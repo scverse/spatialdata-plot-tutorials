@@ -14,6 +14,15 @@ Render H&E tissue, overlay spots, color by gene expression and by cluster,
 and finish with a publication-style figure.
 :::
 
+:::{grid-item-card} Interactive region annotation
+:link: interactive_annotate
+:link-type: doc
+:img-top: interactive_annotate.png
+
+Draw regions of interest directly on a `spatialdata-plot` canvas with
+`sdata.pl.annotate(...)` and persist them as a `ShapesModel` element.
+:::
+
 ::::
 
 ```{toctree}
@@ -21,4 +30,5 @@ and finish with a publication-style figure.
 :maxdepth: 1
 
 visium_mouse_brain
+interactive_annotate
 ```
