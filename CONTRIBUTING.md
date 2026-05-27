@@ -35,7 +35,14 @@ pre-commit install
 5. Add the notebook to the appropriate `index.md` so it appears in the gallery
    toctree.
 
-6. Open a PR. CI will:
+6. Place the gallery thumbnail and any other media (GIFs, screenshots, static
+   PNGs referenced from the notebook) under `_static/img/`. Reference them from
+   `index.md` and notebook markdown cells with relative paths
+   (e.g. `:img-top: ../_static/img/<slug>.png` from inside `examples/` or
+   `tutorials/`, and `![…](../_static/img/<slug>.gif)` from a notebook cell).
+   Do **not** drop assets next to the notebook itself.
+
+7. Open a PR. CI will:
    - Lint structure and code (`lint.yaml`).
    - Re-execute the notebook against the latest `spatialdata-plot` release
      and diff outputs (`execute.yaml`).

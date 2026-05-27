@@ -8,7 +8,7 @@ Entry-point material for learning the API on synthetic data.
 :::{grid-item-card} Getting started
 :link: getting_started
 :link-type: doc
-:img-top: getting_started.png
+:img-top: ../_static/img/getting_started.png
 
 The fluent `.pl` API, layering, and styling on the in-memory `blobs`
 dataset. Ideal first read.
@@ -17,7 +17,7 @@ dataset. Ideal first read.
 :::{grid-item-card} Colour and palettes
 :link: color_and_palette
 :link-type: doc
-:img-top: color_and_palette.png
+:img-top: ../_static/img/color_and_palette.png
 
 How `color=` resolves, the v0.3.0 `groups` behaviour, and building
 perceptually well-spaced or colourblind-safe palettes with
