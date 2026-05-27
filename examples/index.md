@@ -1,6 +1,6 @@
 # Examples
 
-Worked examples on real datasets you'd actually analyse.
+Examples from real datasets you'd actually analyse.
 
 ::::{grid} 1 2 2 2
 :gutter: 3
@@ -8,7 +8,7 @@ Worked examples on real datasets you'd actually analyse.
 :::{grid-item-card} Visium mouse brain
 :link: visium_mouse_brain
 :link-type: doc
-:img-top: visium_mouse_brain.png
+:img-top: ../_static/img/visium_mouse_brain.png
 
 Render H&E tissue, overlay spots, color by gene expression and by cluster,
 and finish with a publication-style figure.
@@ -17,7 +17,7 @@ and finish with a publication-style figure.
 :::{grid-item-card} Interactive region annotation
 :link: interactive_annotate
 :link-type: doc
-:img-top: interactive_annotate.png
+:img-top: ../_static/img/interactive_annotate.png
 
 Draw regions of interest directly on a `spatialdata-plot` canvas with
 `sdata.pl.annotate(...)` and persist them as a `ShapesModel` element.
