@@ -375,15 +375,6 @@
 <p>We’ll use the <code class="docutils literal notranslate"><span class="pre">squidpy.datasets.visium_hne_sdata()</span></code> test data to demonstrate the function. The <code class="docutils literal notranslate"><span class="pre">SpatialData</span></code> object contains a multi-resolution H&amp;E image (<code class="docutils literal notranslate"><span class="pre">'hne'</span></code>) and the spot polygons (<code class="docutils literal notranslate"><span class="pre">'spots'</span></code>), both aligned in the <code class="docutils literal notranslate"><span class="pre">'global'</span></code> coordinate system.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">squidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sq</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">Polygon</span>
 
@@ -401,7 +392,7 @@
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/visium_hne_sdata.zarr
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /ictstr01/groups/ml01/workspace/ttreis/projects/spatialdata-plot-notebooks/examples/data/spatialdata/visium_hne_sdata.zarr
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /Users/tim.treis/Documents/GitHub/spatialdata-plot-notebooks/examples/data/spatialdata/visium_hne_sdata.zarr
 ├── Images
 │     └── &#39;hne&#39;: DataTree[cyx] (3, 11757, 11291), (3, 5878, 5645), (3, 2939, 2822), (3, 1469, 1411)
 ├── Shapes
@@ -426,7 +417,7 @@ with coordinate systems:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4235a1239194a3724d9d5adc9b5d47805bde17337fb28d69e4b0cf4ba8456b79.png" src="../../_images/4235a1239194a3724d9d5adc9b5d47805bde17337fb28d69e4b0cf4ba8456b79.png" />
+<img alt="../../_images/960d95b932194b3a636ffd047046c7e674ce3e580273a365100c9e7197332b66.png" src="../../_images/960d95b932194b3a636ffd047046c7e674ce3e580273a365100c9e7197332b66.png" />
 </div>
 </div>
 </section>
@@ -446,7 +437,7 @@ with coordinate systems:
 <p><strong>Drawing tools</strong>: rectangle, polygon, point. Points are stored as small circle polygons (radius scaled to the rendered image’s CS extent) so the resulting <code class="docutils literal notranslate"><span class="pre">ShapesModel</span></code> is uniform-type.</p>
 <p>When you click <strong>Save</strong> the shapes on the canvas are committed to <code class="docutils literal notranslate"><span class="pre">sdata.shapes[&lt;name&gt;]</span></code> as a single <code class="docutils literal notranslate"><span class="pre">ShapesModel</span></code> (multiple rows if you drew multiple shapes). Same-name commits overwrite. Use <code class="docutils literal notranslate"><span class="pre">sdata.write_element(&lt;name&gt;)</span></code> after the cell to persist to a backing zarr.</p>
 <p><img alt="Drawing a region with sdata.pl.annotate" src="../../_images/interactive_annotate.gif" /></p>
-<p><em>Live recording of the widget. Replace this file with your own capture before publishing the tutorial.</em></p>
+<p><em>Live recording of the widget.</em></p>
 </section>
 <section id="what-the-widget-produces">
 <h2>What the widget produces<a class="headerlink" href="#what-the-widget-produces" title="Link to this heading">#</a></h2>
@@ -454,26 +445,41 @@ with coordinate systems:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pretend the user drew this polygon in the widget and clicked Save with</span>
-<span class="c1"># name=&quot;tumor_region&quot;. Coordinates are in the &#39;global&#39; coordinate system</span>
+<span class="c1"># name=&quot;poly&quot;. Coordinates are in the &#39;global&#39; coordinate system</span>
 <span class="c1"># of the visium_hne_sdata dataset.</span>
 <span class="n">hippocampus_polygon</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span>
     <span class="p">[</span>
-        <span class="p">(</span><span class="mi">3200</span><span class="p">,</span> <span class="mi">4800</span><span class="p">),</span>
-        <span class="p">(</span><span class="mi">4800</span><span class="p">,</span> <span class="mi">4400</span><span class="p">),</span>
-        <span class="p">(</span><span class="mi">5600</span><span class="p">,</span> <span class="mi">5200</span><span class="p">),</span>
-        <span class="p">(</span><span class="mi">5400</span><span class="p">,</span> <span class="mi">6400</span><span class="p">),</span>
-        <span class="p">(</span><span class="mi">4200</span><span class="p">,</span> <span class="mi">6600</span><span class="p">),</span>
-        <span class="p">(</span><span class="mi">3200</span><span class="p">,</span> <span class="mi">6000</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2540</span><span class="p">,</span> <span class="mi">3946</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3105</span><span class="p">,</span> <span class="mi">3597</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3387</span><span class="p">,</span> <span class="mi">3149</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3750</span><span class="p">,</span> <span class="mi">2953</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4449</span><span class="p">,</span> <span class="mi">2939</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5054</span><span class="p">,</span> <span class="mi">3065</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5511</span><span class="p">,</span> <span class="mi">3317</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6008</span><span class="p">,</span> <span class="mi">3835</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6223</span><span class="p">,</span> <span class="mi">4198</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6398</span><span class="p">,</span> <span class="mi">4688</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6344</span><span class="p">,</span> <span class="mi">5052</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6115</span><span class="p">,</span> <span class="mi">5346</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5712</span><span class="p">,</span> <span class="mi">5304</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5242</span><span class="p">,</span> <span class="mi">4926</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4919</span><span class="p">,</span> <span class="mi">4688</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4449</span><span class="p">,</span> <span class="mi">4534</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3777</span><span class="p">,</span> <span class="mi">4548</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3333</span><span class="p">,</span> <span class="mi">4548</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2876</span><span class="p">,</span> <span class="mi">4520</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2540</span><span class="p">,</span> <span class="mi">4478</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2540</span><span class="p">,</span> <span class="mi">3946</span><span class="p">)</span>
     <span class="p">]</span>
 <span class="p">)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpd</span>
 
-<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">&quot;tumor_region&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ShapesModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">&quot;poly&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ShapesModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
     <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">({</span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">hippocampus_polygon</span><span class="p">]}),</span>
     <span class="n">transformations</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;global&quot;</span><span class="p">:</span> <span class="n">Identity</span><span class="p">()},</span>
 <span class="p">)</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">&quot;tumor_region&quot;</span><span class="p">]</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">&quot;poly&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -502,7 +508,7 @@ with coordinate systems:
   <tbody>
     <tr>
       <th>0</th>
-      <td>POLYGON ((3200 4800, 4800 4400, 5600 5200, 540...</td>
+      <td>POLYGON ((2540 3946, 3105 3597, 3387 3149, 375...</td>
     </tr>
   </tbody>
 </table>
@@ -517,14 +523,14 @@ with coordinate systems:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
     <span class="n">sdata</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;tumor_region&quot;</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">&quot;#22d3ee&quot;</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;poly&quot;</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f04e71eed81e649b12a86507f9bd2c10d346d6b8353100890ec7f1ee64e506b3.png" src="../../_images/f04e71eed81e649b12a86507f9bd2c10d346d6b8353100890ec7f1ee64e506b3.png" />
+<img alt="../../_images/a63c16dec8933d4e969ad920dc6d6f2dcbe29476f2e11a7ec646e0829e84726c.png" src="../../_images/a63c16dec8933d4e969ad920dc6d6f2dcbe29476f2e11a7ec646e0829e84726c.png" />
 </div>
 </div>
 </section>
@@ -535,7 +541,7 @@ with coordinate systems:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">polygon_query</span><span class="p">(</span>
     <span class="n">sdata</span><span class="p">,</span>
-    <span class="n">sdata</span><span class="p">[</span><span class="s2">&quot;tumor_region&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">sdata</span><span class="p">[</span><span class="s2">&quot;poly&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">&quot;global&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">subset</span>
@@ -545,15 +551,15 @@ with coordinate systems:
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object
 ├── Images
-│     └── &#39;hne&#39;: DataTree[cyx] (3, 2200, 2400), (3, 1100, 1200), (3, 550, 600), (3, 275, 300)
+│     └── &#39;hne&#39;: DataTree[cyx] (3, 2407, 3858), (3, 1204, 1929), (3, 601, 964), (3, 301, 483)
 ├── Shapes
-│     ├── &#39;spots&#39;: GeoDataFrame shape: (261, 2) (2D shapes)
-│     └── &#39;tumor_region&#39;: GeoDataFrame shape: (1, 1) (2D shapes)
+│     ├── &#39;poly&#39;: GeoDataFrame shape: (1, 1) (2D shapes)
+│     └── &#39;spots&#39;: GeoDataFrame shape: (351, 2) (2D shapes)
 └── Tables
-      └── &#39;adata&#39;: AnnData (261, 18078)
+      └── &#39;adata&#39;: AnnData (351, 18078)
 with coordinate systems:
     ▸ &#39;global&#39;, with elements:
-        hne (Images), spots (Shapes), tumor_region (Shapes)
+        hne (Images), poly (Shapes), spots (Shapes)
 </pre></div>
 </div>
 </div>
@@ -563,14 +569,14 @@ with coordinate systems:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
     <span class="n">subset</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;spots&quot;</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;spots&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;total_counts&quot;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9f905de110bcf5dd0843b2256925b236fc7240dc854bb2d1f98a7224d05d7eaa.png" src="../../_images/9f905de110bcf5dd0843b2256925b236fc7240dc854bb2d1f98a7224d05d7eaa.png" />
+<img alt="../../_images/48c1e943f14828f26a2bb1c004b15e17cc68134706fb33d55aea03ee365e6f82.png" src="../../_images/48c1e943f14828f26a2bb1c004b15e17cc68134706fb33d55aea03ee365e6f82.png" />
 </div>
 </div>
 </section>
@@ -580,12 +586,36 @@ with coordinate systems:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ruff: noqa: F401, F811, I001, E402</span>
 <span class="c1"># fmt: off</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">anywidget</span>
 
 <span class="o">%</span><span class="k">load_ext</span> watermark
 <span class="c1"># fmt: on</span>
 
-<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,squidpy,matplotlib,numpy
+<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,anywidget,squidpy,matplotlib,numpy
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The watermark extension is already loaded. To reload it, use:
+  %reload_ext watermark
+Python implementation: CPython
+Python version       : 3.14.4
+IPython version      : 9.13.0
+
+spatialdata     : 0.7.3
+spatialdata_plot: 0.3.5.dev26+g694ed9238
+anywidget       : 0.11.0
+squidpy         : 1.8.1
+matplotlib      : 3.10.9
+numpy           : 2.4.4
+
+Compiler    : Clang 20.1.8 
+OS          : Darwin
+Release     : 25.2.0
+Machine     : arm64
+Processor   : arm
+CPU cores   : 8
+Architecture: 64bit
 </pre></div>
 </div>
 </div>
