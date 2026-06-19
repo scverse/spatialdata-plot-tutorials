@@ -387,6 +387,8 @@ the default <code class="docutils literal notranslate"><span class="pre">matplot
 <p>The image sections use the cached <code class="docutils literal notranslate"><span class="pre">squidpy</span></code> Visium H&amp;E mouse-brain dataset (its <code class="docutils literal notranslate"><span class="pre">hne</span></code> image is
 multi-scale); the backend benchmarks use small synthetic <code class="docutils literal notranslate"><span class="pre">SpatialData</span></code> objects. Nothing extra
 needs downloading.</p>
+<p><strong>Dataset</strong>: a Visium H&amp;E mouse-brain section, loaded by <code class="docutils literal notranslate"><span class="pre">squidpy.datasets.visium_hne_sdata()</span></code> from
+the scverse example-data host (cached after the first download).</p>
 <p><strong>Credit</strong>: adapted from the <a class="reference external" href="https://github.com/scverse/spatialdata-notebooks/blob/main/notebooks/examples/speed_up_illustration.ipynb"><code class="docutils literal notranslate"><span class="pre">speed_up_illustration</span></code></a> notebook in <code class="docutils literal notranslate"><span class="pre">spatialdata-notebooks</span></code> by
 <a class="reference external" href="https://github.com/Sonja-Stockhaus">&#64;Sonja-Stockhaus</a> and the <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> team.</p>
 <div class="cell docutils container">
@@ -471,8 +473,8 @@ whether rasterization is needed.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 2.88 s, sys: 1.84 s, total: 4.72 s
-Wall time: 3.99 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.06 s, sys: 1.96 s, total: 5.03 s
+Wall time: 5.18 s
 </pre></div>
 </div>
 <img alt="../../_images/f7757ee1f68830dc36613e56047502a3782dfc76ca3ef017777b1527ca22686c.png" src="../../_images/f7757ee1f68830dc36613e56047502a3782dfc76ca3ef017777b1527ca22686c.png" />
@@ -491,8 +493,8 @@ the image is rasterized. A higher <code class="docutils literal notranslate"><sp
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.05 s, sys: 1.85 s, total: 4.89 s
-Wall time: 3.94 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.07 s, sys: 1.91 s, total: 4.98 s
+Wall time: 4.02 s
 </pre></div>
 </div>
 <img alt="../../_images/d533cc64579f0af69679195278086168e832b4b546a351226363bcb160daa563.png" src="../../_images/d533cc64579f0af69679195278086168e832b4b546a351226363bcb160daa563.png" />
@@ -509,8 +511,8 @@ large images (see the multi-scale section for a more dramatic case).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.8 s, sys: 2.18 s, total: 5.98 s
-Wall time: 4.85 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.85 s, sys: 2.24 s, total: 6.09 s
+Wall time: 4.9 s
 </pre></div>
 </div>
 <img alt="../../_images/570cc9634e0bf08fe05e42f0aad7ddf32b791555a889ac07c8dc5b873d0d2fcc.png" src="../../_images/570cc9634e0bf08fe05e42f0aad7ddf32b791555a889ac07c8dc5b873d0d2fcc.png" />
@@ -534,8 +536,8 @@ picks one of the lower-resolution scales.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 373 ms, sys: 124 ms, total: 497 ms
-Wall time: 418 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 364 ms, sys: 137 ms, total: 501 ms
+Wall time: 471 ms
 </pre></div>
 </div>
 <img alt="../../_images/aee8ddab2ef797b064ecc057986fb44cd74ef010d10a62a3c1b986b816ed9c31.png" src="../../_images/aee8ddab2ef797b064ecc057986fb44cd74ef010d10a62a3c1b986b816ed9c31.png" />
@@ -557,8 +559,8 @@ coarser than requested).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 591 ms, sys: 123 ms, total: 715 ms
-Wall time: 634 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 586 ms, sys: 136 ms, total: 722 ms
+Wall time: 637 ms
 </pre></div>
 </div>
 <img alt="../../_images/5cbfe89543cb3bb48ad882e8d4fc1e0012dbff28e77bf0fcf75f296aa66d0d28.png" src="../../_images/5cbfe89543cb3bb48ad882e8d4fc1e0012dbff28e77bf0fcf75f296aa66d0d28.png" />
@@ -574,44 +576,17 @@ unless you <em>also</em> set <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 16.2 s, sys: 9.96 s, total: 26.1 s
-Wall time: 22.7 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 15.2 s, sys: 9.24 s, total: 24.4 s
+Wall time: 20.8 s
 </pre></div>
 </div>
 <img alt="../../_images/1c6a9e997abbe58bca718460590ddbd89b0b99aa030cf752bfd5bf7a8e12566f.png" src="../../_images/1c6a9e997abbe58bca718460590ddbd89b0b99aa030cf752bfd5bf7a8e12566f.png" />
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">scale=&quot;full&quot;</span></code> selects the highest-resolution scale and performs no rasterization. On a large image
-this is the slow extreme — and, depending on the machine, can run into memory limits. We crop first
-to keep the runtime of this notebook reasonable while still showing the effect.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata_cropped</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">bounding_box</span><span class="p">(</span>
-    <span class="n">min_coordinate</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-    <span class="n">max_coordinate</span><span class="o">=</span><span class="p">[</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">],</span>
-    <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">),</span>
-    <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">&quot;global&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="n">sdata_cropped</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="c1"># highest resolution, no rasterization -&gt; slowest</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.12 s, sys: 1.89 s, total: 5.01 s
-Wall time: 4.05 s
-</pre></div>
-</div>
-<img alt="../../_images/202e48d3744e57e0254d990fa7cc40f618e3a1a3b93b0ebb15fa30fdcc6f1c96.png" src="../../_images/202e48d3744e57e0254d990fa7cc40f618e3a1a3b93b0ebb15fa30fdcc6f1c96.png" />
-</div>
-</div>
+<p>You can force the highest-resolution scale with <code class="docutils literal notranslate"><span class="pre">scale=&quot;full&quot;</span></code>, which skips rasterization entirely.
+On a sufficiently large image this is the slow extreme and can even exhaust memory; for this dataset
+the full <code class="docutils literal notranslate"><span class="pre">hne</span></code> image is small enough that the difference is minor, so we describe it here rather than
+render it.</p>
 </section>
 </section>
 <section id="datashader-backend-for-shapes-and-points">
@@ -659,33 +634,58 @@ we locate the crossover for polygons, multi-polygons, and circles, then look at 
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">benchmark</span><span class="p">(</span><span class="n">to_plot</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">counts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">repeat</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
     <span class="n">render_name</span> <span class="o">=</span> <span class="s2">&quot;render_points&quot;</span> <span class="k">if</span> <span class="n">to_plot</span> <span class="o">==</span> <span class="s2">&quot;points&quot;</span> <span class="k">else</span> <span class="s2">&quot;render_shapes&quot;</span>
+
+    <span class="c1"># One-time warmup so numba JIT / datashader setup isn&#39;t charged to the first timed run.</span>
+    <span class="n">warm</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">make_sdata</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="p">,</span> <span class="n">render_name</span><span class="p">)</span>
+    <span class="n">warm</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">warm</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;datashader&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
-        <span class="n">sdata_b</span> <span class="o">=</span> <span class="n">make_sdata</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-        <span class="n">render</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sdata_b</span><span class="o">.</span><span class="n">pl</span><span class="p">,</span> <span class="n">render_name</span><span class="p">)</span>
+        <span class="n">render</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">make_sdata</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="p">,</span> <span class="n">render_name</span><span class="p">)</span>
         <span class="n">run</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">render</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># noqa: B023, E731</span>
-        <span class="n">run</span><span class="p">(</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">)</span>  <span class="c1"># untimed warmup: numba JIT + datashader canvas setup  # noqa: B023</span>
-        <span class="n">run</span><span class="p">(</span><span class="s2">&quot;datashader&quot;</span><span class="p">)</span>  <span class="c1"># noqa: B023</span>
         <span class="n">mpl_times</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">run</span><span class="p">(</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">),</span> <span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="n">repeat</span><span class="p">)</span>  <span class="c1"># noqa: B023</span>
         <span class="n">ds_times</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">run</span><span class="p">(</span><span class="s2">&quot;datashader&quot;</span><span class="p">),</span> <span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="n">repeat</span><span class="p">)</span>  <span class="c1"># noqa: B023</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>  <span class="c1"># don&#39;t let figures accumulate across counts</span>
         <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mpl_times</span><span class="p">,</span> <span class="n">ds_times</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;object_num&quot;</span><span class="p">,</span> <span class="s2">&quot;mpl_time&quot;</span><span class="p">,</span> <span class="s2">&quot;ds_time&quot;</span><span class="p">])</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">visualise_comparison</span><span class="p">(</span><span class="n">results</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">crossover</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="n">medians</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Object count where datashader overtakes matplotlib, interpolated from the data.</span>
+
+<span class="sd">    Returns None when datashader is not ahead at the largest count (e.g. points), so no</span>
+<span class="sd">    misleading line is drawn.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">medians</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;object_num&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;object_num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;mpl_time&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;ds_time&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>  <span class="c1"># &gt; 0 =&gt; datashader faster</span>
+    <span class="k">if</span> <span class="n">diff</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">cross</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;object_num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># datashader faster throughout</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>  <span class="c1"># last mpl -&gt; datashader sign change</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="o">-</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">cross</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">cross</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visualise_comparison</span><span class="p">(</span><span class="n">results</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">medians</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;object_num&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">medians</span><span class="p">[</span><span class="s2">&quot;object_num&quot;</span><span class="p">],</span> <span class="n">medians</span><span class="p">[</span><span class="s2">&quot;mpl_time&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">medians</span><span class="p">[</span><span class="s2">&quot;object_num&quot;</span><span class="p">],</span> <span class="n">medians</span><span class="p">[</span><span class="s2">&quot;ds_time&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;object_num&quot;</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;mpl_time&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;object_num&quot;</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;ds_time&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;datashader&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">crossover</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">crossover</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;~crossover (</span><span class="si">{</span><span class="n">crossover</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">xover</span> <span class="o">=</span> <span class="n">crossover</span><span class="p">(</span><span class="n">medians</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">xover</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">xover</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;crossover (~</span><span class="si">{</span><span class="n">xover</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Rendering time in seconds</span><span class="se">\n</span><span class="s2">(lower is better)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -693,8 +693,9 @@ we locate the crossover for polygons, multi-polygons, and circles, then look at 
 </div>
 <section id="polygons">
 <h3>3.1 Polygons<a class="headerlink" href="#polygons" title="Link to this heading">#</a></h3>
-<p>Below ~250 polygons <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is faster; above it <code class="docutils literal notranslate"><span class="pre">datashader</span></code> takes over. The exact crossover
-depends on your hardware, but the qualitative behaviour is robust.</p>
+<p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is faster for small collections; <code class="docutils literal notranslate"><span class="pre">datashader</span></code> takes over once there are many polygons.
+The red line marks the crossover measured from this run — its exact location depends on your
+hardware.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
@@ -705,19 +706,19 @@ depends on your hardware, but the qualitative behaviour is robust.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_polygons</span><span class="p">,</span> <span class="s2">&quot;polygons&quot;</span><span class="p">,</span> <span class="n">crossover</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_polygons</span><span class="p">,</span> <span class="s2">&quot;polygons&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/74fb7c8468b662784f5a177faa1b83fad6c3f54124d7d8b732cae9bfe433ff5d.png" src="../../_images/74fb7c8468b662784f5a177faa1b83fad6c3f54124d7d8b732cae9bfe433ff5d.png" />
+<img alt="../../_images/124c7eff2ff7348175877e8b016d712b585014a7da4d5e44ac1f98781942245a.png" src="../../_images/124c7eff2ff7348175877e8b016d712b585014a7da4d5e44ac1f98781942245a.png" />
 </div>
 </div>
 </section>
 <section id="multi-polygons">
 <h3>3.2 Multi-polygons<a class="headerlink" href="#multi-polygons" title="Link to this heading">#</a></h3>
-<p>Multi-polygons behave like polygons, with the crossover around ~225 here.</p>
+<p>Multi-polygons behave like polygons; the red line marks the measured crossover.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
@@ -728,19 +729,19 @@ depends on your hardware, but the qualitative behaviour is robust.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_multipolygons</span><span class="p">,</span> <span class="s2">&quot;multi-polygons&quot;</span><span class="p">,</span> <span class="n">crossover</span><span class="o">=</span><span class="mi">225</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_multipolygons</span><span class="p">,</span> <span class="s2">&quot;multi-polygons&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7ae3d7917a46d0481cc12e96ec2c469b4f259ac73590808002d48355aad54718.png" src="../../_images/7ae3d7917a46d0481cc12e96ec2c469b4f259ac73590808002d48355aad54718.png" />
+<img alt="../../_images/c5ba44f44027e94071ca53841a92a3e45323f820a226c47cb411d4ab6615321c.png" src="../../_images/c5ba44f44027e94071ca53841a92a3e45323f820a226c47cb411d4ab6615321c.png" />
 </div>
 </div>
 </section>
 <section id="circles">
 <h3>3.3 Circles<a class="headerlink" href="#circles" title="Link to this heading">#</a></h3>
-<p>Circles cross over around ~250 as well.</p>
+<p>Circles behave the same way, with the crossover marked in red.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
@@ -751,13 +752,13 @@ depends on your hardware, but the qualitative behaviour is robust.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_circles</span><span class="p">,</span> <span class="s2">&quot;circles&quot;</span><span class="p">,</span> <span class="n">crossover</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_circles</span><span class="p">,</span> <span class="s2">&quot;circles&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9da00b6adf8fbc48a51dd767bbf0160e9497fc127d7ca6d53fb591f083262cbd.png" src="../../_images/9da00b6adf8fbc48a51dd767bbf0160e9497fc127d7ca6d53fb591f083262cbd.png" />
+<img alt="../../_images/fa0b3ba001b4abfd0fbf0eaf3aa260097e2bb329121dac8455919338fb9160f3.png" src="../../_images/fa0b3ba001b4abfd0fbf0eaf3aa260097e2bb329121dac8455919338fb9160f3.png" />
 </div>
 </div>
 </section>
@@ -765,10 +766,10 @@ depends on your hardware, but the qualitative behaviour is robust.</p>
 <h3>3.4 Points<a class="headerlink" href="#points" title="Link to this heading">#</a></h3>
 <p>Points are the exception. <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> already draws point scatters quickly, and although
 <a class="reference external" href="https://github.com/scverse/spatialdata-plot/issues/379">scverse/spatialdata-plot#379</a> made <code class="docutils literal notranslate"><span class="pre">datashader</span></code> point rendering substantially faster, the two
-backends end up <em>comparable</em> across the whole range on the pinned versions here: <code class="docutils literal notranslate"><span class="pre">datashader</span></code> has a
-slight edge below ~50k points, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> a slight edge above. There is no clean crossover to
-exploit. For points, choose a backend for its features (e.g. <code class="docutils literal notranslate"><span class="pre">datashader</span></code> density shading) rather
-than for raw speed — and profile on your own data if speed is critical.</p>
+backends stay <em>comparable</em> across the whole range on the pinned versions here — <code class="docutils literal notranslate"><span class="pre">datashader</span></code> has a
+slight edge at small sizes and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> a slight edge at large ones, with no clean crossover (so
+no line is drawn). For points, choose a backend for its features (e.g. <code class="docutils literal notranslate"><span class="pre">datashader</span></code> density shading)
+rather than for raw speed, and profile on your own data if speed is critical.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
@@ -785,7 +786,7 @@ than for raw speed — and profile on your own data if speed is critical.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/88b97a9777f295b50d601ae9edeb59f4199815e6f05a39fe32265d616a35675c.png" src="../../_images/88b97a9777f295b50d601ae9edeb59f4199815e6f05a39fe32265d616a35675c.png" />
+<img alt="../../_images/459b7a65e89f61eb6ec91806a811a4469eac80cc317c009cef000d402b065e82.png" src="../../_images/459b7a65e89f61eb6ec91806a811a4469eac80cc317c009cef000d402b065e82.png" />
 </div>
 </div>
 </section>

@@ -29,7 +29,8 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 :img-top: ../_static/img/performance.png
 
 Keep rendering fast on large data: automatic rasterization and scale
-selection for images, and the `datashader` backend for many shapes.
+selection for images, and the `datashader` backend for large collections
+of shapes and points.
 :::
 
 ::::
