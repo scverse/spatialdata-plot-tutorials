@@ -473,8 +473,8 @@ whether rasterization is needed.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.06 s, sys: 1.96 s, total: 5.03 s
-Wall time: 5.18 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 2.79 s, sys: 1.78 s, total: 4.57 s
+Wall time: 3.59 s
 </pre></div>
 </div>
 <img alt="../../_images/f7757ee1f68830dc36613e56047502a3782dfc76ca3ef017777b1527ca22686c.png" src="../../_images/f7757ee1f68830dc36613e56047502a3782dfc76ca3ef017777b1527ca22686c.png" />
@@ -493,8 +493,8 @@ the image is rasterized. A higher <code class="docutils literal notranslate"><sp
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.07 s, sys: 1.91 s, total: 4.98 s
-Wall time: 4.02 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 2.92 s, sys: 1.79 s, total: 4.71 s
+Wall time: 3.67 s
 </pre></div>
 </div>
 <img alt="../../_images/d533cc64579f0af69679195278086168e832b4b546a351226363bcb160daa563.png" src="../../_images/d533cc64579f0af69679195278086168e832b4b546a351226363bcb160daa563.png" />
@@ -511,8 +511,8 @@ large images (see the multi-scale section for a more dramatic case).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.85 s, sys: 2.24 s, total: 6.09 s
-Wall time: 4.9 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.75 s, sys: 2.14 s, total: 5.89 s
+Wall time: 4.72 s
 </pre></div>
 </div>
 <img alt="../../_images/570cc9634e0bf08fe05e42f0aad7ddf32b791555a889ac07c8dc5b873d0d2fcc.png" src="../../_images/570cc9634e0bf08fe05e42f0aad7ddf32b791555a889ac07c8dc5b873d0d2fcc.png" />
@@ -536,8 +536,8 @@ picks one of the lower-resolution scales.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 364 ms, sys: 137 ms, total: 501 ms
-Wall time: 471 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 361 ms, sys: 126 ms, total: 487 ms
+Wall time: 407 ms
 </pre></div>
 </div>
 <img alt="../../_images/aee8ddab2ef797b064ecc057986fb44cd74ef010d10a62a3c1b986b816ed9c31.png" src="../../_images/aee8ddab2ef797b064ecc057986fb44cd74ef010d10a62a3c1b986b816ed9c31.png" />
@@ -559,8 +559,8 @@ coarser than requested).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 586 ms, sys: 136 ms, total: 722 ms
-Wall time: 637 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 604 ms, sys: 127 ms, total: 731 ms
+Wall time: 646 ms
 </pre></div>
 </div>
 <img alt="../../_images/5cbfe89543cb3bb48ad882e8d4fc1e0012dbff28e77bf0fcf75f296aa66d0d28.png" src="../../_images/5cbfe89543cb3bb48ad882e8d4fc1e0012dbff28e77bf0fcf75f296aa66d0d28.png" />
@@ -576,8 +576,8 @@ unless you <em>also</em> set <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 15.2 s, sys: 9.24 s, total: 24.4 s
-Wall time: 20.8 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 15.5 s, sys: 9.56 s, total: 25.1 s
+Wall time: 20.4 s
 </pre></div>
 </div>
 <img alt="../../_images/1c6a9e997abbe58bca718460590ddbd89b0b99aa030cf752bfd5bf7a8e12566f.png" src="../../_images/1c6a9e997abbe58bca718460590ddbd89b0b99aa030cf752bfd5bf7a8e12566f.png" />
@@ -593,8 +593,8 @@ render it.</p>
 <h2>3 Datashader backend for shapes and points<a class="headerlink" href="#datashader-backend-for-shapes-and-points" title="Link to this heading">#</a></h2>
 <p>For vector geometry, <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> can render with either <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> (the default) or
 <a class="reference external" href="https://datashader.org/"><code class="docutils literal notranslate"><span class="pre">datashader</span></code></a> via <code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code>. For shapes, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> wins for
-small collections and <code class="docutils literal notranslate"><span class="pre">datashader</span></code> wins once there are many objects; points behave differently. Below
-we locate the crossover for polygons, multi-polygons, and circles, then look at points.</p>
+small collections and <code class="docutils literal notranslate"><span class="pre">datashader</span></code> wins once there are many objects; for points the advantage
+reverses. Below we locate the crossover for polygons, multi-polygons, and circles, then for points.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">RNG</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -653,22 +653,23 @@ we locate the crossover for polygons, multi-polygons, and circles, then look at 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="n">medians</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Object count where datashader overtakes matplotlib, interpolated from the data.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Object count where the faster backend switches, interpolated from the medians.</span>
 
-<span class="sd">    Returns None when datashader is not ahead at the largest count (e.g. points), so no</span>
-<span class="sd">    misleading line is drawn.</span>
+<span class="sd">    Detects a crossing in either direction (datashader overtaking matplotlib for shapes, or</span>
+<span class="sd">    matplotlib overtaking datashader for points) and returns the last one. None if they never cross.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">medians</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;object_num&quot;</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;object_num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
     <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">&quot;mpl_time&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;ds_time&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>  <span class="c1"># &gt; 0 =&gt; datashader faster</span>
-    <span class="k">if</span> <span class="n">diff</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-    <span class="n">cross</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;object_num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># datashader faster throughout</span>
+    <span class="n">cross</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>  <span class="c1"># last mpl -&gt; datashader sign change</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&gt;</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
             <span class="n">t</span> <span class="o">=</span> <span class="o">-</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
             <span class="n">cross</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]))</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">cross</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">cross</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">mag</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">cross</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># round to 2 significant figures for a clean label</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">cross</span> <span class="o">/</span> <span class="n">mag</span><span class="p">)</span> <span class="o">*</span> <span class="n">mag</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">visualise_comparison</span><span class="p">(</span><span class="n">results</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -712,7 +713,7 @@ hardware.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/124c7eff2ff7348175877e8b016d712b585014a7da4d5e44ac1f98781942245a.png" src="../../_images/124c7eff2ff7348175877e8b016d712b585014a7da4d5e44ac1f98781942245a.png" />
+<img alt="../../_images/31d92f3b55defe6e2f7a90c7303cec2daac81cadd4de29dce3cd1d6308434451.png" src="../../_images/31d92f3b55defe6e2f7a90c7303cec2daac81cadd4de29dce3cd1d6308434451.png" />
 </div>
 </div>
 </section>
@@ -735,7 +736,7 @@ hardware.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c5ba44f44027e94071ca53841a92a3e45323f820a226c47cb411d4ab6615321c.png" src="../../_images/c5ba44f44027e94071ca53841a92a3e45323f820a226c47cb411d4ab6615321c.png" />
+<img alt="../../_images/1202f3bed8c7351cf1c31005dad8cf1e36abd23e74f3263570f974245c0fdaef.png" src="../../_images/1202f3bed8c7351cf1c31005dad8cf1e36abd23e74f3263570f974245c0fdaef.png" />
 </div>
 </div>
 </section>
@@ -758,22 +759,22 @@ hardware.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/fa0b3ba001b4abfd0fbf0eaf3aa260097e2bb329121dac8455919338fb9160f3.png" src="../../_images/fa0b3ba001b4abfd0fbf0eaf3aa260097e2bb329121dac8455919338fb9160f3.png" />
+<img alt="../../_images/bea7bd200f3f4d1f224fec99c06c4cb254d68c309387b9a4f2e28dddf43bb7f9.png" src="../../_images/bea7bd200f3f4d1f224fec99c06c4cb254d68c309387b9a4f2e28dddf43bb7f9.png" />
 </div>
 </div>
 </section>
 <section id="points">
 <h3>3.4 Points<a class="headerlink" href="#points" title="Link to this heading">#</a></h3>
-<p>Points are the exception. <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> already draws point scatters quickly, and although
-<a class="reference external" href="https://github.com/scverse/spatialdata-plot/issues/379">scverse/spatialdata-plot#379</a> made <code class="docutils literal notranslate"><span class="pre">datashader</span></code> point rendering substantially faster, the two
-backends stay <em>comparable</em> across the whole range on the pinned versions here — <code class="docutils literal notranslate"><span class="pre">datashader</span></code> has a
-slight edge at small sizes and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> a slight edge at large ones, with no clean crossover (so
-no line is drawn). For points, choose a backend for its features (e.g. <code class="docutils literal notranslate"><span class="pre">datashader</span></code> density shading)
-rather than for raw speed, and profile on your own data if speed is critical.</p>
+<p>Points invert the shapes story. <code class="docutils literal notranslate"><span class="pre">datashader</span></code> is faster for small point sets, but <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>
+already draws point scatters efficiently and wins at scale: the crossover (marked in red) sits
+roughly around 100k points, and out to 10 million <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> stays ahead. So <code class="docutils literal notranslate"><span class="pre">datashader</span></code> gives no
+speed advantage for the large point sets where you would most want it — this was investigated in
+<a class="reference external" href="https://github.com/scverse/spatialdata-plot/issues/379">scverse/spatialdata-plot#379</a>. Choose it for features such as density shading rather than for raw
+speed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
-<span class="n">results_points</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;points&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span> <span class="mi">500_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">])</span>
+<span class="n">results_points</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">(</span><span class="s2">&quot;points&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">,</span> <span class="mi">10_000_000</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -786,7 +787,7 @@ rather than for raw speed, and profile on your own data if speed is critical.</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/459b7a65e89f61eb6ec91806a811a4469eac80cc317c009cef000d402b065e82.png" src="../../_images/459b7a65e89f61eb6ec91806a811a4469eac80cc317c009cef000d402b065e82.png" />
+<img alt="../../_images/c16662847a52c933e6b6f90aed6ac4ffa825a1253fa6efc71c43d337f4c03395.png" src="../../_images/c16662847a52c933e6b6f90aed6ac4ffa825a1253fa6efc71c43d337f4c03395.png" />
 </div>
 </div>
 </section>
