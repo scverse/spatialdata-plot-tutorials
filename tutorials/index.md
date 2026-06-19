@@ -24,6 +24,16 @@ perceptually well-spaced or colourblind-safe palettes with
 `make_palette` and `make_palette_from_data`.
 :::
 
+:::{grid-item-card} Speeding up rendering
+:link: performance
+:link-type: doc
+:img-top: ../_static/img/performance.png
+
+Keep rendering fast on large data: automatic rasterization and scale
+selection for images, and the `datashader` backend for large collections
+of shapes and points.
+:::
+
 ::::
 
 ```{toctree}
@@ -32,4 +42,5 @@ perceptually well-spaced or colourblind-safe palettes with
 
 getting_started
 color_and_palette
+performance
 ```

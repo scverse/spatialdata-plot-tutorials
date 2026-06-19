@@ -23,16 +23,6 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 `sdata.pl.annotate(...)` and persist them as a `ShapesModel` element.
 :::
 
-:::{grid-item-card} Speeding up rendering
-:link: performance
-:link-type: doc
-:img-top: ../_static/img/performance.png
-
-Keep rendering fast on large data: automatic rasterization and scale
-selection for images, and the `datashader` backend for large collections
-of shapes and points.
-:::
-
 ::::
 
 ```{toctree}
@@ -41,5 +31,4 @@ of shapes and points.
 
 visium_mouse_brain
 interactive_annotate
-performance
 ```
