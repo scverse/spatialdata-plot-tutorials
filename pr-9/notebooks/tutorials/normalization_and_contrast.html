@@ -1,0 +1,936 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Normalization and contrast in spatialdata-plot" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="notebooks/tutorials/normalization_and_contrast.html" />
+<meta property="og:site_name" content="spatialdata-plot" />
+<meta property="og:description" content="This tutorial covers the norm= argument: how spatialdata-plot turns scalar data values into colors, and every knob you have to control contrast. By the end you should be able to: Explain what a nor..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_tutorials_normalization_and_contrast_374c30fb.png" />
+<meta property="og:image:alt" content="This tutorial covers the norm= argument: how spatialdata-plot turns scalar data values into colors, and every knob you have to control contrast. By the end you should be able to: Explain what a nor..." />
+<meta name="description" content="This tutorial covers the norm= argument: how spatialdata-plot turns scalar data values into colors, and every knob you have to control contrast. By the end you should be able to: Explain what a nor..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Normalization and contrast in spatialdata-plot &#8212; spatialdata-plot</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=05624691" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f2dec995" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4644695f"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/tutorials/normalization_and_contrast';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Examples" href="../examples/index.html" />
+    <link rel="prev" title="Speeding up the rendering of large data" href="performance.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g0919069e8.d20260620" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-light" alt="spatialdata-plot - Home"/>
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-dark pst-js-only" alt="spatialdata-plot - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../gallery.html">Gallery</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html">Getting started with spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="performance.html">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Normalization and contrast in spatialdata-plot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/visium_mouse_brain.html">Plotting a Visium dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/interactive_annotate.html">Interactive region annotation</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api.html">API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../plotting.html">Plotting (<code class="docutils literal notranslate"><span class="pre">.pl</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/scverse/spatialdata-plot.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/tutorials/normalization_and_contrast.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Normalization and contrast in spatialdata-plot</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-a-norm-is">What a <code class="docutils literal notranslate"><span class="pre">norm</span></code> is</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-renderers-take-norm">Which renderers take <code class="docutils literal notranslate"><span class="pre">norm</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-default-per-channel-min-max">1. The default — per-channel min/max</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-contrast-limits-normalize-vmin-vmax">2. Fixed contrast limits — <code class="docutils literal notranslate"><span class="pre">Normalize(vmin,</span> <span class="pre">vmax)</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clipping-what-happens-outside-vmin-vmax">3. Clipping — what happens outside <code class="docutils literal notranslate"><span class="pre">[vmin,</span> <span class="pre">vmax]</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logarithmic-scaling-lognorm">4. Logarithmic scaling — <code class="docutils literal notranslate"><span class="pre">LogNorm</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-matplotlib-norms-work-too">5. Other matplotlib norms work too</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#percentile-contrast-percentilenormalize">6. Percentile contrast — <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#per-channel-norms-for-images">7. Per-channel norms for images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-with-transfunc">8. Combining with <code class="docutils literal notranslate"><span class="pre">transfunc</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#true-rgb-images">9. True RGB images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#norms-on-shapes-points-and-labels">10. Norms on shapes, points, and labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-datashader-caveat">11. The datashader caveat</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-cases-the-renderer-handles-for-you">12. Edge cases the renderer handles for you</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="normalization-and-contrast-in-spatialdata-plot">
+<h1>Normalization and contrast in spatialdata-plot<a class="headerlink" href="#normalization-and-contrast-in-spatialdata-plot" title="Link to this heading">#</a></h1>
+<p>This tutorial covers the <code class="docutils literal notranslate"><span class="pre">norm=</span></code> argument: how <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> turns scalar data values into
+colors, and every knob you have to control contrast. By the end you should be able to:</p>
+<ul class="simple">
+<li><p>Explain what a <code class="docutils literal notranslate"><span class="pre">norm</span></code> does and when its limits are chosen for you.</p></li>
+<li><p>Set fixed contrast limits and choose how out-of-range values are drawn.</p></li>
+<li><p>Pick the right scaling — linear, logarithmic, power, or <strong>percentile</strong> — for your data.</p></li>
+<li><p>Give each image channel its own contrast, and use <code class="docutils literal notranslate"><span class="pre">norm</span></code> on shapes, points, and labels.</p></li>
+<li><p>Recognize the datashader caveat and the cases the renderer validates for you.</p></li>
+</ul>
+<section id="what-a-norm-is">
+<h2>What a <code class="docutils literal notranslate"><span class="pre">norm</span></code> is<a class="headerlink" href="#what-a-norm-is" title="Link to this heading">#</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">norm</span></code> is a <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.colors.Normalize.html"><code class="docutils literal notranslate"><span class="pre">matplotlib.colors.Normalize</span></code></a>
+instance. It maps <strong>scalar data values → <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1]</span></code></strong> <em>before</em> the colormap turns them into colors, and it does
+two things:</p>
+<ol class="arabic simple">
+<li><p>Sets the <strong>contrast limits</strong> <code class="docutils literal notranslate"><span class="pre">vmin</span></code> / <code class="docutils literal notranslate"><span class="pre">vmax</span></code> — the data values that map to the bottom and top of the cmap.</p></li>
+<li><p>Sets the <strong>scaling</strong> in between — linear, log, power, percentile-clipped — chosen by the <em>subclass</em>.</p></li>
+</ol>
+<p>If you don’t pass a <code class="docutils literal notranslate"><span class="pre">norm</span></code>, you get a plain <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> whose <code class="docutils literal notranslate"><span class="pre">vmin</span></code>/<code class="docutils literal notranslate"><span class="pre">vmax</span></code> are <strong>autoscaled to the data
+min/max</strong>. That is the default everywhere and it is unchanged.</p>
+<blockquote>
+<div><p><strong>The one rule:</strong> when <code class="docutils literal notranslate"><span class="pre">vmin</span></code>/<code class="docutils literal notranslate"><span class="pre">vmax</span></code> are unset, they autoscale from the data, and <em>how</em> they autoscale is
+decided by the norm subclass. <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> delegates to each norm’s own logic, so <strong>every</strong>
+<code class="docutils literal notranslate"><span class="pre">Normalize</span></code> subclass works — including the percentile one below — with no special-casing.</p>
+</div></blockquote>
+</section>
+<section id="which-renderers-take-norm">
+<h2>Which renderers take <code class="docutils literal notranslate"><span class="pre">norm</span></code><a class="headerlink" href="#which-renderers-take-norm" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Renderer</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">norm</span></code> accepts</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">render_images</span></code></p></td>
+<td><p>a <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> <strong>or a <code class="docutils literal notranslate"><span class="pre">list[Normalize]</span></code></strong></p></td>
+<td><p>single = broadcast &amp; autoscaled per channel; list = one per channel</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">render_shapes</span></code></p></td>
+<td><p>a <code class="docutils literal notranslate"><span class="pre">Normalize</span></code></p></td>
+<td><p>scales a continuous <code class="docutils literal notranslate"><span class="pre">color=</span></code> column</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">render_points</span></code></p></td>
+<td><p>a <code class="docutils literal notranslate"><span class="pre">Normalize</span></code></p></td>
+<td><p>continuous <code class="docutils literal notranslate"><span class="pre">color=</span></code>; resolved limits apply on the matplotlib backend</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">render_labels</span></code></p></td>
+<td><p>a <code class="docutils literal notranslate"><span class="pre">Normalize</span></code></p></td>
+<td><p>scales a continuous <code class="docutils literal notranslate"><span class="pre">color=</span></code> column</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Images are the only renderer that accepts a <strong>list</strong>, because an image has several channels that may each
+want their own contrast.</p>
+</section>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sdp</span>  <span class="c1"># noqa: F401  (registers the .pl accessor)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogNorm</span><span class="p">,</span> <span class="n">Normalize</span><span class="p">,</span> <span class="n">PowerNorm</span><span class="p">,</span> <span class="n">SymLogNorm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata_plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">PercentileNormalize</span>
+
+<span class="n">sdata</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">blobs</span><span class="p">()</span>  <span class="c1"># blobs_image has 3 channels: [0, 1, 2]</span>
+<span class="n">sdata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object
+├── Images
+│     ├── &#39;blobs_image&#39;: DataArray[cyx] (3, 512, 512)
+│     └── &#39;blobs_multiscale_image&#39;: DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
+├── Labels
+│     ├── &#39;blobs_labels&#39;: DataArray[yx] (512, 512)
+│     └── &#39;blobs_multiscale_labels&#39;: DataTree[yx] (512, 512), (256, 256), (128, 128)
+├── Points
+│     └── &#39;blobs_points&#39;: DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
+├── Shapes
+│     ├── &#39;blobs_circles&#39;: GeoDataFrame shape: (5, 2) (2D shapes)
+│     ├── &#39;blobs_multipolygons&#39;: GeoDataFrame shape: (2, 1) (2D shapes)
+│     └── &#39;blobs_polygons&#39;: GeoDataFrame shape: (5, 1) (2D shapes)
+└── Tables
+      └── &#39;table&#39;: AnnData (26, 3)
+with coordinate systems:
+    ▸ &#39;global&#39;, with elements:
+        blobs_image (Images), blobs_multiscale_image (Images), blobs_labels (Labels), blobs_multiscale_labels (Labels), blobs_points (Points), blobs_circles (Shapes), blobs_multipolygons (Shapes), blobs_polygons (Shapes)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-default-per-channel-min-max">
+<h2>1. The default — per-channel min/max<a class="headerlink" href="#the-default-per-channel-min-max" title="Link to this heading">#</a></h2>
+<p>With no <code class="docutils literal notranslate"><span class="pre">norm</span></code>, every channel is scaled independently to its own min and max. This is the historical default.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4db0a6d3c549d6354700021a9c27edd64854e65de19fc15ba57c88f6bfec5c2d.png" src="../../_images/4db0a6d3c549d6354700021a9c27edd64854e65de19fc15ba57c88f6bfec5c2d.png" />
+</div>
+</div>
+</section>
+<section id="fixed-contrast-limits-normalize-vmin-vmax">
+<h2>2. Fixed contrast limits — <code class="docutils literal notranslate"><span class="pre">Normalize(vmin,</span> <span class="pre">vmax)</span></code><a class="headerlink" href="#fixed-contrast-limits-normalize-vmin-vmax" title="Link to this heading">#</a></h2>
+<p>Pin the window yourself. A single <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> on a multi-channel image is <strong>broadcast to every channel</strong>.
+We render one channel with a colorbar so the limits are visible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/3a926f7b0c36a53044ff91547d8f8c69cbacfdecf9057a19da14c9420c01a592.png" src="../../_images/3a926f7b0c36a53044ff91547d8f8c69cbacfdecf9057a19da14c9420c01a592.png" />
+</div>
+</div>
+</section>
+<section id="clipping-what-happens-outside-vmin-vmax">
+<h2>3. Clipping — what happens outside <code class="docutils literal notranslate"><span class="pre">[vmin,</span> <span class="pre">vmax]</span></code><a class="headerlink" href="#clipping-what-happens-outside-vmin-vmax" title="Link to this heading">#</a></h2>
+<p>With <code class="docutils literal notranslate"><span class="pre">clip=False</span></code> (the default), values below <code class="docutils literal notranslate"><span class="pre">vmin</span></code> or above <code class="docutils literal notranslate"><span class="pre">vmax</span></code> are drawn in the colormap’s <strong>under/over</strong>
+colors. With <code class="docutils literal notranslate"><span class="pre">clip=True</span></code>, they are clamped to the ends instead. We use a cmap with distinct under/over colors
+to make the difference obvious.</p>
+<p>First, <code class="docutils literal notranslate"><span class="pre">clip=False</span></code> — out-of-range pixels show magenta (under) and red (over):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_under</span><span class="p">(</span><span class="s2">&quot;magenta&quot;</span><span class="p">)</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_over</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">Normalize</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/17fcd67aa1e291c294a053e320be992dfc3e1cbb34bd3411e2f2a0e565cdf5a5.png" src="../../_images/17fcd67aa1e291c294a053e320be992dfc3e1cbb34bd3411e2f2a0e565cdf5a5.png" />
+</div>
+</div>
+<p>Now <code class="docutils literal notranslate"><span class="pre">clip=True</span></code> — the same out-of-range pixels are clamped to the cmap ends instead:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">Normalize</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7503afa9f4ab1b84cff03625bc167833d48c1e58b7deb5eec3b4fd76b134c17c.png" src="../../_images/7503afa9f4ab1b84cff03625bc167833d48c1e58b7deb5eec3b4fd76b134c17c.png" />
+</div>
+</div>
+</section>
+<section id="logarithmic-scaling-lognorm">
+<h2>4. Logarithmic scaling — <code class="docutils literal notranslate"><span class="pre">LogNorm</span></code><a class="headerlink" href="#logarithmic-scaling-lognorm" title="Link to this heading">#</a></h2>
+<p>For data spanning orders of magnitude. <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> guards the log domain: limits autoscale from the
+<strong>strictly-positive</strong> values only, so a non-positive <code class="docutils literal notranslate"><span class="pre">vmin</span></code> never raises a late “Invalid vmin or vmax”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e021866f4e7e1662010b7f990d89a72fb83b209de4c988645c1570a6a00bf631.png" src="../../_images/e021866f4e7e1662010b7f990d89a72fb83b209de4c988645c1570a6a00bf631.png" />
+</div>
+</div>
+</section>
+<section id="other-matplotlib-norms-work-too">
+<h2>5. Other matplotlib norms work too<a class="headerlink" href="#other-matplotlib-norms-work-too" title="Link to this heading">#</a></h2>
+<p>Because the limits come from each norm’s own logic, any <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> subclass plugs in. Two common ones:
+<code class="docutils literal notranslate"><span class="pre">PowerNorm</span></code> (gamma correction) and <code class="docutils literal notranslate"><span class="pre">SymLogNorm</span></code> (log scaling with a linear region around zero).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">PowerNorm</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e273a20d47725eb6f9a150717e249caec7b11f0a0ee6fe308fe3960c120c251c.png" src="../../_images/e273a20d47725eb6f9a150717e249caec7b11f0a0ee6fe308fe3960c120c251c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">SymLogNorm</span><span class="p">(</span><span class="n">linthresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/66c7da7d1eac25daa7b4b0905f005356f3450101659bc52939076d5cc6d6ecb5.png" src="../../_images/66c7da7d1eac25daa7b4b0905f005356f3450101659bc52939076d5cc6d6ecb5.png" />
+</div>
+</div>
+</section>
+<section id="percentile-contrast-percentilenormalize">
+<h2>6. Percentile contrast — <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code><a class="headerlink" href="#percentile-contrast-percentilenormalize" title="Link to this heading">#</a></h2>
+<p>Heavy-tailed images (fluorescence, Xenium morphology) often look dim: a single bright outlier sets the min/max
+<code class="docutils literal notranslate"><span class="pre">vmax</span></code> and crushes the rest of the signal to near-black. <code class="docutils literal notranslate"><span class="pre">PercentileNormalize(pmin,</span> <span class="pre">pmax)</span></code> derives the limits
+from data <strong>percentiles</strong> instead — the same idea as the contrast sliders in viewers like Xenium Explorer.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pmin</span></code>/<code class="docutils literal notranslate"><span class="pre">pmax</span></code> are validated to satisfy <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">pmin</span> <span class="pre">&lt;</span> <span class="pre">pmax</span> <span class="pre">&lt;=</span> <span class="pre">100</span></code>.</p></li>
+<li><p>NaN / inf / masked pixels are excluded from the percentile computation.</p></li>
+<li><p>A single instance is <strong>autoscaled independently per channel</strong>.</p></li>
+</ul>
+<p>Here is the default min/max rendering of one channel:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/85e7e85857abc236037e275b00334432405cb799e3395527da1098dca03c268b.png" src="../../_images/85e7e85857abc236037e275b00334432405cb799e3395527da1098dca03c268b.png" />
+</div>
+</div>
+<p>And the same channel with the top 10% of values clipped, lifting the bulk of the signal:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f1d87596f53fba24ed5edbf142c1d75ac76447bbced2d4af9c577e7602badf2b.png" src="../../_images/f1d87596f53fba24ed5edbf142c1d75ac76447bbced2d4af9c577e7602badf2b.png" />
+</div>
+</div>
+</section>
+<section id="per-channel-norms-for-images">
+<h2>7. Per-channel norms for images<a class="headerlink" href="#per-channel-norms-for-images" title="Link to this heading">#</a></h2>
+<p>Pass a <strong>list</strong> of norms, one per channel (its length must equal the number of channels). You can mix
+subclasses freely — give each channel exactly the contrast it needs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">norms</span> <span class="o">=</span> <span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">99</span><span class="p">),</span> <span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span> <span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">)]</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="n">norms</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/34db5c05940bc54907d7ef5dcf6b822ae4402e6375b0e136aaa9b9b41fccf130.png" src="../../_images/34db5c05940bc54907d7ef5dcf6b822ae4402e6375b0e136aaa9b9b41fccf130.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mixed</span> <span class="o">=</span> <span class="p">[</span><span class="n">Normalize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">LogNorm</span><span class="p">(),</span> <span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">98</span><span class="p">)]</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="n">mixed</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Yellow">WARNING </span> render_images: You&#39;re blending multiple cmaps. If the plot doesn&#39;t look
+         like you expect, it might be because your cmaps go from a given color  
+         to <span class=" -Color -Color-Green">&#39;white&#39;</span>, and not to <span class=" -Color -Color-Green">&#39;transparent&#39;</span>. Therefore, the <span class=" -Color -Color-Green">&#39;white&#39;</span> of higher 
+         layers will overlay the lower layers. Consider using <span class=" -Color -Color-Green">&#39;palette&#39;</span> instead.
+</pre></div>
+</div>
+<img alt="../../_images/1914c537e7659074d1e3b370ddbf3384006e3e07f1a8cb3a25b7497f73a6435b.png" src="../../_images/1914c537e7659074d1e3b370ddbf3384006e3e07f1a8cb3a25b7497f73a6435b.png" />
+</div>
+</div>
+</section>
+<section id="combining-with-transfunc">
+<h2>8. Combining with <code class="docutils literal notranslate"><span class="pre">transfunc</span></code><a class="headerlink" href="#combining-with-transfunc" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">transfunc</span></code> transforms the <strong>raw array first</strong>, then <code class="docutils literal notranslate"><span class="pre">norm</span></code> scales the result. So <code class="docutils literal notranslate"><span class="pre">transfunc=np.sqrt</span></code> with a
+<code class="docutils literal notranslate"><span class="pre">norm</span></code> operates on the square-rooted data — handy for pairing a fixed transform with explicit limits.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">transfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">Normalize</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1832ba6620df8c85c535b182ee0ca4bdfcce7d979ea32dec06d5f9922973e5e2.png" src="../../_images/1832ba6620df8c85c535b182ee0ca4bdfcce7d979ea32dec06d5f9922973e5e2.png" />
+</div>
+</div>
+</section>
+<section id="true-rgb-images">
+<h2>9. True RGB images<a class="headerlink" href="#true-rgb-images" title="Link to this heading">#</a></h2>
+<p>When the channels are literally named <code class="docutils literal notranslate"><span class="pre">{r,</span> <span class="pre">g,</span> <span class="pre">b(,</span> <span class="pre">a)}</span></code>, the RGB path composites them with one shared scale to
+preserve hue balance. If you pass a <code class="docutils literal notranslate"><span class="pre">norm</span></code> with explicit <code class="docutils literal notranslate"><span class="pre">vmin</span></code>/<code class="docutils literal notranslate"><span class="pre">vmax</span></code>, it is applied per channel and clipped
+to <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1]</span></code>; otherwise channels are scaled by their dtype.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rac</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">raccoon</span><span class="p">()</span>  <span class="c1"># a real RGB photo</span>
+<span class="n">rac</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;raccoon&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Transposing `data` of type: <span class=" -Color -Color-Bold">&lt;class</span> <span class=" -Color -Color-Green">&#39;dask.array.core.Array&#39;</span><span class=" -Color -Color-Bold">&gt;</span> to <span class=" -Color -Color-Bold">(</span><span class=" -Color -Color-Green">&#39;c&#39;</span>,   
+         <span class=" -Color -Color-Green">&#39;y&#39;</span>, <span class=" -Color -Color-Green">&#39;x&#39;</span><span class=" -Color -Color-Bold">)</span>.
+</pre></div>
+</div>
+<img alt="../../_images/30d12761a86c5927679cc20ffc26be300fbfac506fa64451e06147f47a62f487.png" src="../../_images/30d12761a86c5927679cc20ffc26be300fbfac506fa64451e06147f47a62f487.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rac</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;raccoon&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">Normalize</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6d0eb441abd240abb3a3f1fe27ad20e1ddc3de94af3b3f15c234666846d131c2.png" src="../../_images/6d0eb441abd240abb3a3f1fe27ad20e1ddc3de94af3b3f15c234666846d131c2.png" />
+</div>
+</div>
+</section>
+<section id="norms-on-shapes-points-and-labels">
+<h2>10. Norms on shapes, points, and labels<a class="headerlink" href="#norms-on-shapes-points-and-labels" title="Link to this heading">#</a></h2>
+<p>For non-image renderers, <code class="docutils literal notranslate"><span class="pre">norm</span></code> scales a continuous <code class="docutils literal notranslate"><span class="pre">color=</span></code> column. The <strong>same resolved norm drives both the
+fill colors and the colorbar</strong>, so the bar always matches the pixels — a <code class="docutils literal notranslate"><span class="pre">LogNorm</span></code> colorbar stays logarithmic.</p>
+<p>Shapes, colored by a continuous geometry column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;blobs_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">Normalize</span><span class="p">(),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c7e56dbf28e470cfe5543471b7c9f34959fffa2f8ca2937ddfff0fb1410128ba.png" src="../../_images/c7e56dbf28e470cfe5543471b7c9f34959fffa2f8ca2937ddfff0fb1410128ba.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;blobs_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">95</span><span class="p">),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c7e56dbf28e470cfe5543471b7c9f34959fffa2f8ca2937ddfff0fb1410128ba.png" src="../../_images/c7e56dbf28e470cfe5543471b7c9f34959fffa2f8ca2937ddfff0fb1410128ba.png" />
+</div>
+</div>
+<p>Points, colored by a continuous column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">&quot;blobs_points&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;instance_id&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">Normalize</span><span class="p">(),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9209520828f05b7ea0b6db77e1c3515236beb897f04702af411bbaed942174a0.png" src="../../_images/9209520828f05b7ea0b6db77e1c3515236beb897f04702af411bbaed942174a0.png" />
+</div>
+</div>
+<p>Labels, colored by a continuous table column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">&quot;blobs_labels&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;channel_0_sum&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">98</span><span class="p">),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/efd31ec5c05f03789957e714582e55ca2989a5910dac9198341539a571f9b37c.png" src="../../_images/efd31ec5c05f03789957e714582e55ca2989a5910dac9198341539a571f9b37c.png" />
+</div>
+</div>
+</section>
+<section id="the-datashader-caveat">
+<h2>11. The datashader caveat<a class="headerlink" href="#the-datashader-caveat" title="Link to this heading">#</a></h2>
+<p>On the <strong>datashader</strong> backend, contrast autoscales to the aggregated value range, <strong>not</strong> to a norm’s
+percentiles. Explicit <code class="docutils literal notranslate"><span class="pre">vmin</span></code>/<code class="docutils literal notranslate"><span class="pre">vmax</span></code> are still honored. For percentile-driven contrast on points, use the
+default matplotlib backend.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">&quot;blobs_points&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;instance_id&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;datashader&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">Normalize</span><span class="p">())</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/2d5b3006d7013d43bb0a4e1689a7871fa2f5b26348395e87f7ceabe930fdcbfc.png" src="../../_images/2d5b3006d7013d43bb0a4e1689a7871fa2f5b26348395e87f7ceabe930fdcbfc.png" />
+</div>
+</div>
+</section>
+<section id="edge-cases-the-renderer-handles-for-you">
+<h2>12. Edge cases the renderer handles for you<a class="headerlink" href="#edge-cases-the-renderer-handles-for-you" title="Link to this heading">#</a></h2>
+<p>A <strong>constant-value channel</strong> can’t be min/max scaled (it would divide by zero), so it warns and renders as
+mid-gray instead of going blank:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">blobs</span><span class="p">()</span>
+<span class="n">const</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mf">0.3</span>  <span class="c1"># make channel 0 a single value (in place; keeps attrs)</span>
+<span class="n">const</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d7842378d80c9fd04935ff5921a2a6da6498ff2724c08ac7917c9596218140aa.png" src="../../_images/d7842378d80c9fd04935ff5921a2a6da6498ff2724c08ac7917c9596218140aa.png" />
+</div>
+</div>
+<p>A per-channel <strong>norm list of the wrong length</strong> is rejected with a clear message:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="n">Normalize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ValueError:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ValueError: Length of &#39;norm&#39; list (2) must match the number of channels (3).
+</pre></div>
+</div>
+</div>
+</div>
+<p>And invalid percentile bounds are caught at construction time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">bad</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">)]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">PercentileNormalize</span><span class="p">(</span><span class="o">*</span><span class="n">bad</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PercentileNormalize</span><span class="si">{</span><span class="n">bad</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PercentileNormalize(50, 50) -&gt; Require 0 &lt;= pmin &lt; pmax &lt;= 100, got pmin=50, pmax=50.
+PercentileNormalize(90, 10) -&gt; Require 0 &lt;= pmin &lt; pmax &lt;= 100, got pmin=90, pmax=10.
+PercentileNormalize(-1, 50) -&gt; Require 0 &lt;= pmin &lt; pmax &lt;= 100, got pmin=-1, pmax=50.
+PercentileNormalize(0, 101) -&gt; Require 0 &lt;= pmin &lt; pmax &lt;= 100, got pmin=0, pmax=101.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">norm</span></code> is a matplotlib <code class="docutils literal notranslate"><span class="pre">Normalize</span></code>; the <strong>default is per-channel min/max</strong> and is unchanged.</p></li>
+<li><p>Limits come from each norm’s own logic, so <code class="docutils literal notranslate"><span class="pre">Normalize</span></code>, <code class="docutils literal notranslate"><span class="pre">LogNorm</span></code>, <code class="docutils literal notranslate"><span class="pre">PowerNorm</span></code>, <code class="docutils literal notranslate"><span class="pre">SymLogNorm</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> all just work.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PercentileNormalize(pmin,</span> <span class="pre">pmax)</span></code> fixes heavy-tailed dimness with no new parameter — it’s opt-in.</p></li>
+<li><p>Only <code class="docutils literal notranslate"><span class="pre">render_images</span></code> accepts a <strong>list</strong> of norms (one per channel); single instances broadcast.</p></li>
+<li><p>The colorbar always reflects the resolved norm; datashader autoscales to the aggregate.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="performance.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Speeding up the rendering of large data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../examples/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Examples</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-a-norm-is">What a <code class="docutils literal notranslate"><span class="pre">norm</span></code> is</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-renderers-take-norm">Which renderers take <code class="docutils literal notranslate"><span class="pre">norm</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-default-per-channel-min-max">1. The default — per-channel min/max</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-contrast-limits-normalize-vmin-vmax">2. Fixed contrast limits — <code class="docutils literal notranslate"><span class="pre">Normalize(vmin,</span> <span class="pre">vmax)</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clipping-what-happens-outside-vmin-vmax">3. Clipping — what happens outside <code class="docutils literal notranslate"><span class="pre">[vmin,</span> <span class="pre">vmax]</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logarithmic-scaling-lognorm">4. Logarithmic scaling — <code class="docutils literal notranslate"><span class="pre">LogNorm</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-matplotlib-norms-work-too">5. Other matplotlib norms work too</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#percentile-contrast-percentilenormalize">6. Percentile contrast — <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#per-channel-norms-for-images">7. Per-channel norms for images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-with-transfunc">8. Combining with <code class="docutils literal notranslate"><span class="pre">transfunc</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#true-rgb-images">9. True RGB images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#norms-on-shapes-points-and-labels">10. Norms on shapes, points, and labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-datashader-caveat">11. The datashader caveat</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-cases-the-renderer-handles-for-you">12. Edge cases the renderer handles for you</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By scverse
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, scverse..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

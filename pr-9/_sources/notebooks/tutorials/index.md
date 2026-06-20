@@ -1,0 +1,57 @@
+# Tutorials
+
+Entry-point material for learning the API on synthetic data.
+
+::::{grid} 1 2 2 2
+:gutter: 3
+
+:::{grid-item-card} Getting started
+:link: getting_started
+:link-type: doc
+:img-top: ../_static/img/getting_started.png
+
+The fluent `.pl` API, layering, and styling on the in-memory `blobs`
+dataset. Ideal first read.
+:::
+
+:::{grid-item-card} Colour and palettes
+:link: color_and_palette
+:link-type: doc
+:img-top: ../_static/img/color_and_palette.png
+
+How `color=` resolves, the v0.3.0 `groups` behaviour, and building
+perceptually well-spaced or colourblind-safe palettes with
+`make_palette` and `make_palette_from_data`.
+:::
+
+:::{grid-item-card} Speeding up rendering
+:link: performance
+:link-type: doc
+:img-top: ../_static/img/performance.png
+
+Keep rendering fast on large data: automatic rasterization and scale
+selection for images, and the `datashader` backend for large collections
+of shapes and points.
+:::
+
+:::{grid-item-card} Normalization and contrast
+:link: normalization_and_contrast
+:link-type: doc
+:img-top: ../_static/img/normalization_and_contrast.png
+
+How `norm=` maps data to colours: fixed contrast limits, clipping,
+logarithmic and percentile scaling with `PercentileNormalize`, and
+per-channel norms for images.
+:::
+
+::::
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+
+getting_started
+color_and_palette
+performance
+normalization_and_contrast
+```

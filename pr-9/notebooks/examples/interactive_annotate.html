@@ -1,0 +1,737 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Interactive region annotation" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="notebooks/examples/interactive_annotate.html" />
+<meta property="og:site_name" content="spatialdata-plot" />
+<meta property="og:description" content="This tutorial shows how to use.pl.annotate() to draw regions of interest directly on top of a spatialdata-plot rendering and persist them as a ShapesModel element. The widget is built on anybioimag..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_examples_interactive_annotate_105a8cfe.png" />
+<meta property="og:image:alt" content="This tutorial shows how to use.pl.annotate() to draw regions of interest directly on top of a spatialdata-plot rendering and persist them as a ShapesModel element. The widget is built on anybioimag..." />
+<meta name="description" content="This tutorial shows how to use.pl.annotate() to draw regions of interest directly on top of a spatialdata-plot rendering and persist them as a ShapesModel element. The widget is built on anybioimag..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Interactive region annotation &#8212; spatialdata-plot</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=05624691" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f2dec995" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=4644695f"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/examples/interactive_annotate';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="API" href="../../api.html" />
+    <link rel="prev" title="Plotting a Visium dataset" href="visium_mouse_brain.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g0919069e8.d20260620" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-light" alt="spatialdata-plot - Home"/>
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-dark pst-js-only" alt="spatialdata-plot - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../gallery.html">Gallery</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/performance.html">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/normalization_and_contrast.html">Normalization and contrast in spatialdata-plot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Examples</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="visium_mouse_brain.html">Plotting a Visium dataset</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Interactive region annotation</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api.html">API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../plotting.html">Plotting (<code class="docutils literal notranslate"><span class="pre">.pl</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/scverse/spatialdata-plot.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/examples/interactive_annotate.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Interactive region annotation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-dataset">Loading the dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-what-we-ll-annotate">Inspect what we’ll annotate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-widget">Launching the widget</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-the-widget-produces">What the widget produces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-the-saved-region">Working with the saved region</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cropping-the-dataset-to-the-region">Cropping the dataset to the region</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="interactive-region-annotation">
+<h1>Interactive region annotation<a class="headerlink" href="#interactive-region-annotation" title="Link to this heading">#</a></h1>
+<p>This tutorial shows how to use <code class="docutils literal notranslate"><span class="pre">.pl.annotate()</span></code> to draw regions of interest directly on top of a <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> rendering and persist them as a <code class="docutils literal notranslate"><span class="pre">ShapesModel</span></code> element. The widget is built on <a class="reference external" href="https://github.com/maartenpaul/anybioimage"><code class="docutils literal notranslate"><span class="pre">anybioimage</span></code></a>’s <code class="docutils literal notranslate"><span class="pre">BioImageViewer</span></code>, which renders the image once and handles all drawing client-side — so it works over SSH (Jupyter or VSCode-Remote-SSH) without streaming PNG frames per mouse-move.</p>
+<p><strong>Credit:</strong> This feature uses <a class="reference external" href="https://github.com/maartenpaul/anybioimage"><code class="docutils literal notranslate"><span class="pre">anybioimage</span></code></a>’s <code class="docutils literal notranslate"><span class="pre">BioImageViewer</span></code>, which was identified as a suitable solution during the <a class="reference external" href="https://github.com/scverse/2026_04_hackathon_padua/issues/22">scverse Padua 2026 hackathon</a>, where <a class="reference external" href="https://github.com/EricMoerthVis">&#64;EricMoerthVis</a>, <a class="reference external" href="https://github.com/Sonja-Stockhaus">&#64;Sonja-Stockhaus</a>, and <a class="reference external" href="https://github.com/asarigun">&#64;asarigun</a> implemented a first POC.</p>
+<p><strong>Dataset</strong>: a Visium H&amp;E mouse brain section, downloaded by <code class="docutils literal notranslate"><span class="pre">squidpy.datasets.visium_hne_sdata</span></code>.</p>
+<p><strong>Requires the <code class="docutils literal notranslate"><span class="pre">interactive</span></code> extra:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;spatialdata-plot[interactive]&#39;</span>
+</pre></div>
+</div>
+<section id="loading-the-dataset">
+<h2>Loading the dataset<a class="headerlink" href="#loading-the-dataset" title="Link to this heading">#</a></h2>
+<p>We’ll use the <code class="docutils literal notranslate"><span class="pre">squidpy.datasets.visium_hne_sdata()</span></code> test data to demonstrate the function. The <code class="docutils literal notranslate"><span class="pre">SpatialData</span></code> object contains a multi-resolution H&amp;E image (<code class="docutils literal notranslate"><span class="pre">'hne'</span></code>) and the spot polygons (<code class="docutils literal notranslate"><span class="pre">'spots'</span></code>), both aligned in the <code class="docutils literal notranslate"><span class="pre">'global'</span></code> coordinate system.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">squidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sq</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">Polygon</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>  <span class="c1"># noqa: F401  (registers the .pl accessor)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShapesModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata.transformations.transformations</span><span class="w"> </span><span class="kn">import</span> <span class="n">Identity</span>
+
+<span class="n">sdata</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">visium_hne_sdata</span><span class="p">()</span>
+<span class="n">sdata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/visium_hne_sdata.zarr
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /Users/tim.treis/Documents/GitHub/spatialdata-plot-notebooks/examples/data/spatialdata/visium_hne_sdata.zarr
+├── Images
+│     └── &#39;hne&#39;: DataTree[cyx] (3, 11757, 11291), (3, 5878, 5645), (3, 2939, 2822), (3, 1469, 1411)
+├── Shapes
+│     └── &#39;spots&#39;: GeoDataFrame shape: (2688, 2) (2D shapes)
+└── Tables
+      └── &#39;adata&#39;: AnnData (2688, 18078)
+with coordinate systems:
+    ▸ &#39;global&#39;, with elements:
+        hne (Images), spots (Shapes)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="inspect-what-we-ll-annotate">
+<h2>Inspect what we’ll annotate<a class="headerlink" href="#inspect-what-we-ll-annotate" title="Link to this heading">#</a></h2>
+<p>Before drawing, let’s render the image so we know what to outline.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/960d95b932194b3a636ffd047046c7e674ce3e580273a365100c9e7197332b66.png" src="../../_images/960d95b932194b3a636ffd047046c7e674ce3e580273a365100c9e7197332b66.png" />
+</div>
+</div>
+</section>
+<section id="launching-the-widget">
+<h2>Launching the widget<a class="headerlink" href="#launching-the-widget" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">annotate()</span></code> is a terminal step on a render chain: it rasterises whatever you composed upstream (<code class="docutils literal notranslate"><span class="pre">render_images</span></code> / <code class="docutils literal notranslate"><span class="pre">render_shapes</span></code> / <code class="docutils literal notranslate"><span class="pre">render_points</span></code> / <code class="docutils literal notranslate"><span class="pre">render_labels</span></code>) and hands the resulting RGB to the <code class="docutils literal notranslate"><span class="pre">BioImageViewer</span></code>. Drawn shapes are mapped back from canvas pixels into the chosen coordinate system and stored in <code class="docutils literal notranslate"><span class="pre">sdata.shapes[&lt;name&gt;]</span></code> with an <code class="docutils literal notranslate"><span class="pre">Identity</span></code> transformation in that CS.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">sdata</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="s2">&quot;global&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>The code above is intentionally a Markdown block, not a code cell — the widget needs a live JS runtime, which the static docs build can’t provide. Run the line in your own notebook (Jupyter Lab or VSCode-Remote-SSH) to see the canvas.</p>
+</div></blockquote>
+<p><strong>Drawing tools</strong>: rectangle, polygon, point. Points are stored as small circle polygons (radius scaled to the rendered image’s CS extent) so the resulting <code class="docutils literal notranslate"><span class="pre">ShapesModel</span></code> is uniform-type.</p>
+<p>When you click <strong>Save</strong> the shapes on the canvas are committed to <code class="docutils literal notranslate"><span class="pre">sdata.shapes[&lt;name&gt;]</span></code> as a single <code class="docutils literal notranslate"><span class="pre">ShapesModel</span></code> (multiple rows if you drew multiple shapes). Same-name commits overwrite. Use <code class="docutils literal notranslate"><span class="pre">sdata.write_element(&lt;name&gt;)</span></code> after the cell to persist to a backing zarr.</p>
+<p><img alt="Drawing a region with sdata.pl.annotate" src="../../_images/interactive_annotate.gif" /></p>
+<p><em>Live recording of the widget.</em></p>
+</section>
+<section id="what-the-widget-produces">
+<h2>What the widget produces<a class="headerlink" href="#what-the-widget-produces" title="Link to this heading">#</a></h2>
+<p>To keep the rest of this notebook reproducible without a live kernel, the next cell manually creates a similar <code class="docutils literal notranslate"><span class="pre">ShapesModel</span></code> the widget would have written if you’d drawn a polygon around the hippocampus and clicked Save with the name <code class="docutils literal notranslate"><span class="pre">'tumor_region'</span></code>. After this cell, downstream code is identical regardless of whether you ran the widget or this simulated commit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pretend the user drew this polygon in the widget and clicked Save with</span>
+<span class="c1"># name=&quot;poly&quot;. Coordinates are in the &#39;global&#39; coordinate system</span>
+<span class="c1"># of the visium_hne_sdata dataset.</span>
+<span class="n">hippocampus_polygon</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="mi">2540</span><span class="p">,</span> <span class="mi">3946</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3105</span><span class="p">,</span> <span class="mi">3597</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3387</span><span class="p">,</span> <span class="mi">3149</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3750</span><span class="p">,</span> <span class="mi">2953</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4449</span><span class="p">,</span> <span class="mi">2939</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5054</span><span class="p">,</span> <span class="mi">3065</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5511</span><span class="p">,</span> <span class="mi">3317</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6008</span><span class="p">,</span> <span class="mi">3835</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6223</span><span class="p">,</span> <span class="mi">4198</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6398</span><span class="p">,</span> <span class="mi">4688</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6344</span><span class="p">,</span> <span class="mi">5052</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6115</span><span class="p">,</span> <span class="mi">5346</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5712</span><span class="p">,</span> <span class="mi">5304</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5242</span><span class="p">,</span> <span class="mi">4926</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4919</span><span class="p">,</span> <span class="mi">4688</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4449</span><span class="p">,</span> <span class="mi">4534</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3777</span><span class="p">,</span> <span class="mi">4548</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3333</span><span class="p">,</span> <span class="mi">4548</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2876</span><span class="p">,</span> <span class="mi">4520</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2540</span><span class="p">,</span> <span class="mi">4478</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2540</span><span class="p">,</span> <span class="mi">3946</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpd</span>
+
+<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">&quot;poly&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ShapesModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">({</span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">hippocampus_polygon</span><span class="p">]}),</span>
+    <span class="n">transformations</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;global&quot;</span><span class="p">:</span> <span class="n">Identity</span><span class="p">()},</span>
+<span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">&quot;poly&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>POLYGON ((2540 3946, 3105 3597, 3387 3149, 375...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="working-with-the-saved-region">
+<h2>Working with the saved region<a class="headerlink" href="#working-with-the-saved-region" title="Link to this heading">#</a></h2>
+<p>The committed element is a normal <code class="docutils literal notranslate"><span class="pre">ShapesModel</span></code> — every downstream API in <code class="docutils literal notranslate"><span class="pre">spatialdata</span></code> and <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> treats it like any other shapes layer. Here we overlay it on the H&amp;E to confirm placement.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">sdata</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;poly&quot;</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/cdd5dab73c3eba49c9843be3f54c5d77eb13b87d9d45940e870aaeff4878e7dc.png" src="../../_images/cdd5dab73c3eba49c9843be3f54c5d77eb13b87d9d45940e870aaeff4878e7dc.png" />
+</div>
+</div>
+</section>
+<section id="cropping-the-dataset-to-the-region">
+<h2>Cropping the dataset to the region<a class="headerlink" href="#cropping-the-dataset-to-the-region" title="Link to this heading">#</a></h2>
+<p>Because the region is a registered <code class="docutils literal notranslate"><span class="pre">ShapesModel</span></code>, <code class="docutils literal notranslate"><span class="pre">sdata.query.polygon</span></code> can subset every element down to what falls inside it. Useful for focused analyses or quick QC on a single anatomical structure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">polygon_query</span><span class="p">(</span>
+    <span class="n">sdata</span><span class="p">,</span>
+    <span class="n">sdata</span><span class="p">[</span><span class="s2">&quot;poly&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">&quot;global&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">subset</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object
+├── Images
+│     └── &#39;hne&#39;: DataTree[cyx] (3, 2352, 4035), (3, 1176, 2017), (3, 588, 1008), (3, 294, 505)
+├── Shapes
+│     ├── &#39;poly&#39;: GeoDataFrame shape: (1, 1) (2D shapes)
+│     └── &#39;spots&#39;: GeoDataFrame shape: (351, 2) (2D shapes)
+└── Tables
+      └── &#39;adata&#39;: AnnData (351, 18078)
+with coordinate systems:
+    ▸ &#39;global&#39;, with elements:
+        hne (Images), poly (Shapes), spots (Shapes)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">subset</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;spots&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;total_counts&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b66c634a5a512f5b08f67c786dd0e82ff3bcbdf4c3570ac83bf67c7c3e5d992e.png" src="../../_images/b66c634a5a512f5b08f67c786dd0e82ff3bcbdf4c3570ac83bf67c7c3e5d992e.png" />
+</div>
+</div>
+</section>
+<section id="for-reproducibility">
+<h2>For reproducibility<a class="headerlink" href="#for-reproducibility" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ruff: noqa: F401, F811, I001, E402</span>
+<span class="c1"># fmt: off</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">anywidget</span>
+
+<span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="c1"># fmt: on</span>
+
+<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,anywidget,squidpy,matplotlib,numpy
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The watermark extension is already loaded. To reload it, use:
+  %reload_ext watermark
+Python implementation: CPython
+Python version       : 3.14.4
+IPython version      : 9.13.0
+
+spatialdata     : 0.7.3
+spatialdata_plot: 0.4.0
+anywidget       : 0.11.0
+squidpy         : 1.8.1
+matplotlib      : 3.10.9
+numpy           : 2.4.4
+
+Compiler    : Clang 20.1.8 
+OS          : Darwin
+Release     : 25.2.0
+Machine     : arm64
+Processor   : arm
+CPU cores   : 8
+Architecture: 64bit
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="visium_mouse_brain.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Plotting a Visium dataset</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../api.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-dataset">Loading the dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-what-we-ll-annotate">Inspect what we’ll annotate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-the-widget">Launching the widget</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-the-widget-produces">What the widget produces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-the-saved-region">Working with the saved region</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cropping-the-dataset-to-the-region">Cropping the dataset to the region</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By scverse
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, scverse..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
