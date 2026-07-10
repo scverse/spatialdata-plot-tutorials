@@ -2,22 +2,23 @@
 
 Entry-point material for learning the API on synthetic data.
 
+<!-- gallery-cards-start -->
 ::::{grid} 1 2 2 2
 :gutter: 3
 
 :::{grid-item-card} Getting started
-:link: getting_started
+:link: /notebooks/tutorials/getting_started
 :link-type: doc
-:img-top: ../_static/img/getting_started.png
+:img-top: /notebooks/_static/img/getting_started.png
 
 The fluent `.pl` API, layering, and styling on the in-memory `blobs`
 dataset. Ideal first read.
 :::
 
 :::{grid-item-card} Colour and palettes
-:link: color_and_palette
+:link: /notebooks/tutorials/color_and_palette
 :link-type: doc
-:img-top: ../_static/img/color_and_palette.png
+:img-top: /notebooks/_static/img/color_and_palette.png
 
 How `color=` resolves, the v0.3.0 `groups` behaviour, and building
 perceptually well-spaced or colourblind-safe palettes with
@@ -25,9 +26,9 @@ perceptually well-spaced or colourblind-safe palettes with
 :::
 
 :::{grid-item-card} Speeding up rendering
-:link: performance
+:link: /notebooks/tutorials/performance
 :link-type: doc
-:img-top: ../_static/img/performance.png
+:img-top: /notebooks/_static/img/performance.png
 
 Keep rendering fast on large data: automatic rasterization and scale
 selection for images, and the `datashader` backend for large collections
@@ -35,6 +36,7 @@ of shapes and points.
 :::
 
 ::::
+<!-- gallery-cards-end -->
 
 ```{toctree}
 :hidden:
