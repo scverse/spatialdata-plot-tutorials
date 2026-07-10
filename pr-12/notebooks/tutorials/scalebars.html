@@ -464,6 +464,7 @@ with coordinate systems:
 <li><p><code class="docutils literal notranslate"><span class="pre">length_fraction</span></code> — target bar length as a fraction of the axes width.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">scale_loc</span></code> / <code class="docutils literal notranslate"><span class="pre">label_loc</span></code> — where the number and unit sit relative to the bar.</p></li>
 </ul>
+<p>The default box is <strong>white</strong>, so on a dark image like <code class="docutils literal notranslate"><span class="pre">blobs</span></code> you either keep the default (dark bar on a white box) or, if you switch to <code class="docutils literal notranslate"><span class="pre">color=&quot;white&quot;</span></code>, pair it with a dark box (<code class="docutils literal notranslate"><span class="pre">box_color</span></code>/<code class="docutils literal notranslate"><span class="pre">box_alpha</span></code>) or <code class="docutils literal notranslate"><span class="pre">frameon=False</span></code> — otherwise the white bar lands on the white box and disappears.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
@@ -494,6 +495,8 @@ with coordinate systems:
     <span class="n">scalebar_params</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
         <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;box_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;box_alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
         <span class="s2">&quot;font_properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">},</span>
     <span class="p">},</span>
 <span class="p">)</span>
@@ -501,7 +504,7 @@ with coordinate systems:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/35832cd7c4ea8a3a08a598e8aa42541626218b85e13105426d2280fafa622ed9.png" src="../../_images/35832cd7c4ea8a3a08a598e8aa42541626218b85e13105426d2280fafa622ed9.png" />
+<img alt="../../_images/ca7131b57c2ea1e2e9cae23d333f5b079f5094c4cd42fac6c19b8463cc5e5c75.png" src="../../_images/ca7131b57c2ea1e2e9cae23d333f5b079f5094c4cd42fac6c19b8463cc5e5c75.png" />
 </div>
 </div>
 </section>
@@ -516,6 +519,8 @@ with coordinate systems:
     <span class="n">scalebar_params</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
         <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;box_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;box_alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
         <span class="s2">&quot;fixed_value&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
         <span class="s2">&quot;fixed_units&quot;</span><span class="p">:</span> <span class="s2">&quot;um&quot;</span><span class="p">,</span>
     <span class="p">},</span>
@@ -524,7 +529,7 @@ with coordinate systems:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/78bb6c5caa248ca7cd1404b0982b27bd60a1cac45faeb67d471398e4ff861a68.png" src="../../_images/78bb6c5caa248ca7cd1404b0982b27bd60a1cac45faeb67d471398e4ff861a68.png" />
+<img alt="../../_images/92fec706a22c7aca3d3908c49bdd801580bdf8d1475d38fcd7078082037b2def.png" src="../../_images/92fec706a22c7aca3d3908c49bdd801580bdf8d1475d38fcd7078082037b2def.png" />
 </div>
 </div>
 </section>
