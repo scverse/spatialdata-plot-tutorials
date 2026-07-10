@@ -35,6 +35,15 @@ selection for images, and the `datashader` backend for large collections
 of shapes and points.
 :::
 
+:::{grid-item-card} Scalebars
+:link: /notebooks/tutorials/scalebars
+:link-type: doc
+:img-top: /notebooks/_static/img/scalebars.png
+
+Add a physical scalebar with `scalebar_dx`, choose units, and style
+placement, colour, length and fonts through `scalebar_params`.
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -45,4 +54,5 @@ of shapes and points.
 getting_started
 color_and_palette
 performance
+scalebars
 ```
