@@ -36,10 +36,14 @@ pre-commit install
    toctree.
 
 6. Place the gallery thumbnail and any other media (GIFs, screenshots, static
-   PNGs referenced from the notebook) under `_static/img/`. Reference them from
-   `index.md` and notebook markdown cells with relative paths
-   (e.g. `:img-top: ../_static/img/<slug>.png` from inside `examples/` or
-   `tutorials/`, and `![…](../_static/img/<slug>.gif)` from a notebook cell).
+   PNGs referenced from the notebook) under `_static/img/`. This repo is mounted
+   as a git submodule at `docs/notebooks/` in the `spatialdata-plot` Sphinx
+   build, so paths resolve against that mount:
+   - **Gallery cards in `index.md`** — use the absolute source-root path:
+     `:img-top: /notebooks/_static/img/<slug>.png`.
+   - **Notebook markdown cells** — use a path relative to the notebook:
+     `![…](../_static/img/<slug>.gif)`.
+
    Do **not** drop assets next to the notebook itself.
 
 7. Open a PR. CI will:
