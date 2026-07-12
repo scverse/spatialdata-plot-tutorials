@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=dbc0d07c"></script>
+    <script src="../../_static/documentation_options.js?v=7748d207"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -70,7 +70,7 @@
     <link rel="prev" title="Speeding up the rendering of large data" href="performance.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g076eeaca6.d20260710" />
+  <meta name="docsearch:version" content="0.1.dev1+g076eeaca6.d20260712" />
   </head>
   
   
@@ -413,7 +413,7 @@ with coordinate systems:
 </section>
 <section id="the-one-required-piece-scalebar-dx">
 <h2>1. The one required piece: <code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code><a class="headerlink" href="#the-one-required-piece-scalebar-dx" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code> is the physical size of <strong>one axes-unit</strong>. The <code class="docutils literal notranslate"><span class="pre">blobs</span></code> image is indexed in pixels, so one axes-unit is one pixel; at our assumed resolution that is 0.5 µm. Pass that as <code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code>, and the unit it is measured in as <code class="docutils literal notranslate"><span class="pre">scalebar_units</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code> should be a float.</p>
+<p><code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code> is the physical size of <strong>one axes-unit</strong>. The <code class="docutils literal notranslate"><span class="pre">blobs</span></code> image is indexed in pixels, so one axes-unit is one pixel; at our assumed resolution that is 0.5 µm. Pass that as <code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code> (a float), and the unit it is measured in as <code class="docutils literal notranslate"><span class="pre">scalebar_units</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PX_SIZE_UM</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># physical size of one pixel, taken from the acquisition metadata</span>
@@ -438,7 +438,7 @@ with coordinate systems:
 </section>
 <section id="units-and-auto-scaling">
 <h2>2. Units and auto-scaling<a class="headerlink" href="#units-and-auto-scaling" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">scalebar_units</span></code> is simply the unit your <code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code> is expressed in. matplotlib-scalebar then picks a human-friendly magnitude automatically: a bar spanning thousands of µm is shown in mm. The same image at a coarse 50 µm/pixel gives a bar labelled in mm:</p>
+<p><code class="docutils literal notranslate"><span class="pre">scalebar_units</span></code> is simply the unit your <code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code> is expressed in. In the background, it uses <a class="reference external" href="https://pypi.org/project/matplotlib-scalebar/">matplotlib-scalebar</a>, which picks a human-friendly magnitude automatically — a bar spanning thousands of µm is relabelled in mm. Here the same image at a coarse 50 µm/pixel crosses that threshold:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
@@ -456,7 +456,7 @@ with coordinate systems:
 </section>
 <section id="placement-and-appearance-with-scalebar-params">
 <h2>3. Placement and appearance with <code class="docutils literal notranslate"><span class="pre">scalebar_params</span></code><a class="headerlink" href="#placement-and-appearance-with-scalebar-params" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">scalebar_params</span></code> is a dict forwarded <strong>verbatim</strong> to matplotlib-scalebar’s <code class="docutils literal notranslate"><span class="pre">ScaleBar</span></code>, so every option it supports is available. The ones you will reach for most:</p>
+<p><code class="docutils literal notranslate"><span class="pre">scalebar_params</span></code> is a dict forwarded to matplotlib-scalebar’s <code class="docutils literal notranslate"><span class="pre">ScaleBar</span></code>, so every option it supports is available. The ones you will reach for most:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">location</span></code> — which corner (<code class="docutils literal notranslate"><span class="pre">&quot;lower</span> <span class="pre">right&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;upper</span> <span class="pre">left&quot;</span></code>, …).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">color</span></code> — bar and text colour (use white on dark images).</p></li>
@@ -549,6 +549,26 @@ with coordinate systems:
 <span class="o">%</span><span class="k">load_ext</span> watermark
 <span class="c1"># fmt: on</span>
 <span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,matplotlib,matplotlib_scalebar
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python implementation: CPython
+Python version       : 3.14.4
+IPython version      : 9.13.0
+
+spatialdata        : 0.7.3
+spatialdata_plot   : 0.4.0
+matplotlib         : 3.10.9
+matplotlib_scalebar: 0.9.0
+
+Compiler    : Clang 20.1.8 
+OS          : Darwin
+Release     : 25.2.0
+Machine     : arm64
+Processor   : arm
+CPU cores   : 8
+Architecture: 64bit
 </pre></div>
 </div>
 </div>
