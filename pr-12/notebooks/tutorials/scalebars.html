@@ -351,7 +351,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#units-and-auto-scaling">2. Units and auto-scaling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placement-and-appearance-with-scalebar-params">3. Placement and appearance with <code class="docutils literal notranslate"><span class="pre">scalebar_params</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pinning-an-exact-bar-length">4. Pinning an exact bar length</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#everything-else-and-on-real-data">5. Everything else, and on real data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotating-the-bar-and-adding-a-label">5. Rotating the bar and adding a label</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
             </nav>
@@ -426,7 +426,7 @@ with coordinate systems:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4211da38c5feff24a3237793f9e7efb8375f096b1343779e6d6a2168e432061a.png" src="../../_images/4211da38c5feff24a3237793f9e7efb8375f096b1343779e6d6a2168e432061a.png" />
+<img alt="../../_images/4f92675a93795d4432bcab822724c9a4e590a37e88aeb83e676c6be86c1bb9ad.png" src="../../_images/4f92675a93795d4432bcab822724c9a4e590a37e88aeb83e676c6be86c1bb9ad.png" />
 </div>
 </div>
 <p>Without <code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code> there is <strong>no scalebar</strong> — the plot has no way to know the physical size, and it never guesses. Two things worth remembering:</p>
@@ -450,7 +450,7 @@ with coordinate systems:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f1fecf885ca269dc570d82a633618ad578ee315afb6f95d7c8ceeb54fecec7fa.png" src="../../_images/f1fecf885ca269dc570d82a633618ad578ee315afb6f95d7c8ceeb54fecec7fa.png" />
+<img alt="../../_images/4d0aabe5fd25e99f61956f06f4719cd3eca27309e6e6954051e0478e970bddb0.png" src="../../_images/4d0aabe5fd25e99f61956f06f4719cd3eca27309e6e6954051e0478e970bddb0.png" />
 </div>
 </div>
 </section>
@@ -483,7 +483,7 @@ with coordinate systems:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/15e2d4e50a68e7fae031293bf635518962aab85174676cbc4afcc9377c2ce88c.png" src="../../_images/15e2d4e50a68e7fae031293bf635518962aab85174676cbc4afcc9377c2ce88c.png" />
+<img alt="../../_images/db4dccbb20cc477c35bc2782911edfce2f384d67c4e1fd37d393f5c6786fcb84.png" src="../../_images/db4dccbb20cc477c35bc2782911edfce2f384d67c4e1fd37d393f5c6786fcb84.png" />
 </div>
 </div>
 <p>Font styling goes through <code class="docutils literal notranslate"><span class="pre">font_properties</span></code>, a matplotlib font dict:</p>
@@ -504,7 +504,7 @@ with coordinate systems:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ca7131b57c2ea1e2e9cae23d333f5b079f5094c4cd42fac6c19b8463cc5e5c75.png" src="../../_images/ca7131b57c2ea1e2e9cae23d333f5b079f5094c4cd42fac6c19b8463cc5e5c75.png" />
+<img alt="../../_images/d97fb0c1816c3af627c718b35cc5786927aac36391ab71493d67cd3a40858044.png" src="../../_images/d97fb0c1816c3af627c718b35cc5786927aac36391ab71493d67cd3a40858044.png" />
 </div>
 </div>
 </section>
@@ -529,14 +529,37 @@ with coordinate systems:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/92fec706a22c7aca3d3908c49bdd801580bdf8d1475d38fcd7078082037b2def.png" src="../../_images/92fec706a22c7aca3d3908c49bdd801580bdf8d1475d38fcd7078082037b2def.png" />
+<img alt="../../_images/126725ab7bb424c303a6de20791fc79166225c753e65efac3d1fcc4e6360df5b.png" src="../../_images/126725ab7bb424c303a6de20791fc79166225c753e65efac3d1fcc4e6360df5b.png" />
 </div>
 </div>
 </section>
-<section id="everything-else-and-on-real-data">
-<h2>5. Everything else, and on real data<a class="headerlink" href="#everything-else-and-on-real-data" title="Link to this heading">#</a></h2>
-<p>Because <code class="docutils literal notranslate"><span class="pre">scalebar_params</span></code> is forwarded to matplotlib-scalebar, anything that library supports (<code class="docutils literal notranslate"><span class="pre">rotation</span></code>, <code class="docutils literal notranslate"><span class="pre">width_fraction</span></code>, custom formatters, …) works too — see the <a class="reference external" href="https://github.com/ppinard/matplotlib-scalebar">matplotlib-scalebar documentation</a> for the full list.</p>
-<p>For a scalebar on a real dataset with a genuine micron-per-pixel value, see the <a class="reference internal" href="../examples/visium_mouse_brain.html"><span class="doc">Visium mouse brain example</span></a>, which finishes with a publication-style figure.</p>
+<section id="rotating-the-bar-and-adding-a-label">
+<h2>5. Rotating the bar and adding a label<a class="headerlink" href="#rotating-the-bar-and-adding-a-label" title="Link to this heading">#</a></h2>
+<p>Two more <code class="docutils literal notranslate"><span class="pre">scalebar_params</span></code> round things out. <code class="docutils literal notranslate"><span class="pre">rotation</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;horizontal&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;vertical&quot;</span></code>) turns the bar on its side — useful when the free space in a panel is a tall strip rather than a wide one. <code class="docutils literal notranslate"><span class="pre">label</span></code> adds your own text alongside the automatic value, effectively a title for the bar, and <code class="docutils literal notranslate"><span class="pre">label_loc</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;top&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>) places it relative to the bar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">scalebar_dx</span><span class="o">=</span><span class="n">PX_SIZE_UM</span><span class="p">,</span>
+    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">&quot;um&quot;</span><span class="p">,</span>
+    <span class="n">scalebar_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;box_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;box_alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s2">&quot;fixed_value&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;fixed_units&quot;</span><span class="p">:</span> <span class="s2">&quot;um&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rotation&quot;</span><span class="p">:</span> <span class="s2">&quot;vertical&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;scale&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;label_loc&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1b942c7e23bc179319e76a405c3b2b50ce41b4941ea6622604b460912923a120.png" src="../../_images/1b942c7e23bc179319e76a405c3b2b50ce41b4941ea6622604b460912923a120.png" />
+</div>
+</div>
 </section>
 <section id="for-reproducibility">
 <h2>For reproducibility<a class="headerlink" href="#for-reproducibility" title="Link to this heading">#</a></h2>
@@ -628,7 +651,7 @@ Architecture: 64bit
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#units-and-auto-scaling">2. Units and auto-scaling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placement-and-appearance-with-scalebar-params">3. Placement and appearance with <code class="docutils literal notranslate"><span class="pre">scalebar_params</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pinning-an-exact-bar-length">4. Pinning an exact bar length</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#everything-else-and-on-real-data">5. Everything else, and on real data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotating-the-bar-and-adding-a-label">5. Rotating the bar and adding a label</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
   </nav></div>
