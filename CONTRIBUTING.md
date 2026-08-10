@@ -5,8 +5,8 @@ Thanks for contributing a notebook to the `spatialdata-plot` gallery.
 ## Setup
 
 ```bash
-git clone https://github.com/scverse/spatialdata-plot-notebooks.git
-cd spatialdata-plot-notebooks
+git clone https://github.com/scverse/spatialdata-plot-tutorials.git
+cd spatialdata-plot-tutorials
 pip install -e ".[exec,dev]"
 pre-commit install
 ```
