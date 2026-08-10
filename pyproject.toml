@@ -16,7 +16,7 @@ authors = [{ name = "scverse" }]
 # the notebooks end-to-end.
 [project.optional-dependencies]
 exec = [
-    "spatialdata-plot[interactive]>=0.4.0",
+    "spatialdata-plot[interactive]>=0.4.1",
     "squidpy",
     "jupyter",
     "ipykernel",
@@ -52,7 +52,7 @@ nbconvert = "*"
 watermark = "*"
 
 [tool.pixi.pypi-dependencies]
-spatialdata-plot = { version = ">=0.4.0", extras = ["interactive"] }
+spatialdata-plot = { version = ">=0.4.1", extras = ["interactive"] }
 squidpy = "*"
 
 [tool.pixi.tasks]
