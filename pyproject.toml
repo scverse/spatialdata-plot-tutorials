@@ -8,7 +8,7 @@ version = "0.0.0"
 description = "Executable notebooks demonstrating spatialdata-plot on real spatial-omics datasets."
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 authors = [{ name = "scverse" }]
 
 # The package itself ships no Python code; this is a pyproject for tooling +
@@ -45,7 +45,7 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-arm64"]
 
 [tool.pixi.dependencies]
-python = ">=3.11"
+python = ">=3.12"
 jupyterlab = "*"
 ipykernel = "*"
 nbconvert = "*"
@@ -62,7 +62,7 @@ execute = "jupyter nbconvert --to notebook --execute --inplace tutorials/*.ipynb
 
 [tool.ruff]
 line-length = 120
-target-version = "py311"
+target-version = "py312"
 
 [tool.ruff.lint]
 # Notebooks have different idioms than production code (bare expressions to
