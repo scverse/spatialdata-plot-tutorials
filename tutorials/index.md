@@ -25,6 +25,16 @@ perceptually well-spaced or colourblind-safe palettes with
 `make_palette` and `make_palette_from_data`.
 :::
 
+:::{grid-item-card} Multi-panel colouring
+:link: /notebooks/tutorials/multi_panel_color
+:link-type: doc
+:img-top: /notebooks/_static/img/multi_panel_color.png
+
+Render several colourings at once by passing a list to `color=`,
+scanpy-style, with per-panel legends/colourbars, shared `palette`/`cmap`,
+and `ncols` grid control.
+:::
+
 :::{grid-item-card} Speeding up rendering
 :link: /notebooks/tutorials/performance
 :link-type: doc
@@ -44,5 +54,6 @@ of shapes and points.
 
 getting_started
 color_and_palette
+multi_panel_color
 performance
 ```
