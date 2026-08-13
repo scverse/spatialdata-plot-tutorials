@@ -1,4 +1,4 @@
-# spatialdata-plot-notebooks
+# spatialdata-plot-tutorials
 
 Executable notebooks demonstrating [spatialdata-plot] on real spatial-omics
 datasets. Rendered into the [spatialdata-plot documentation][docs] as a
@@ -21,8 +21,8 @@ re-executes every notebook against the latest `spatialdata-plot` release.
 ## Running notebooks locally
 
 ```bash
-git clone https://github.com/scverse/spatialdata-plot-notebooks.git
-cd spatialdata-plot-notebooks
+git clone https://github.com/scverse/spatialdata-plot-tutorials.git
+cd spatialdata-plot-tutorials
 pip install -e ".[exec]"
 jupyter lab
 ```

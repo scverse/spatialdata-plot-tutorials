@@ -3,12 +3,12 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "spatialdata-plot-notebooks"
+name = "spatialdata-plot-tutorials"
 version = "0.0.0"
 description = "Executable notebooks demonstrating spatialdata-plot on real spatial-omics datasets."
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 authors = [{ name = "scverse" }]
 
 # The package itself ships no Python code; this is a pyproject for tooling +
@@ -16,7 +16,7 @@ authors = [{ name = "scverse" }]
 # the notebooks end-to-end.
 [project.optional-dependencies]
 exec = [
-    "spatialdata-plot[interactive]>=0.4.0",
+    "spatialdata-plot[interactive]>=0.4.1",
     "squidpy",
     "jupyter",
     "ipykernel",
@@ -29,7 +29,7 @@ dev = [
 ]
 
 [project.urls]
-Source = "https://github.com/scverse/spatialdata-plot-notebooks"
+Source = "https://github.com/scverse/spatialdata-plot-tutorials"
 Documentation = "https://spatialdata.scverse.org/projects/plot/en/latest/"
 
 [tool.hatch.build.targets.wheel]
@@ -45,24 +45,24 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-arm64"]
 
 [tool.pixi.dependencies]
-python = ">=3.11"
+python = ">=3.12"
 jupyterlab = "*"
 ipykernel = "*"
 nbconvert = "*"
 watermark = "*"
 
 [tool.pixi.pypi-dependencies]
-spatialdata-plot = { version = ">=0.4.0", extras = ["interactive"] }
+spatialdata-plot = { version = ">=0.4.1", extras = ["interactive"] }
 squidpy = "*"
 
 [tool.pixi.tasks]
-kernel-install = 'python -m ipykernel install --user --name sdata-plot-notebooks --display-name "sdata-plot-notebooks"'
+kernel-install = 'python -m ipykernel install --user --name sdata-plot-tutorials --display-name "sdata-plot-tutorials"'
 lab = "jupyter lab"
 execute = "jupyter nbconvert --to notebook --execute --inplace tutorials/*.ipynb examples/*.ipynb"
 
 [tool.ruff]
 line-length = 120
-target-version = "py311"
+target-version = "py312"
 
 [tool.ruff.lint]
 # Notebooks have different idioms than production code (bare expressions to
