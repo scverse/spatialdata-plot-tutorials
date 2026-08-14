@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="notebooks/tutorials/as_points.html" />
 <meta property="og:site_name" content="spatialdata-plot" />
-<meta property="og:description" content="spatialdata-plot normally draws each element as its full geometry: a shape is its polygon or circle, a labels element is its filled segmentation mask. Passing as_points=True to render_shapes() or r..." />
+<meta property="og:description" content="By default, spatialdata-plot draws each element as its full geometry: a shape as its polygon or circle, a labels element as its filled segmentation mask. Passing as_points=True to render_shapes() o..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="_images/social_previews/summary_notebooks_tutorials_as_points_a603d26b.png" />
-<meta property="og:image:alt" content="spatialdata-plot normally draws each element as its full geometry: a shape is its polygon or circle, a labels element is its filled segmentation mask. Passing as_points=True to render_shapes() or r..." />
-<meta name="description" content="spatialdata-plot normally draws each element as its full geometry: a shape is its polygon or circle, a labels element is its filled segmentation mask. Passing as_points=True to render_shapes() or r..." />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_tutorials_as_points_f9d0e017.png" />
+<meta property="og:image:alt" content="By default, spatialdata-plot draws each element as its full geometry: a shape as its polygon or circle, a labels element as its filled segmentation mask. Passing as_points=True to render_shapes() o..." />
+<meta name="description" content="By default, spatialdata-plot draws each element as its full geometry: a shape as its polygon or circle, a labels element as its filled segmentation mask. Passing as_points=True to render_shapes() o..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Rendering elements as points with as_points &#8212; spatialdata-plot</title>
@@ -408,9 +408,10 @@
                 <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shapes-full-geometry-vs-one-dot-per-centroid">1. Shapes: full geometry vs one dot per centroid</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-segmentation-masks-as-centroids">2. Labels: segmentation masks as centroids</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-speed-trade-off">3. The speed trade-off</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-and-the-50-000-rule">4. Backend and the ~50 000 rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-and-size-still-apply">2. Colour and size still apply</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-segmentation-masks-as-centroids">3. Labels: segmentation masks as centroids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-speed-trade-off">4. The speed trade-off</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-and-the-50000-rule">5. Backend and the 50000 rule</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-reach-for-as-points">When to reach for <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
@@ -426,31 +427,27 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="rendering-elements-as-points-with-as-points">
 <h1>Rendering elements as points with <code class="docutils literal notranslate"><span class="pre">as_points</span></code><a class="headerlink" href="#rendering-elements-as-points-with-as-points" title="Link to this heading">#</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> normally draws each element as its full geometry: a shape is
-its polygon or circle, a labels element is its filled segmentation mask. Passing
-<code class="docutils literal notranslate"><span class="pre">as_points=True</span></code> to <code class="docutils literal notranslate"><span class="pre">render_shapes()</span></code> or <code class="docutils literal notranslate"><span class="pre">render_labels()</span></code> instead draws <strong>one dot
-per element, placed at its centroid</strong>. You keep <em>where</em> each object is and <em>what
-colour</em> it has, but drop its size and outline.</p>
-<p>This notebook shows the <em>how</em> and the <em>why</em>:</p>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> draws each element as its full geometry: a shape
+as its polygon or circle, a labels element as its filled segmentation mask.
+Passing <code class="docutils literal notranslate"><span class="pre">as_points=True</span></code> to <code class="docutils literal notranslate"><span class="pre">render_shapes()</span></code> or <code class="docutils literal notranslate"><span class="pre">render_labels()</span></code> draws one dot
+per element at its centroid instead. You keep where each object sits and what
+colour it has, and you give up its size and outline.</p>
+<p>This notebook covers:</p>
 <ul class="simple">
-<li><p>what the option looks like on real data, for both shapes and labels;</p></li>
-<li><p>what it ignores (<code class="docutils literal notranslate"><span class="pre">outline_*</span></code>, <code class="docutils literal notranslate"><span class="pre">shape</span></code>, <code class="docutils literal notranslate"><span class="pre">contour_px</span></code>);</p></li>
-<li><p>the backend it picks and the ~50 000-element rule;</p></li>
-<li><p>and — the reason it exists — what it costs, measured. The headline: for
-<strong>shapes</strong> it is a large speed win; for <strong>labels</strong> it is mostly a change of
-<em>representation</em>, not speed.</p></li>
+<li><p>what the option looks like on real data, for shapes and for labels,</p></li>
+<li><p>the appearance controls that still apply (<code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">cmap</span></code>, <code class="docutils literal notranslate"><span class="pre">palette</span></code>),</p></li>
+<li><p>the backend it picks and the 50000-element rule,</p></li>
+<li><p>what it costs, measured on the full dataset.</p></li>
 </ul>
-<p>We use a real Xenium human breast-cancer section (~168 000 cells) so the speed
-numbers are meaningful rather than synthetic.</p>
+<p>The data is a Xenium human breast-cancer section with 167780 cells, so the
+timings reflect a real workload rather than a toy one.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
-<p>The dataset is the Xenium replicate-1 human breast-cancer sample, converted to
+<p>The dataset is the Xenium replicate 1 human breast-cancer sample, converted to
 the SpatialData Zarr format and hosted on the scverse example-data bucket. It is
-~3.4 GB; <code class="docutils literal notranslate"><span class="pre">pooch</span></code> downloads it once and caches it, so re-runs are instant.</p>
-<blockquote>
-<div><p>This notebook is <strong>not</strong> re-executed in CI (the download is too large); its
-outputs are committed and trusted. Run it locally to reproduce them.</p>
-</div></blockquote>
+about 3.4 GB. <code class="docutils literal notranslate"><span class="pre">pooch</span></code> downloads it once and caches it, so later runs are instant.</p>
+<p>This notebook is not re-executed in CI, because the download is too large. Its
+outputs are committed and trusted; run it locally to reproduce them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
@@ -506,19 +503,18 @@ with coordinate systems:
 </div>
 </div>
 </div>
-<p>Two things to note in the object above. First, there are <strong>167 780 cells</strong> — big
-enough that how we draw them matters. Second, Xenium ships the cell outlines as
-<strong>shapes</strong> (<code class="docutils literal notranslate"><span class="pre">cell_circles</span></code> and <code class="docutils literal notranslate"><span class="pre">cell_boundaries</span></code>), and there is <strong>no labels
-element</strong>: no segmentation-mask raster. We will make one further down by
-rasterizing the boundaries, so we can show <code class="docutils literal notranslate"><span class="pre">as_points</span></code> on labels too.</p>
-<p>Throughout, we work on a small crop for the pictures (so individual cells are
-visible) and on the full section for the timings.</p>
+<p>The object above holds 167780 cells. Xenium ships the cell outlines as shapes
+(<code class="docutils literal notranslate"><span class="pre">cell_circles</span></code> and <code class="docutils literal notranslate"><span class="pre">cell_boundaries</span></code>) and has no labels element, so there is no
+segmentation-mask raster. We build one further down by rasterizing the
+boundaries, which lets us show <code class="docutils literal notranslate"><span class="pre">as_points</span></code> on labels too.</p>
+<p>We use a small crop for the pictures, so individual cells stay visible, and the
+full section for the timings.</p>
 </section>
 <section id="shapes-full-geometry-vs-one-dot-per-centroid">
 <h2>1. Shapes: full geometry vs one dot per centroid<a class="headerlink" href="#shapes-full-geometry-vs-one-dot-per-centroid" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">render_shapes(...,</span> <span class="pre">as_points=True)</span></code> replaces each circle/polygon with a single
-marker at its centroid. <code class="docutils literal notranslate"><span class="pre">size</span></code> sets the marker area (matplotlib’s scatter <code class="docutils literal notranslate"><span class="pre">s</span></code>).
-Because only the centroid is drawn, <code class="docutils literal notranslate"><span class="pre">outline_*</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> are ignored.</p>
+<p><code class="docutils literal notranslate"><span class="pre">render_shapes(...,</span> <span class="pre">as_points=True)</span></code> replaces each circle or polygon with a
+single marker at its centroid. Only the centroid is drawn, so <code class="docutils literal notranslate"><span class="pre">outline_width</span></code>,
+<code class="docutils literal notranslate"><span class="pre">outline_color</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> have no effect.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">XMIN</span><span class="p">,</span> <span class="n">YMIN</span><span class="p">,</span> <span class="n">XMAX</span><span class="p">,</span> <span class="n">YMAX</span> <span class="o">=</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span>  <span class="c1"># a 1000 x 1000 micron window</span>
@@ -550,37 +546,64 @@ Because only the centroid is drawn, <code class="docutils literal notranslate"><
 <img alt="../../_images/a87f5b88eedb93f85fe2da89e6b9ba6dc2aff1c2e02b26198c1328b29b218128.png" src="../../_images/a87f5b88eedb93f85fe2da89e6b9ba6dc2aff1c2e02b26198c1328b29b218128.png" />
 </div>
 </div>
-<p>Colour is resolved exactly as for the full geometry — the dot inherits the value
-the shape would have had. Here we colour by <code class="docutils literal notranslate"><span class="pre">total_counts</span></code> from the annotating
-table; the categorical/continuous handling, <code class="docutils literal notranslate"><span class="pre">palette</span></code>/<code class="docutils literal notranslate"><span class="pre">cmap</span></code>, legends and
-colourbars all behave identically.</p>
+</section>
+<section id="colour-and-size-still-apply">
+<h2>2. Colour and size still apply<a class="headerlink" href="#colour-and-size-still-apply" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">as_points</span></code> changes what is drawn at each location, not how colour is resolved.
+<code class="docutils literal notranslate"><span class="pre">color</span></code> accepts a gene name (looked up in the annotating table), a column on the
+element or its table, or a literal colour. Continuous values use <code class="docutils literal notranslate"><span class="pre">cmap</span></code> and
+categorical values use <code class="docutils literal notranslate"><span class="pre">palette</span></code>, exactly as for the full geometry, and legends
+and colourbars behave the same way.</p>
+<p>Here we colour by <code class="docutils literal notranslate"><span class="pre">EPCAM</span></code>, an epithelial marker. Its expression follows the
+tissue: the ductal and tumour regions are bright, the surrounding stroma is dark.
+The centroid view keeps that spatial trend after dropping the outlines.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
-<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;total_counts&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
-    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;full geometry, colour = total_counts&quot;</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;full geometry, colour = EPCAM&quot;</span>
 <span class="p">)</span>
 <span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
-    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;total_counts&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">30</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;as_points, colour = total_counts&quot;</span><span class="p">)</span>
+    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">30</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;as_points, colour = EPCAM&quot;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/bed259f4f2b1c3b9dd215866e977f99073b5cb6b6d06aff1c9b32062f8454626.png" src="../../_images/bed259f4f2b1c3b9dd215866e977f99073b5cb6b6d06aff1c9b32062f8454626.png" />
+<img alt="../../_images/f664a4c304f2eeb3861e5f343b4193db75e6766f96fedfee843cb2e9b649fe53.png" src="../../_images/f664a4c304f2eeb3861e5f343b4193db75e6766f96fedfee843cb2e9b649fe53.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">size</span></code> sets the marker area (matplotlib’s scatter <code class="docutils literal notranslate"><span class="pre">s</span></code>), independent of the data.
+It is a styling choice, not the cell’s real size, which the centroid view does
+not carry. Larger markers read better when zoomed out; smaller ones keep dense
+regions from overlapping into a blob.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;size=8&quot;</span><span class="p">)</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">80</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;size=80&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6896d6f3e431546fb9535b1c3bf97ddb2576ee76eafb09f8b4ac8b47eccd7efc.png" src="../../_images/6896d6f3e431546fb9535b1c3bf97ddb2576ee76eafb09f8b4ac8b47eccd7efc.png" />
 </div>
 </div>
 </section>
 <section id="labels-segmentation-masks-as-centroids">
-<h2>2. Labels: segmentation masks as centroids<a class="headerlink" href="#labels-segmentation-masks-as-centroids" title="Link to this heading">#</a></h2>
-<p>Xenium has no labels element, so we build a real one from the real cell
-boundaries: <code class="docutils literal notranslate"><span class="pre">rasterize(...,</span> <span class="pre">return_regions_as_labels=True)</span></code> paints each cell’s
-polygon with its integer id, giving a proper segmentation mask (pixel value =
-cell id).</p>
+<h2>3. Labels: segmentation masks as centroids<a class="headerlink" href="#labels-segmentation-masks-as-centroids" title="Link to this heading">#</a></h2>
+<p>Xenium has no labels element, so we build one from the real cell boundaries.
+<code class="docutils literal notranslate"><span class="pre">rasterize(...,</span> <span class="pre">return_regions_as_labels=True)</span></code> paints each cell’s polygon with
+its integer id, producing a segmentation mask whose pixel value is the cell id.</p>
 <p><code class="docutils literal notranslate"><span class="pre">render_labels(...,</span> <span class="pre">as_points=True)</span></code> then draws one dot per label. The centroids
-are computed from the <em>rendered</em> (display-resolution) raster, so it stays cheap;
-<code class="docutils literal notranslate"><span class="pre">contour_px</span></code> and <code class="docutils literal notranslate"><span class="pre">outline_*</span></code> are ignored.</p>
+come from the rendered, display-resolution raster, so the computation stays
+cheap. <code class="docutils literal notranslate"><span class="pre">contour_px</span></code> and the outline options are ignored.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cell_masks</span> <span class="o">=</span> <span class="n">rasterize</span><span class="p">(</span>
@@ -609,10 +632,11 @@ are computed from the <em>rendered</em> (display-resolution) raster, so it stays
 </div>
 </section>
 <section id="the-speed-trade-off">
-<h2>3. The speed trade-off<a class="headerlink" href="#the-speed-trade-off" title="Link to this heading">#</a></h2>
-<p>This is why the option exists. We subsample the real cells across a range of
-counts and time each rendering, holding the backend at matplotlib so we compare
-<em>drawing N polygons/masks</em> against <em>drawing N dots</em> directly.</p>
+<h2>4. The speed trade-off<a class="headerlink" href="#the-speed-trade-off" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">as_points</span></code> exists mainly for speed. We subsample the real cells across a range
+of counts, up to the full 167780, and time each render. The backend is held at
+matplotlib, so the comparison is drawing N polygons or masks against drawing N
+dots.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">time_best</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
@@ -630,7 +654,7 @@ counts and time each rendering, holding the backend at matplotlib so we compare
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Shapes: draw N circles vs N centroid dots.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Shapes: draw N circles against N centroid dots, up to every cell in the section.</span>
 <span class="n">circ</span> <span class="o">=</span> <span class="n">sdata</span><span class="p">[</span><span class="s2">&quot;cell_circles&quot;</span><span class="p">]</span>
 <span class="n">shape_ns</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1_000</span><span class="p">,</span> <span class="mi">5_000</span><span class="p">,</span> <span class="mi">20_000</span><span class="p">,</span> <span class="mi">50_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">circ</span><span class="p">)]</span>
 <span class="n">shape_full</span><span class="p">,</span> <span class="n">shape_pts</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
@@ -646,20 +670,20 @@ counts and time each rendering, holding the backend at matplotlib so we compare
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   1000:  full   0.03s   as_points  0.01s   (3x)
-N=   5000:  full   0.13s   as_points  0.02s   (9x)
-N=  20000:  full   0.51s   as_points  0.04s   (14x)
-N=  50000:  full   1.27s   as_points  0.09s   (14x)
-N= 100000:  full   2.52s   as_points  0.16s   (16x)
-N= 167780:  full   4.24s   as_points  0.26s   (16x)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   1000:  full   0.03s   as_points  0.01s   (4x)
+N=   5000:  full   0.14s   as_points  0.02s   (8x)
+N=  20000:  full   0.50s   as_points  0.04s   (13x)
+N=  50000:  full   1.26s   as_points  0.09s   (14x)
+N= 100000:  full   2.49s   as_points  0.17s   (15x)
+N= 167780:  full   4.21s   as_points  0.27s   (16x)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Labels: draw the filled mask vs N centroid dots. We rasterize progressively</span>
-<span class="c1"># larger crops (more cells) to grow N.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Labels: draw the filled mask against N centroid dots. We rasterize progressively</span>
+<span class="c1"># larger crops to grow the cell count.</span>
 <span class="n">label_sides</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1_000</span><span class="p">,</span> <span class="mi">4_000</span><span class="p">,</span> <span class="mi">8_000</span><span class="p">,</span> <span class="mi">12_000</span><span class="p">]</span>
 <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">=</span> <span class="mi">2_000</span><span class="p">,</span> <span class="mi">2_000</span>
 <span class="n">label_ns</span><span class="p">,</span> <span class="n">label_full</span><span class="p">,</span> <span class="n">label_pts</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
@@ -688,10 +712,10 @@ N= 167780:  full   4.24s   as_points  0.26s   (16x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   424:  full mask  0.10s   as_points  0.09s
-N=  5833:  full mask  0.10s   as_points  0.10s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   424:  full mask  0.10s   as_points  0.10s
+N=  5833:  full mask  0.11s   as_points  0.10s
 N= 18606:  full mask  0.12s   as_points  0.12s
-N= 39125:  full mask  0.15s   as_points  0.15s
+N= 39125:  full mask  0.16s   as_points  0.15s
 </pre></div>
 </div>
 </div>
@@ -717,70 +741,68 @@ N= 39125:  full mask  0.15s   as_points  0.15s
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/84074bd937b55bf5cad36d364b33c6303a121a782c18e85c4de9c94155fbbe5e.png" src="../../_images/84074bd937b55bf5cad36d364b33c6303a121a782c18e85c4de9c94155fbbe5e.png" />
+<img alt="../../_images/119c3185d52ce0e5852a912f9956192546276c10b8887cfd5798ac5b4d3ae1d4.png" src="../../_images/119c3185d52ce0e5852a912f9956192546276c10b8887cfd5798ac5b4d3ae1d4.png" />
 </div>
 </div>
-<p>The two panels tell different stories, and that is the key lesson:</p>
+<p>The two panels behave differently:</p>
 <ul class="simple">
-<li><p><strong>Shapes — a large, growing win.</strong> Every circle is a vector primitive
-matplotlib has to draw; a centroid is one scatter point. At the full section
-(~168 000 cells) <code class="docutils literal notranslate"><span class="pre">as_points</span></code> is on the order of <strong>10–15× faster</strong>, and the gap
-widens with cell count.</p></li>
-<li><p><strong>Labels — essentially free either way.</strong> A labels element renders as a
-<em>raster</em> (an <code class="docutils literal notranslate"><span class="pre">imshow</span></code> downsampled to the display), whose cost depends on
-display pixels, not cell count. Computing centroids costs about the same. So
-for labels <code class="docutils literal notranslate"><span class="pre">as_points</span></code> is <strong>not</strong> a speed optimisation — it is a different
-<em>look</em> (dots instead of filled regions), useful for decluttering or overlaying
-on an image, at roughly the same price.</p></li>
+<li><p>Shapes: a large gain that grows with cell count. Each circle is a vector
+primitive matplotlib draws one at a time, while a centroid is a single scatter
+point. At the full section (167780 cells) <code class="docutils literal notranslate"><span class="pre">as_points</span></code> is roughly 15 times
+faster.</p></li>
+<li><p>Labels: about the same either way. A labels element renders as a raster (an
+<code class="docutils literal notranslate"><span class="pre">imshow</span></code> downsampled to the display), whose cost tracks display pixels rather
+than cell count, and computing centroids costs about as much. For labels,
+<code class="docutils literal notranslate"><span class="pre">as_points</span></code> gives a different look, not a speedup.</p></li>
 </ul>
-<p>Rule of thumb: reach for <code class="docutils literal notranslate"><span class="pre">as_points</span></code> on <strong>shapes</strong> when you have many objects and
-don’t need their morphology; reach for it on <strong>labels</strong> when you want the
-centroid <em>representation</em>, not for speed.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">as_points</span></code> on shapes when you have many objects and do not need their
+morphology. Use it on labels when you want the centroid representation.</p>
 </section>
-<section id="backend-and-the-50-000-rule">
-<h2>4. Backend and the ~50 000 rule<a class="headerlink" href="#backend-and-the-50-000-rule" title="Link to this heading">#</a></h2>
-<p>The centroid dots can be drawn by either backend, chosen with <code class="docutils literal notranslate"><span class="pre">method</span></code>:</p>
+<section id="backend-and-the-50000-rule">
+<h2>5. Backend and the 50000 rule<a class="headerlink" href="#backend-and-the-50000-rule" title="Link to this heading">#</a></h2>
+<p>The dots can be drawn by either backend, set with <code class="docutils literal notranslate"><span class="pre">method</span></code>:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">method=&quot;matplotlib&quot;</span></code> (per-glyph scatter) — exact, great up to tens of
-thousands of dots.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code> (density raster) — scales to millions.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">method=None</span></code> (default) — matplotlib, but <strong>auto-switches to datashader above
-~50 000 centroids</strong> (<code class="docutils literal notranslate"><span class="pre">AS_POINTS_DS_AUTO</span> <span class="pre">=</span> <span class="pre">50_000</span></code>), because matplotlib’s
-per-glyph cost (~18 µs/dot) starts to dominate there.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method=&quot;matplotlib&quot;</span></code>: per-glyph scatter, exact, good up to tens of thousands
+of dots.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code>: density raster, scales to millions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method=None</span></code> (default): matplotlib, switching to datashader above 50000
+centroids (<code class="docutils literal notranslate"><span class="pre">AS_POINTS_DS_AUTO</span> <span class="pre">=</span> <span class="pre">50000</span></code>), because matplotlib’s per-glyph cost
+starts to dominate around there.</p></li>
 </ul>
-<p>One caveat: datashader aggregates then shades, so it cannot represent “one
-distinct random colour per cell” (the default colouring of a label element with
-no colour column). In that case it falls back to matplotlib with a warning. With
-a real colour column (like below) both backends work; they differ only in look.</p>
+<p>datashader aggregates and then shades, so it cannot represent one distinct random
+colour per cell, which is the default colouring of a labels element with no
+colour column. In that case it falls back to matplotlib with a warning. With a
+real colour column, as below, both backends work and differ only in appearance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
 <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
-    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;total_counts&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;matplotlib&quot;</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;matplotlib (168k dots)&quot;</span><span class="p">)</span>
+    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;matplotlib&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;matplotlib (167780 dots)&quot;</span><span class="p">)</span>
 <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
-    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;total_counts&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;datashader&quot;</span>
+    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;datashader&quot;</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;datashader&quot;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/fe1f6979812d4552bece40699969c2da5ba8eb4a7896800fc2247316b51eb41a.png" src="../../_images/fe1f6979812d4552bece40699969c2da5ba8eb4a7896800fc2247316b51eb41a.png" />
+<img alt="../../_images/10477e56009357f96b8f3de3cd9b7de98cb94da4e83db5799c2872f143e83d71.png" src="../../_images/10477e56009357f96b8f3de3cd9b7de98cb94da4e83db5799c2872f143e83d71.png" />
 </div>
 </div>
 </section>
 <section id="when-to-reach-for-as-points">
 <h2>When to reach for <code class="docutils literal notranslate"><span class="pre">as_points</span></code><a class="headerlink" href="#when-to-reach-for-as-points" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Many shapes, morphology not needed</strong> — a quick overview of hundreds of
-thousands of cells, coloured by a value, without waiting on polygon drawing.</p></li>
-<li><p><strong>Overlaying positions on an image</strong> — dots read more clearly than filled
-masks on top of tissue.</p></li>
-<li><p><strong>Not for label speed</strong> — if you already have a labels element, rendering the
-mask is just as fast; use <code class="docutils literal notranslate"><span class="pre">as_points</span></code> only if you want the dot look.</p></li>
-<li><p><strong>Remember what’s dropped</strong> — size, outline and shape are gone. When those
-carry meaning (spot size, cell area, boundary detail), keep the full geometry.</p></li>
+<li><p>Many shapes, morphology not needed: a fast overview of hundreds of thousands of
+cells coloured by a value, without waiting on polygon drawing.</p></li>
+<li><p>Positions over an image: dots read more clearly than filled masks on top of
+tissue.</p></li>
+<li><p>Not for label speed: rendering a mask is already fast, so use <code class="docutils literal notranslate"><span class="pre">as_points</span></code> on
+labels only for the dot look.</p></li>
+<li><p>Remember what is dropped: the cell’s real size, outline and shape. The marker
+<code class="docutils literal notranslate"><span class="pre">size</span></code> is a styling value, not the cell’s area. When those properties carry
+meaning, keep the full geometry.</p></li>
 </ul>
 </section>
 <section id="for-reproducibility">
@@ -872,9 +894,10 @@ Architecture: 64bit
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shapes-full-geometry-vs-one-dot-per-centroid">1. Shapes: full geometry vs one dot per centroid</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-segmentation-masks-as-centroids">2. Labels: segmentation masks as centroids</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-speed-trade-off">3. The speed trade-off</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-and-the-50-000-rule">4. Backend and the ~50 000 rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-and-size-still-apply">2. Colour and size still apply</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-segmentation-masks-as-centroids">3. Labels: segmentation masks as centroids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-speed-trade-off">4. The speed trade-off</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-and-the-50000-rule">5. Backend and the 50000 rule</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-reach-for-as-points">When to reach for <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
