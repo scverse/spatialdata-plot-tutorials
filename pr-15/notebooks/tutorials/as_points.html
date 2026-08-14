@@ -633,10 +633,31 @@ cheap. <code class="docutils literal notranslate"><span class="pre">contour_px</
 </section>
 <section id="the-speed-trade-off">
 <h2>4. The speed trade-off<a class="headerlink" href="#the-speed-trade-off" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">as_points</span></code> exists mainly for speed. We subsample the real cells across a range
-of counts, up to the full 167780, and time each render. The backend is held at
-matplotlib, so the comparison is drawing N polygons or masks against drawing N
-dots.</p>
+<p>First, the whole section drawn both ways: all 167780 cells, coloured by EPCAM. At
+this zoom each cell is only a few microns across, well under one pixel, so the
+full-geometry circles render sparse and speckled while <code class="docutils literal notranslate"><span class="pre">as_points</span></code> spreads each
+cell into a visible marker. The centroid view is the cleaner overview here, and,
+as the timings below show, much the faster one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">outline_alpha</span><span class="o">=</span><span class="mf">0.0</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;full geometry (167780 circles)&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;as_points (167780 dots)&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e12e47aebe090e5abb24801680c15c37b701bb88ca3729c4513945204a7433c1.png" src="../../_images/e12e47aebe090e5abb24801680c15c37b701bb88ca3729c4513945204a7433c1.png" />
+</div>
+</div>
+<p>To put numbers on it, we subsample the real cells across a range of counts, up to
+the full 167780, and time each render. The backend is held at matplotlib, so the
+comparison is drawing N polygons or masks against drawing N dots.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">time_best</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
@@ -671,11 +692,11 @@ dots.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   1000:  full   0.03s   as_points  0.01s   (4x)
-N=   5000:  full   0.14s   as_points  0.02s   (8x)
-N=  20000:  full   0.50s   as_points  0.04s   (13x)
-N=  50000:  full   1.26s   as_points  0.09s   (14x)
-N= 100000:  full   2.49s   as_points  0.17s   (15x)
-N= 167780:  full   4.21s   as_points  0.27s   (16x)
+N=   5000:  full   0.13s   as_points  0.02s   (8x)
+N=  20000:  full   0.51s   as_points  0.04s   (13x)
+N=  50000:  full   1.26s   as_points  0.09s   (15x)
+N= 100000:  full   2.50s   as_points  0.17s   (15x)
+N= 167780:  full   4.19s   as_points  0.27s   (16x)
 </pre></div>
 </div>
 </div>
@@ -712,8 +733,8 @@ N= 167780:  full   4.21s   as_points  0.27s   (16x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   424:  full mask  0.10s   as_points  0.10s
-N=  5833:  full mask  0.11s   as_points  0.10s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   424:  full mask  0.10s   as_points  0.09s
+N=  5833:  full mask  0.10s   as_points  0.10s
 N= 18606:  full mask  0.12s   as_points  0.12s
 N= 39125:  full mask  0.16s   as_points  0.15s
 </pre></div>
@@ -741,7 +762,7 @@ N= 39125:  full mask  0.16s   as_points  0.15s
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/119c3185d52ce0e5852a912f9956192546276c10b8887cfd5798ac5b4d3ae1d4.png" src="../../_images/119c3185d52ce0e5852a912f9956192546276c10b8887cfd5798ac5b4d3ae1d4.png" />
+<img alt="../../_images/827afb7dddaec5285fd0b9c78af6fd72749175941494151c9ae8f58aa57ca193.png" src="../../_images/827afb7dddaec5285fd0b9c78af6fd72749175941494151c9ae8f58aa57ca193.png" />
 </div>
 </div>
 <p>The two panels behave differently:</p>
