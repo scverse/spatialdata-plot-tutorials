@@ -637,8 +637,10 @@ cheap. <code class="docutils literal notranslate"><span class="pre">contour_px</
 <p>First, the whole section drawn both ways: all 167780 cells, coloured by EPCAM. At
 this zoom each cell is only a few microns across, well under one pixel, so the
 full-geometry circles render sparse and speckled while <code class="docutils literal notranslate"><span class="pre">as_points</span></code> spreads each
-cell into a visible marker. The centroid view is the cleaner overview here, and,
-as the timings below show, much the faster one.</p>
+cell into a visible marker. On the datashader backend <code class="docutils literal notranslate"><span class="pre">size</span></code> sets how far each
+dot spreads, so a larger value fills the gaps into continuous coverage. The
+centroid view is the cleaner overview here, and, as the timings below show, much
+the faster one.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
@@ -646,14 +648,14 @@ as the timings below show, much the faster one.</p>
     <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">outline_alpha</span><span class="o">=</span><span class="mf">0.0</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;full geometry (167780 circles)&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
-    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span>
+    <span class="s2">&quot;cell_circles&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;EPCAM&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;datashader&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;as_points (167780 dots)&quot;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e12e47aebe090e5abb24801680c15c37b701bb88ca3729c4513945204a7433c1.png" src="../../_images/e12e47aebe090e5abb24801680c15c37b701bb88ca3729c4513945204a7433c1.png" />
+<img alt="../../_images/855c78a30dd38c3528985c35cc96e52656289abe0ca81ab6881bb6c162f740e3.png" src="../../_images/855c78a30dd38c3528985c35cc96e52656289abe0ca81ab6881bb6c162f740e3.png" />
 </div>
 </div>
 <p>To put numbers on it, we subsample the real cells across a range of counts, up to
@@ -692,12 +694,12 @@ comparison is drawing N polygons or masks against drawing N dots.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   1000:  full   0.03s   as_points  0.01s   (4x)
-N=   5000:  full   0.13s   as_points  0.02s   (8x)
-N=  20000:  full   0.50s   as_points  0.04s   (13x)
-N=  50000:  full   1.23s   as_points  0.09s   (14x)
-N= 100000:  full   2.48s   as_points  0.17s   (15x)
-N= 167780:  full   4.15s   as_points  0.27s   (16x)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   1000:  full   0.03s   as_points  0.01s   (3x)
+N=   5000:  full   0.13s   as_points  0.02s   (9x)
+N=  20000:  full   0.52s   as_points  0.04s   (13x)
+N=  50000:  full   1.26s   as_points  0.09s   (15x)
+N= 100000:  full   2.54s   as_points  0.17s   (15x)
+N= 167780:  full   4.23s   as_points  0.26s   (16x)
 </pre></div>
 </div>
 </div>
@@ -734,10 +736,10 @@ N= 167780:  full   4.15s   as_points  0.27s   (16x)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   424:  full mask  0.09s   as_points  0.09s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   424:  full mask  0.10s   as_points  0.09s
 N=  5833:  full mask  0.10s   as_points  0.10s
 N= 18606:  full mask  0.12s   as_points  0.12s
-N= 39125:  full mask  0.15s   as_points  0.15s
+N= 39125:  full mask  0.17s   as_points  0.15s
 </pre></div>
 </div>
 </div>
@@ -763,7 +765,7 @@ N= 39125:  full mask  0.15s   as_points  0.15s
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/de59cbe19573655e864703983ac44f0046efcf54ff6bc63f7788fab428a29a51.png" src="../../_images/de59cbe19573655e864703983ac44f0046efcf54ff6bc63f7788fab428a29a51.png" />
+<img alt="../../_images/22ae510ed0e3f6e3afdb800839f28d1bd202a8f51cb3b517864df6d2a569f9cf.png" src="../../_images/22ae510ed0e3f6e3afdb800839f28d1bd202a8f51cb3b517864df6d2a569f9cf.png" />
 </div>
 </div>
 <p>The two panels behave differently:</p>
@@ -791,10 +793,10 @@ of dots.</p></li>
 centroids (<code class="docutils literal notranslate"><span class="pre">AS_POINTS_DS_AUTO</span> <span class="pre">=</span> <span class="pre">50000</span></code>), because matplotlib’s per-glyph cost
 starts to dominate around there.</p></li>
 </ul>
-<p>The full-section <code class="docutils literal notranslate"><span class="pre">as_points</span></code> panel above used the default, so with 167780 cells
-it was already drawn by datashader. Passing <code class="docutils literal notranslate"><span class="pre">method=&quot;matplotlib&quot;</span></code> would force
-per-glyph scatter instead, and <code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code> forces the raster at any
-size.</p>
+<p>The full-section <code class="docutils literal notranslate"><span class="pre">as_points</span></code> panel above uses the datashader backend, which is
+also what the default selects above 50000 cells. Passing <code class="docutils literal notranslate"><span class="pre">method=&quot;matplotlib&quot;</span></code>
+forces per-glyph scatter instead, one marker per cell; <code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code>
+forces the raster at any size.</p>
 <p>datashader aggregates and then shades, so it cannot represent one distinct random
 colour per cell, which is the default colouring of a labels element with no
 colour column. In that case it falls back to matplotlib with a warning.</p>
