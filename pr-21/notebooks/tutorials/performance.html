@@ -1,0 +1,1024 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Speeding up the rendering of large data" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="notebooks/tutorials/performance.html" />
+<meta property="og:site_name" content="spatialdata-plot" />
+<meta property="og:description" content="spatialdata-plot is built to stay responsive on large datasets. This example shows the two mechanisms that make that possible and how to steer them: Images / labels — automatic rasterization of sin..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_tutorials_performance_fc493837.png" />
+<meta property="og:image:alt" content="spatialdata-plot is built to stay responsive on large datasets. This example shows the two mechanisms that make that possible and how to steer them: Images / labels — automatic rasterization of sin..." />
+<meta name="description" content="spatialdata-plot is built to stay responsive on large datasets. This example shows the two mechanisms that make that possible and how to steer them: Images / labels — automatic rasterization of sin..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Speeding up the rendering of large data &#8212; spatialdata-plot</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=4418a689" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=05624691" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f2dec995" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/tutorials/performance';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Scalebars in spatialdata-plot" href="scalebars.html" />
+    <link rel="prev" title="Multi-panel colouring in spatialdata-plot" href="multi_panel_color.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-light" alt="spatialdata-plot - Home"/>
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-dark pst-js-only" alt="spatialdata-plot - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../gallery.html">Gallery</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html">Getting started with spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multi_panel_color.html">Multi-panel colouring in spatialdata-plot</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scalebars.html">Scalebars in spatialdata-plot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/visium_mouse_brain.html">Plotting a Visium dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/interactive_annotate.html">Interactive region annotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/datashader_reductions.html">Datashader reductions in spatialdata-plot</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api.html">API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../plotting.html">Plotting (<code class="docutils literal notranslate"><span class="pre">.pl</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/scverse/spatialdata-plot.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/tutorials/performance.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Speeding up the rendering of large data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-scale-images">1 Single-scale images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#default-behaviour">1.1 Default behaviour</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">1.2 Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-scale-images">2 Multi-scale images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1 Default behaviour</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.2 Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datashader-backend-for-shapes-and-points">3 Datashader backend for shapes and points</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polygons">3.1 Polygons</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-polygons">3.2 Multi-polygons</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#circles">3.3 Circles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#points">3.4 Points</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="speeding-up-the-rendering-of-large-data">
+<h1>Speeding up the rendering of large data<a class="headerlink" href="#speeding-up-the-rendering-of-large-data" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> is built to stay responsive on large datasets. This example shows the two
+mechanisms that make that possible and how to steer them:</p>
+<ol class="arabic simple">
+<li><p><strong>Images / labels</strong> — automatic rasterization of single-scale rasters and automatic scale
+selection for multi-scale rasters, controlled with <code class="docutils literal notranslate"><span class="pre">dpi</span></code>, <code class="docutils literal notranslate"><span class="pre">figsize</span></code>, and the <code class="docutils literal notranslate"><span class="pre">scale</span></code> argument.</p></li>
+<li><p><strong>Shapes / points</strong> — an optional <code class="docutils literal notranslate"><span class="pre">datashader</span></code> backend (<code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code>) that overtakes
+the default <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> backend once you render enough objects.</p></li>
+</ol>
+<p>The image sections use the cached <code class="docutils literal notranslate"><span class="pre">squidpy</span></code> Visium H&amp;E mouse-brain dataset (its <code class="docutils literal notranslate"><span class="pre">hne</span></code> image is
+multi-scale); the backend benchmarks use small synthetic <code class="docutils literal notranslate"><span class="pre">SpatialData</span></code> objects. Nothing extra
+needs downloading.</p>
+<p><strong>Dataset</strong>: a Visium H&amp;E mouse-brain section, loaded by <code class="docutils literal notranslate"><span class="pre">squidpy.datasets.visium_hne_sdata()</span></code> from
+the scverse example-data host (cached after the first download).</p>
+<p><strong>Credit</strong>: adapted from the <a class="reference external" href="https://github.com/scverse/spatialdata-notebooks/blob/main/notebooks/examples/speed_up_illustration.ipynb"><code class="docutils literal notranslate"><span class="pre">speed_up_illustration</span></code></a> notebook in <code class="docutils literal notranslate"><span class="pre">spatialdata-notebooks</span></code> by
+<a class="reference external" href="https://github.com/Sonja-Stockhaus">&#64;Sonja-Stockhaus</a> and the <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> team.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">timeit</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">squidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sq</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeoDataFrame</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.affinity</span><span class="w"> </span><span class="kn">import</span> <span class="n">translate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiPolygon</span><span class="p">,</span> <span class="n">Polygon</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpatialData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image2DModel</span><span class="p">,</span> <span class="n">PointsModel</span><span class="p">,</span> <span class="n">ShapesModel</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>  <span class="c1"># noqa: F401  (registers the .pl accessor)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
+
+<span class="c1"># Keep inline figure sizes (and the committed notebook) small; cells that pass an</span>
+<span class="c1"># explicit `dpi=` to pl.show() still override this for their lesson.</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"figure.dpi"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">80</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">visium_hne_sdata</span><span class="p">()</span>
+<span class="n">sdata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/visium_hne_sdata.zarr
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /Users/tim.treis/Documents/GitHub/spatialdata-plot-notebooks/examples/data/spatialdata/visium_hne_sdata.zarr
+├── Images
+│     └── 'hne': DataTree[cyx] (3, 11757, 11291), (3, 5878, 5645), (3, 2939, 2822), (3, 1469, 1411)
+├── Shapes
+│     └── 'spots': GeoDataFrame shape: (2688, 2) (2D shapes)
+└── Tables
+      └── 'adata': AnnData (2688, 18078)
+with coordinate systems:
+    ▸ 'global', with elements:
+        hne (Images), spots (Shapes)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="single-scale-images">
+<h2>1 Single-scale images<a class="headerlink" href="#single-scale-images" title="Link to this heading">#</a></h2>
+<p>A single-scale image is one image on one grid. A multi-scale image bundles several single-scale
+images of the <em>same</em> picture at decreasing resolutions; rendering one always starts by picking a
+single scale, after which it behaves exactly like a single-scale image.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">hne</span></code> image is multi-scale, so to demonstrate single-scale behaviour we pull one of its scales
+out into a standalone single-scale image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single</span> <span class="o">=</span> <span class="n">Image2DModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s2">"hne"</span><span class="p">][</span><span class="s2">"scale1"</span><span class="p">][</span><span class="s2">"image"</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">(</span><span class="s2">"c"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">))</span>
+<span class="n">sdata</span><span class="p">[</span><span class="s2">"hne_singlescale"</span><span class="p">]</span> <span class="o">=</span> <span class="n">single</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="default-behaviour">
+<h3>1.1 Default behaviour<a class="headerlink" href="#default-behaviour" title="Link to this heading">#</a></h3>
+<p>When the image is larger than the rendering device, it is automatically rasterized (downsampled)
+before drawing. Rendering the full-resolution pixels would not look any better than the device can
+display, but would be much slower. A heuristic over image extent, <code class="docutils literal notranslate"><span class="pre">dpi</span></code>, and figure size decides
+whether rasterization is needed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne_singlescale"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># larger than the rendering device -&gt; automatically rasterized before rendering</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 2.79 s, sys: 1.78 s, total: 4.57 s
+Wall time: 3.59 s
+</pre></div>
+</div>
+<img alt="../../_images/f7757ee1f68830dc36613e56047502a3782dfc76ca3ef017777b1527ca22686c.png" src="../../_images/f7757ee1f68830dc36613e56047502a3782dfc76ca3ef017777b1527ca22686c.png" />
+</div>
+</div>
+</section>
+<section id="options">
+<h3>1.2 Options<a class="headerlink" href="#options" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">dpi</span></code> and <code class="docutils literal notranslate"><span class="pre">figsize</span></code> (on <code class="docutils literal notranslate"><span class="pre">pl.show()</span></code>) feed the same heuristic, so they change <em>whether</em> and <em>how far</em>
+the image is rasterized. A higher <code class="docutils literal notranslate"><span class="pre">dpi</span></code> means more device pixels, so less downsampling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne_singlescale"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 2.92 s, sys: 1.79 s, total: 4.71 s
+Wall time: 3.67 s
+</pre></div>
+</div>
+<img alt="../../_images/d533cc64579f0af69679195278086168e832b4b546a351226363bcb160daa563.png" src="../../_images/d533cc64579f0af69679195278086168e832b4b546a351226363bcb160daa563.png" />
+</div>
+</div>
+<p>To switch rasterization off entirely, pass <code class="docutils literal notranslate"><span class="pre">scale=&quot;full&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">pl.render_images()</span></code> (or
+<code class="docutils literal notranslate"><span class="pre">pl.render_labels()</span></code>). The full-resolution image is then drawn as-is — fine here, but slow for very
+large images (see the multi-scale section for a more dramatic case).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne_singlescale"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s2">"full"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.75 s, sys: 2.14 s, total: 5.89 s
+Wall time: 4.72 s
+</pre></div>
+</div>
+<img alt="../../_images/570cc9634e0bf08fe05e42f0aad7ddf32b791555a889ac07c8dc5b873d0d2fcc.png" src="../../_images/570cc9634e0bf08fe05e42f0aad7ddf32b791555a889ac07c8dc5b873d0d2fcc.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="multi-scale-images">
+<h2>2 Multi-scale images<a class="headerlink" href="#multi-scale-images" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>2.1 Default behaviour<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>By default the scale that best fits the rendering device is selected automatically, then treated
+like a single-scale image (rasterized further if still necessary). For <code class="docutils literal notranslate"><span class="pre">hne</span></code> at default size this
+picks one of the lower-resolution scales.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># a low-resolution scale is selected automatically</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 361 ms, sys: 126 ms, total: 487 ms
+Wall time: 407 ms
+</pre></div>
+</div>
+<img alt="../../_images/aee8ddab2ef797b064ecc057986fb44cd74ef010d10a62a3c1b986b816ed9c31.png" src="../../_images/aee8ddab2ef797b064ecc057986fb44cd74ef010d10a62a3c1b986b816ed9c31.png" />
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>2.2 Options<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">dpi</span></code> and <code class="docutils literal notranslate"><span class="pre">figsize</span></code> also drive scale selection: a larger figure or higher <code class="docutils literal notranslate"><span class="pre">dpi</span></code> pulls in a
+higher-resolution scale. When the “optimal” resolution falls between two stored scales, the
+higher-resolution one is selected and rasterized down if needed (otherwise the result would be
+coarser than requested).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">))</span>
+<span class="c1"># a higher-resolution scale is selected automatically</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 604 ms, sys: 127 ms, total: 731 ms
+Wall time: 646 ms
+</pre></div>
+</div>
+<img alt="../../_images/5cbfe89543cb3bb48ad882e8d4fc1e0012dbff28e77bf0fcf75f296aa66d0d28.png" src="../../_images/5cbfe89543cb3bb48ad882e8d4fc1e0012dbff28e77bf0fcf75f296aa66d0d28.png" />
+</div>
+</div>
+<p>You can also pin a specific scale with the <code class="docutils literal notranslate"><span class="pre">scale</span></code> argument. When you do, no rasterization is added
+unless you <em>also</em> set <code class="docutils literal notranslate"><span class="pre">dpi</span></code>/<code class="docutils literal notranslate"><span class="pre">figsize</span></code> on <code class="docutils literal notranslate"><span class="pre">pl.show()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s2">"scale0"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 15.5 s, sys: 9.56 s, total: 25.1 s
+Wall time: 20.4 s
+</pre></div>
+</div>
+<img alt="../../_images/1c6a9e997abbe58bca718460590ddbd89b0b99aa030cf752bfd5bf7a8e12566f.png" src="../../_images/1c6a9e997abbe58bca718460590ddbd89b0b99aa030cf752bfd5bf7a8e12566f.png" />
+</div>
+</div>
+<p>You can force the highest-resolution scale with <code class="docutils literal notranslate"><span class="pre">scale=&quot;full&quot;</span></code>, which skips rasterization entirely.
+On a sufficiently large image this is the slow extreme and can even exhaust memory; for this dataset
+the full <code class="docutils literal notranslate"><span class="pre">hne</span></code> image is small enough that the difference is minor, so we describe it here rather than
+render it.</p>
+</section>
+</section>
+<section id="datashader-backend-for-shapes-and-points">
+<h2>3 Datashader backend for shapes and points<a class="headerlink" href="#datashader-backend-for-shapes-and-points" title="Link to this heading">#</a></h2>
+<p>For vector geometry, <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> can render with either <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> (the default) or
+<a class="reference external" href="https://datashader.org/"><code class="docutils literal notranslate"><span class="pre">datashader</span></code></a> via <code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code>. For shapes, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> wins for
+small collections and <code class="docutils literal notranslate"><span class="pre">datashader</span></code> wins once there are many objects; for points the advantage
+reverses. Below we locate the crossover for polygons, multi-polygons, and circles, then for points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">RNG</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_shapes</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">extent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10_000</span><span class="p">,</span> <span class="n">multi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeoDataFrame</span><span class="p">:</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">extent</span> <span class="o">//</span> <span class="mi">4</span>
+    <span class="n">shapes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">RNG</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">extent</span><span class="p">),</span> <span class="n">RNG</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">extent</span><span class="p">)</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">RNG</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span> <span class="n">y</span> <span class="o">+</span> <span class="n">RNG</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">q</span><span class="p">)),</span>
+                <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">RNG</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span> <span class="n">y</span><span class="p">),</span>
+                <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">RNG</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">q</span><span class="p">)),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">shapes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MultiPolygon</span><span class="p">([</span><span class="n">poly</span><span class="p">,</span> <span class="n">translate</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">xoff</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">yoff</span><span class="o">=</span><span class="n">q</span><span class="p">)])</span> <span class="k">if</span> <span class="n">multi</span> <span class="k">else</span> <span class="n">poly</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">GeoDataFrame</span><span class="p">({</span><span class="s2">"geometry"</span><span class="p">:</span> <span class="n">shapes</span><span class="p">})</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_sdata</span><span class="p">(</span><span class="n">to_plot</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">extent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10_000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialData</span><span class="p">:</span>
+    <span class="c1"># Only build the element being benchmarked -- rendering never touches anything else.</span>
+    <span class="k">if</span> <span class="n">to_plot</span> <span class="o">==</span> <span class="s2">"points"</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">RNG</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">extent</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">SpatialData</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="p">{</span><span class="s2">"points"</span><span class="p">:</span> <span class="n">PointsModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">df</span><span class="p">)})</span>
+    <span class="k">if</span> <span class="n">to_plot</span> <span class="o">==</span> <span class="s2">"circles"</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">RNG</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">extent</span>
+        <span class="k">return</span> <span class="n">SpatialData</span><span class="p">(</span><span class="n">shapes</span><span class="o">=</span><span class="p">{</span><span class="s2">"circles"</span><span class="p">:</span> <span class="n">ShapesModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)})</span>
+    <span class="n">gdf</span> <span class="o">=</span> <span class="n">generate_shapes</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">multi</span><span class="o">=</span><span class="n">to_plot</span> <span class="o">==</span> <span class="s2">"multipolygons"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">SpatialData</span><span class="p">(</span><span class="n">shapes</span><span class="o">=</span><span class="p">{</span><span class="n">to_plot</span><span class="p">:</span> <span class="n">ShapesModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">gdf</span><span class="p">)})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">benchmark</span><span class="p">(</span><span class="n">to_plot</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">counts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">repeat</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">render_name</span> <span class="o">=</span> <span class="s2">"render_points"</span> <span class="k">if</span> <span class="n">to_plot</span> <span class="o">==</span> <span class="s2">"points"</span> <span class="k">else</span> <span class="s2">"render_shapes"</span>
+
+    <span class="c1"># One-time warmup so numba JIT / datashader setup isn't charged to the first timed run.</span>
+    <span class="n">warm</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">make_sdata</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="p">,</span> <span class="n">render_name</span><span class="p">)</span>
+    <span class="n">warm</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"matplotlib"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">warm</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"datashader"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s2">"all"</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
+        <span class="n">render</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">make_sdata</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="p">,</span> <span class="n">render_name</span><span class="p">)</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">render</span><span class="p">(</span><span class="n">to_plot</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># noqa: B023, E731</span>
+        <span class="n">mpl_times</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">run</span><span class="p">(</span><span class="s2">"matplotlib"</span><span class="p">),</span> <span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="n">repeat</span><span class="p">)</span>  <span class="c1"># noqa: B023</span>
+        <span class="n">ds_times</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">run</span><span class="p">(</span><span class="s2">"datashader"</span><span class="p">),</span> <span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="n">repeat</span><span class="p">)</span>  <span class="c1"># noqa: B023</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s2">"all"</span><span class="p">)</span>  <span class="c1"># don't let figures accumulate across counts</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mpl_times</span><span class="p">,</span> <span class="n">ds_times</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"object_num"</span><span class="p">,</span> <span class="s2">"mpl_time"</span><span class="p">,</span> <span class="s2">"ds_time"</span><span class="p">])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">crossover</span><span class="p">(</span><span class="n">medians</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Object count where the faster backend switches, interpolated from the medians.</span>
+
+<span class="sd">    Detects a crossing in either direction (datashader overtaking matplotlib for shapes, or</span>
+<span class="sd">    matplotlib overtaking datashader for points) and returns the last one. None if they never cross.</span>
+<span class="sd">    """</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">medians</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"object_num"</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">"object_num"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s2">"mpl_time"</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">[</span><span class="s2">"ds_time"</span><span class="p">])</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>  <span class="c1"># &gt; 0 =&gt; datashader faster</span>
+    <span class="n">cross</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&gt;</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="o">-</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">diff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">diff</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">cross</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="k">if</span> <span class="n">cross</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">mag</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">cross</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># round to 2 significant figures for a clean label</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">cross</span> <span class="o">/</span> <span class="n">mag</span><span class="p">)</span> <span class="o">*</span> <span class="n">mag</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visualise_comparison</span><span class="p">(</span><span class="n">results</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">medians</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"object_num"</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">medians</span><span class="p">[</span><span class="s2">"object_num"</span><span class="p">],</span> <span class="n">medians</span><span class="p">[</span><span class="s2">"mpl_time"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">medians</span><span class="p">[</span><span class="s2">"object_num"</span><span class="p">],</span> <span class="n">medians</span><span class="p">[</span><span class="s2">"ds_time"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:orange"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">"object_num"</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="s2">"mpl_time"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"matplotlib"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">"object_num"</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="s2">"ds_time"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:orange"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"datashader"</span><span class="p">)</span>
+    <span class="n">xover</span> <span class="o">=</span> <span class="n">crossover</span><span class="p">(</span><span class="n">medians</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">xover</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">xover</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">":"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"crossover (~</span><span class="si">{</span><span class="n">xover</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Number of </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Rendering time in seconds</span><span class="se">\n</span><span class="s2">(lower is better)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="polygons">
+<h3>3.1 Polygons<a class="headerlink" href="#polygons" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is faster for small collections; <code class="docutils literal notranslate"><span class="pre">datashader</span></code> takes over once there are many polygons.
+The red line marks the crossover measured from this run — its exact location depends on your
+hardware.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="n">results_polygons</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">(</span><span class="s2">"polygons"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_polygons</span><span class="p">,</span> <span class="s2">"polygons"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/31d92f3b55defe6e2f7a90c7303cec2daac81cadd4de29dce3cd1d6308434451.png" src="../../_images/31d92f3b55defe6e2f7a90c7303cec2daac81cadd4de29dce3cd1d6308434451.png" />
+</div>
+</div>
+</section>
+<section id="multi-polygons">
+<h3>3.2 Multi-polygons<a class="headerlink" href="#multi-polygons" title="Link to this heading">#</a></h3>
+<p>Multi-polygons behave like polygons; the red line marks the measured crossover.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="n">results_multipolygons</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">(</span><span class="s2">"multipolygons"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">225</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_multipolygons</span><span class="p">,</span> <span class="s2">"multi-polygons"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1202f3bed8c7351cf1c31005dad8cf1e36abd23e74f3263570f974245c0fdaef.png" src="../../_images/1202f3bed8c7351cf1c31005dad8cf1e36abd23e74f3263570f974245c0fdaef.png" />
+</div>
+</div>
+</section>
+<section id="circles">
+<h3>3.3 Circles<a class="headerlink" href="#circles" title="Link to this heading">#</a></h3>
+<p>Circles behave the same way, with the crossover marked in red.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="n">results_circles</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">(</span><span class="s2">"circles"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_circles</span><span class="p">,</span> <span class="s2">"circles"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/bea7bd200f3f4d1f224fec99c06c4cb254d68c309387b9a4f2e28dddf43bb7f9.png" src="../../_images/bea7bd200f3f4d1f224fec99c06c4cb254d68c309387b9a4f2e28dddf43bb7f9.png" />
+</div>
+</div>
+</section>
+<section id="points">
+<h3>3.4 Points<a class="headerlink" href="#points" title="Link to this heading">#</a></h3>
+<p>Points invert the shapes story. <code class="docutils literal notranslate"><span class="pre">datashader</span></code> is faster for small point sets, but <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>
+already draws point scatters efficiently and wins at scale: the crossover (marked in red) sits
+roughly around 100k points, and out to 10 million <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> stays ahead. So <code class="docutils literal notranslate"><span class="pre">datashader</span></code> gives no
+speed advantage for the large point sets where you would most want it — this was investigated in
+<a class="reference external" href="https://github.com/scverse/spatialdata-plot/issues/379">scverse/spatialdata-plot#379</a>. Choose it for features such as density shading rather than for raw
+speed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="n">results_points</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">(</span><span class="s2">"points"</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">,</span> <span class="mi">10_000_000</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_comparison</span><span class="p">(</span><span class="n">results_points</span><span class="p">,</span> <span class="s2">"points"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c16662847a52c933e6b6f90aed6ac4ffa825a1253fa6efc71c43d337f4c03395.png" src="../../_images/c16662847a52c933e6b6f90aed6ac4ffa825a1253fa6efc71c43d337f4c03395.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="for-reproducibility">
+<h2>For reproducibility<a class="headerlink" href="#for-reproducibility" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ruff: noqa: F401, F811, I001, E402</span>
+<span class="c1"># fmt: off</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dask</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>
+
+<span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="c1"># fmt: on</span>
+
+<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,scanpy,anndata,squidpy,matplotlib,numpy,pandas,dask,datashader,geopandas,shapely
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python implementation: CPython
+Python version       : 3.14.4
+IPython version      : 9.13.0
+
+spatialdata     : 0.7.3
+spatialdata_plot: 0.4.0
+scanpy          : 1.12.1
+anndata         : 0.12.13
+squidpy         : 1.8.1
+matplotlib      : 3.10.9
+numpy           : 2.4.4
+pandas          : 2.3.3
+dask            : 2026.1.1
+datashader      : 0.19.0
+geopandas       : 1.1.3
+shapely         : 2.1.2
+
+Compiler    : Clang 20.1.8 
+OS          : Darwin
+Release     : 25.2.0
+Machine     : arm64
+Processor   : arm
+CPU cores   : 8
+Architecture: 64bit
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="multi_panel_color.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Multi-panel colouring in spatialdata-plot</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="scalebars.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Scalebars in spatialdata-plot</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-scale-images">1 Single-scale images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#default-behaviour">1.1 Default behaviour</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">1.2 Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-scale-images">2 Multi-scale images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1 Default behaviour</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.2 Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datashader-backend-for-shapes-and-points">3 Datashader backend for shapes and points</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polygons">3.1 Polygons</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-polygons">3.2 Multi-polygons</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#circles">3.3 Circles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#points">3.4 Points</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By scverse
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, scverse..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
