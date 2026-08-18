@@ -24,6 +24,16 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 `sdata.pl.annotate(...)` and persist them as a `ShapesModel` element.
 :::
 
+:::{grid-item-card} Legends and colorbars
+:link: /notebooks/examples/legends_and_colorbars
+:link-type: doc
+:img-top: /notebooks/_static/img/legends_and_colorbars.png
+
+Place and style categorical legends and continuous colorbars: `legend_loc`,
+`legend_title`, `na_in_legend`, `legend_params`, and `colorbar_params`, on a
+real Visium mouse-brain section.
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -33,4 +43,5 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 
 visium_mouse_brain
 interactive_annotate
+legends_and_colorbars
 ```
