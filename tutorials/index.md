@@ -54,6 +54,16 @@ Add a physical scalebar with `scalebar_dx`, choose units, and style
 placement, colour, length and fonts through `scalebar_params`.
 :::
 
+:::{grid-item-card} Styling shapes and labels
+:link: /notebooks/tutorials/styling_shapes_and_labels
+:link-type: doc
+:img-top: /notebooks/_static/img/styling_shapes_and_labels.png
+
+Control how shapes and labels are drawn: `fill_alpha`, the `outline`
+toggle with `outline_width`/`outline_color`/`outline_alpha`, hollow
+shapes, `scale`, and segmentation boundaries via `contour_px`.
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -66,4 +76,5 @@ color_and_palette
 multi_panel_color
 performance
 scalebars
+styling_shapes_and_labels
 ```
