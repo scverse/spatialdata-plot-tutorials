@@ -38,11 +38,11 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=4418a689" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -51,12 +51,12 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f2dec995" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=4644695f"></script>
+    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -64,27 +64,34 @@
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/tutorials/color_and_palette';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Speeding up the rendering of large data" href="performance.html" />
+    <link rel="next" title="Normalization and contrast in spatialdata-plot" href="normalization_and_contrast.html" />
     <link rel="prev" title="Getting started with spatialdata-plot" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g0919069e8.d20260620" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -110,7 +117,51 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
     </header>
   
 
@@ -168,8 +219,10 @@
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="getting_started.html">Getting started with spatialdata-plot</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Colour and palettes in spatialdata-plot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="performance.html">Speeding up the rendering of large data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="normalization_and_contrast.html">Normalization and contrast in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multi_panel_color.html">Multi-panel colouring in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="performance.html">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scalebars.html">Scalebars in spatialdata-plot</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -313,11 +366,18 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div>
 
 
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -345,7 +405,7 @@
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-does-my-colour-come-from">1. Where does my colour come from?</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literal-colour">Literal colour</a></li>
@@ -402,21 +462,21 @@
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object
 ├── Images
-│     ├── &#39;blobs_image&#39;: DataArray[cyx] (3, 512, 512)
-│     └── &#39;blobs_multiscale_image&#39;: DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
+│     ├── 'blobs_image': DataArray[cyx] (3, 512, 512)
+│     └── 'blobs_multiscale_image': DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
 ├── Labels
-│     ├── &#39;blobs_labels&#39;: DataArray[yx] (512, 512)
-│     └── &#39;blobs_multiscale_labels&#39;: DataTree[yx] (512, 512), (256, 256), (128, 128)
+│     ├── 'blobs_labels': DataArray[yx] (512, 512)
+│     └── 'blobs_multiscale_labels': DataTree[yx] (512, 512), (256, 256), (128, 128)
 ├── Points
-│     └── &#39;blobs_points&#39;: DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
+│     └── 'blobs_points': DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
 ├── Shapes
-│     ├── &#39;blobs_circles&#39;: GeoDataFrame shape: (5, 2) (2D shapes)
-│     ├── &#39;blobs_multipolygons&#39;: GeoDataFrame shape: (2, 1) (2D shapes)
-│     └── &#39;blobs_polygons&#39;: GeoDataFrame shape: (5, 1) (2D shapes)
+│     ├── 'blobs_circles': GeoDataFrame shape: (5, 2) (2D shapes)
+│     ├── 'blobs_multipolygons': GeoDataFrame shape: (2, 1) (2D shapes)
+│     └── 'blobs_polygons': GeoDataFrame shape: (5, 1) (2D shapes)
 └── Tables
-      └── &#39;table&#39;: AnnData (26, 3)
+      └── 'table': AnnData (26, 3)
 with coordinate systems:
-    ▸ &#39;global&#39;, with elements:
+    ▸ 'global', with elements:
         blobs_image (Images), blobs_multiscale_image (Images), blobs_labels (Labels), blobs_multiscale_labels (Labels), blobs_points (Points), blobs_circles (Shapes), blobs_multipolygons (Shapes), blobs_polygons (Shapes)
 </pre></div>
 </div>
@@ -428,18 +488,18 @@ with coordinate systems:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># Categorical on the table (annotates blobs_labels)</span>
-<span class="n">table</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="s1">&#39;table&#39;</span><span class="p">]</span>
-<span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;cell_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
-    <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">n_obs</span><span class="p">),</span>
-    <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">],</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="s1">'table'</span><span class="p">]</span>
+<span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
+    <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">,</span> <span class="s1">'D'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">n_obs</span><span class="p">),</span>
+    <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">,</span> <span class="s1">'D'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">],</span>
 <span class="p">)</span>
 
 <span class="c1"># Categorical directly on a shapes GeoDataFrame</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">&#39;blobs_polygons&#39;</span><span class="p">][</span><span class="s1">&#39;region_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
-    <span class="p">[</span><span class="s1">&#39;stroma&#39;</span><span class="p">,</span> <span class="s1">&#39;tumour&#39;</span><span class="p">,</span> <span class="s1">&#39;stroma&#39;</span><span class="p">,</span> <span class="s1">&#39;immune&#39;</span><span class="p">,</span> <span class="s1">&#39;tumour&#39;</span><span class="p">],</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">'blobs_polygons'</span><span class="p">][</span><span class="s1">'region_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">'stroma'</span><span class="p">,</span> <span class="s1">'tumour'</span><span class="p">,</span> <span class="s1">'stroma'</span><span class="p">,</span> <span class="s1">'immune'</span><span class="p">,</span> <span class="s1">'tumour'</span><span class="p">],</span>
 <span class="p">)</span>
 
-<span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;cell_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -470,7 +530,7 @@ Name: count, dtype: int64
 <h3>Literal colour<a class="headerlink" href="#literal-colour" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s1">&#39;blobs_polygons&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#1f77b4&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s1">'blobs_polygons'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#1f77b4'</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -484,7 +544,7 @@ Name: count, dtype: int64
 <p><code class="docutils literal notranslate"><span class="pre">region_type</span></code> lives directly on the <code class="docutils literal notranslate"><span class="pre">blobs_polygons</span></code> GeoDataFrame. It is found there first, so no table lookup is needed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s1">&#39;blobs_polygons&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;region_type&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s1">'blobs_polygons'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'region_type'</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -498,14 +558,14 @@ Name: count, dtype: int64
 <p>If you’ve already coloured a categorical column elsewhere (e.g. in scanpy), the matching <code class="docutils literal notranslate"><span class="pre">'&lt;column&gt;_colors'</span></code> entry in <code class="docutils literal notranslate"><span class="pre">.uns</span></code> is honoured automatically. Setting it explicitly:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">&#39;cell_type_colors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#e41a1c&#39;</span><span class="p">,</span> <span class="s1">&#39;#377eb8&#39;</span><span class="p">,</span> <span class="s1">&#39;#4daf4a&#39;</span><span class="p">,</span> <span class="s1">&#39;#984ea3&#39;</span><span class="p">,</span> <span class="s1">&#39;#ff7f00&#39;</span><span class="p">]</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cell_type&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rendered with:&#39;</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">&#39;cell_type_colors&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">'cell_type_colors'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'#e41a1c'</span><span class="p">,</span> <span class="s1">'#377eb8'</span><span class="p">,</span> <span class="s1">'#4daf4a'</span><span class="p">,</span> <span class="s1">'#984ea3'</span><span class="p">,</span> <span class="s1">'#ff7f00'</span><span class="p">]</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">'blobs_labels'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'cell_type'</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'rendered with:'</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">'cell_type_colors'</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rendered with: [&#39;#e41a1c&#39;, &#39;#377eb8&#39;, &#39;#4daf4a&#39;, &#39;#984ea3&#39;, &#39;#ff7f00&#39;]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rendered with: ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']
 </pre></div>
 </div>
 <img alt="../../_images/5e1f5b86ca33d05984994b359ec08fd493f7b2b8b306a05e4cac4d999b3a7447.png" src="../../_images/5e1f5b86ca33d05984994b359ec08fd493f7b2b8b306a05e4cac4d999b3a7447.png" />
@@ -519,10 +579,10 @@ Name: count, dtype: int64
 <p><code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> infers whether a column is categorical or continuous from its dtype. Categorical columns use <code class="docutils literal notranslate"><span class="pre">palette=</span></code>; continuous columns use <code class="docutils literal notranslate"><span class="pre">cmap=</span></code>. We clear the <code class="docutils literal notranslate"><span class="pre">.uns['cell_type_colors']</span></code> we set above so this section actually exercises the scanpy fallback.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">table</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">&#39;cell_type_colors&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">table</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s1">'cell_type_colors'</span><span class="p">]</span>
 
 <span class="p">(</span>
-    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cell_type&#39;</span><span class="p">)</span>  <span class="c1"># categorical -&gt; palette</span>
+    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">'blobs_labels'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'cell_type'</span><span class="p">)</span>  <span class="c1"># categorical -&gt; palette</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -535,8 +595,8 @@ Name: count, dtype: int64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
-    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">&#39;blobs_image&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys_r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;channel_0_sum&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">)</span>  <span class="c1"># continuous -&gt; cmap</span>
+    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">'blobs_image'</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'Greys_r'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">'blobs_labels'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'channel_0_sum'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'magma'</span><span class="p">)</span>  <span class="c1"># continuous -&gt; cmap</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -554,7 +614,7 @@ Name: count, dtype: int64
 <h3>Default: non-group elements hidden<a class="headerlink" href="#default-non-group-elements-hidden" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cell_type&#39;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">'blobs_labels'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'cell_type'</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">])</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -569,10 +629,10 @@ Name: count, dtype: int64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
     <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span>
-        <span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cell_type&#39;</span><span class="p">,</span>
-        <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">],</span>
-        <span class="n">na_color</span><span class="o">=</span><span class="s1">&#39;lightgrey&#39;</span><span class="p">,</span>
+        <span class="s1">'blobs_labels'</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">'cell_type'</span><span class="p">,</span>
+        <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">],</span>
+        <span class="n">na_color</span><span class="o">=</span><span class="s1">'lightgrey'</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="p">)</span>
@@ -598,7 +658,7 @@ Name: count, dtype: int64
 <p>A small helper to inspect a palette as a strip of swatches:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">show_palette</span><span class="p">(</span><span class="n">colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">show_palette</span><span class="p">(</span><span class="n">colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">''</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">colors</span><span class="p">):</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">))</span>
@@ -606,7 +666,7 @@ Name: count, dtype: int64
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -614,12 +674,12 @@ Name: count, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span> <span class="s1">&#39;default scanpy palette&#39;</span><span class="p">)</span>
-<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;okabe_ito&#39;</span><span class="p">),</span> <span class="s2">&quot;okabe_ito (8 CVD-safe colours)&quot;</span><span class="p">)</span>
-<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab10&#39;</span><span class="p">),</span> <span class="s1">&#39;tab10, source order&#39;</span><span class="p">)</span>
-<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab10&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;contrast&#39;</span><span class="p">),</span> <span class="s2">&quot;tab10, method=&#39;contrast&#39;&quot;</span><span class="p">)</span>
-<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab10&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;colorblind&#39;</span><span class="p">),</span> <span class="s2">&quot;tab10, method=&#39;colorblind&#39;&quot;</span><span class="p">)</span>
-<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab10&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;deuteranopia&#39;</span><span class="p">),</span> <span class="s2">&quot;tab10, method=&#39;deuteranopia&#39;&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span> <span class="s1">'default scanpy palette'</span><span class="p">)</span>
+<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">'okabe_ito'</span><span class="p">),</span> <span class="s2">"okabe_ito (8 CVD-safe colours)"</span><span class="p">)</span>
+<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">'tab10'</span><span class="p">),</span> <span class="s1">'tab10, source order'</span><span class="p">)</span>
+<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">'tab10'</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'contrast'</span><span class="p">),</span> <span class="s2">"tab10, method='contrast'"</span><span class="p">)</span>
+<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">'tab10'</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'colorblind'</span><span class="p">),</span> <span class="s2">"tab10, method='colorblind'"</span><span class="p">)</span>
+<span class="n">show_palette</span><span class="p">(</span><span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">'tab10'</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'deuteranopia'</span><span class="p">),</span> <span class="s2">"tab10, method='deuteranopia'"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -641,24 +701,24 @@ Name: count, dtype: int64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">palette</span> <span class="o">=</span> <span class="n">sdp</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">make_palette_from_data</span><span class="p">(</span>
     <span class="n">sdata</span><span class="p">,</span>
-    <span class="n">element</span><span class="o">=</span><span class="s1">&#39;blobs_polygons&#39;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;region_type&#39;</span><span class="p">,</span>
-    <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;tab10&#39;</span><span class="p">,</span>
-    <span class="n">method</span><span class="o">=</span><span class="s1">&#39;contrast&#39;</span><span class="p">,</span>
+    <span class="n">element</span><span class="o">=</span><span class="s1">'blobs_polygons'</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">'region_type'</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="s1">'tab10'</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s1">'contrast'</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">palette</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;immune&#39;: &#39;#ff7f0e&#39;, &#39;stroma&#39;: &#39;#2ca02c&#39;, &#39;tumour&#39;: &#39;#1f77b4&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'immune': '#ff7f0e', 'stroma': '#2ca02c', 'tumour': '#1f77b4'}
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s1">&#39;blobs_polygons&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;region_type&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s1">'blobs_polygons'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'region_type'</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -770,11 +830,11 @@ Architecture: 64bit
       </div>
     </a>
     <a class="right-next"
-       href="performance.html"
+       href="normalization_and_contrast.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Speeding up the rendering of large data</p>
+        <p class="prev-next-title">Normalization and contrast in spatialdata-plot</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -795,7 +855,7 @@ Architecture: 64bit
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-does-my-colour-come-from">1. Where does my colour come from?</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literal-colour">Literal colour</a></li>
@@ -861,8 +921,8 @@ By scverse
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
 
   <footer class="bd-footer">
   </footer>
