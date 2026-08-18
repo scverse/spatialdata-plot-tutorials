@@ -1,0 +1,16 @@
+/* Reduce the font size in data frames - See https://github.com/scverse/cookiecutter-scverse/issues/193 */
+div.cell_output table.dataframe {
+    font-size: 0.8em;
+}
+
+/* Gallery cards: normalise thumbnail height so cards line up regardless
+   of the underlying image aspect ratio. Image is contained (not cropped)
+   on a white background, centred in the slot. */
+.sd-card-img-top {
+    height: 300px;
+    width: 100%;
+    object-fit: contain;
+    background: #ffffff;
+    padding: 8px;
+    box-sizing: border-box;
+}
