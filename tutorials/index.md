@@ -54,6 +54,16 @@ Add a physical scalebar with `scalebar_dx`, choose units, and style
 placement, colour, length and fonts through `scalebar_params`.
 :::
 
+:::{grid-item-card} Multichannel & fluorescence images
+:link: /notebooks/tutorials/multichannel_images
+:link-type: doc
+:img-top: /notebooks/_static/img/multichannel_images.png
+
+Render multiplexed and fluorescence images: select channels by name,
+composite them with per-channel `palette` LUTs, fix heavy-tailed contrast
+per channel, and label the composite with `channels_as_legend`.
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -66,4 +76,5 @@ color_and_palette
 multi_panel_color
 performance
 scalebars
+multichannel_images
 ```
