@@ -604,7 +604,7 @@ spot. <code class="docutils literal notranslate"><span class="pre">colorbar=True
 <section id="placing-and-styling-the-colorbar-colorbar-params">
 <h2>7. Placing and styling the colorbar — <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code><a class="headerlink" href="#placing-and-styling-the-colorbar-colorbar-params" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code> accepts <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">loc</span></code> (position — <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code> by default, or <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>/<code class="docutils literal notranslate"><span class="pre">&quot;top&quot;</span></code>/
-<code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code>, plus matplotlib colorbar keys. Set <code class="docutils literal notranslate"><span class="pre">loc</span></code> to move the bar; its orientation
+<code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">width</span></code> (a fraction of the axes), <code class="docutils literal notranslate"><span class="pre">pad</span></code>, plus matplotlib colorbar keys. Set <code class="docutils literal notranslate"><span class="pre">loc</span></code> to move the bar; its orientation
 follows the side automatically (horizontal for top/bottom). Passing only <code class="docutils literal notranslate"><span class="pre">orientation</span></code> does <strong>not</strong>
 move it — the bar stays docked right.</p>
 <div class="cell docutils container">
@@ -633,10 +633,10 @@ image, whose channels are named markers (see the <em>Multichannel &amp; fluoresc
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata_plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">PercentileNormalize</span>
 
 <span class="n">cells</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">cells</span><span class="p">()</span>
-<span class="n">n_channels</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="c1"># a single norm broadcasts to every channel, so this needs no hard-coded channel count</span>
 <span class="n">cells</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
     <span class="s2">"morphology_focus"</span><span class="p">,</span>
-    <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">)]</span> <span class="o">*</span> <span class="n">n_channels</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">),</span>
     <span class="n">channels_as_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -646,7 +646,7 @@ image, whose channels are named markers (see the <em>Multichannel &amp; fluoresc
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/cells.zarr
 </pre></div>
 </div>
-<img alt="../../_images/5a016ada2dfcd15fb49e279bb51c21186235b03eec4d91339e24073343b4a7e0.png" src="../../_images/5a016ada2dfcd15fb49e279bb51c21186235b03eec4d91339e24073343b4a7e0.png" />
+<img alt="../../_images/454859fc98ce3dff1e7bc7dd0ca696b9195c50244578000d13758b3fc65f09fd.png" src="../../_images/454859fc98ce3dff1e7bc7dd0ca696b9195c50244578000d13758b3fc65f09fd.png" />
 </div>
 </div>
 </section>
