@@ -551,6 +551,8 @@ drops the count axis).</p>
 <h2>4. Per-category density<a class="headerlink" href="#per-category-density" title="Link to this heading">#</a></h2>
 <p>Colouring by a categorical column draws a <strong>separate density per category</strong> (via <code class="docutils literal notranslate"><span class="pre">datashader.by</span></code>).
 Here, three marker genes selected with <code class="docutils literal notranslate"><span class="pre">groups</span></code> — each traces its own spatial distribution.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">groups</span></code> set and no <code class="docutils literal notranslate"><span class="pre">na_color</span></code>, transcripts outside the three genes are dropped entirely (not
+greyed), so each density reflects only its own gene.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span>
