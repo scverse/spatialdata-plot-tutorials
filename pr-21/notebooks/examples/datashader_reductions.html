@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Interactive region annotation" href="interactive_annotate.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -439,6 +439,10 @@ and so on. By the end you should be able to:</p>
 </ul>
 <p>We use the real Xenium <code class="docutils literal notranslate"><span class="pre">cells</span></code> dataset from <code class="docutils literal notranslate"><span class="pre">squidpy</span></code> (its <code class="docutils literal notranslate"><span class="pre">transcripts</span></code> element and the
 <code class="docutils literal notranslate"><span class="pre">morphology_focus</span></code> image), downloaded and cached on first use.</p>
+<blockquote>
+<div><p><strong>Watch out:</strong> on the datashader backend a <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> does not clip to its percentiles —
+the single most common datashader-contrast surprise, covered in section 5.</p>
+</div></blockquote>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -479,6 +483,33 @@ with coordinate systems:
 </div>
 </div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">cells</span></code> dataset is a small (~3 MB) crop of a real 10x <strong>Xenium</strong> section (also used in the
+<em>Colouring points</em> example). The reductions below aggregate its <code class="docutils literal notranslate"><span class="pre">transcripts</span></code> points, coloured by the
+quality column <code class="docutils literal notranslate"><span class="pre">qv</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s2">"transcripts"</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>['x',
+ 'y',
+ 'z',
+ 'feature_name',
+ 'cell_id',
+ 'fov_name',
+ 'codeword_index',
+ 'qv',
+ 'transcript_id',
+ 'is_gene',
+ 'codeword_category',
+ 'nucleus_distance',
+ 'overlaps_nucleus']
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="why-a-reduction-is-needed">
 <h2>1. Why a reduction is needed<a class="headerlink" href="#why-a-reduction-is-needed" title="Link to this heading">#</a></h2>
@@ -503,6 +534,8 @@ default is <code class="docutils literal notranslate"><span class="pre">max</spa
 <p>The reduction changes both the picture and the colorbar scale. <code class="docutils literal notranslate"><span class="pre">max</span></code> reports the single brightest value
 in a pixel (bounded by the data max), <code class="docutils literal notranslate"><span class="pre">mean</span></code> averages, and <code class="docutils literal notranslate"><span class="pre">sum</span></code> accumulates — so its colorbar runs far
 higher wherever transcripts pile up.</p>
+<p>As a rule of thumb: <code class="docutils literal notranslate"><span class="pre">sum</span></code> for abundance, <code class="docutils literal notranslate"><span class="pre">mean</span></code> for a typical value, <code class="docutils literal notranslate"><span class="pre">max</span></code> for the brightest signal,
+and <code class="docutils literal notranslate"><span class="pre">std</span></code> (below) for heterogeneity.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">reduction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"max"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"sum"</span><span class="p">]:</span>
@@ -521,8 +554,8 @@ higher wherever transcripts pile up.</p>
 </section>
 <section id="count-and-std-structure-without-a-value-column">
 <h2>3. <code class="docutils literal notranslate"><span class="pre">count</span></code> and <code class="docutils literal notranslate"><span class="pre">std</span></code> — structure without a value column<a class="headerlink" href="#count-and-std-structure-without-a-value-column" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">count</span></code> ignores the colour value and shows how many primitives fall in each pixel (a density, like the
-<em>Point density maps</em> notebook). <code class="docutils literal notranslate"><span class="pre">std</span></code> shows the spread of the values per pixel — useful for finding
+<p><code class="docutils literal notranslate"><span class="pre">count</span></code> ignores the colour value and shows how many primitives fall in each pixel (a density — equivalent to
+<code class="docutils literal notranslate"><span class="pre">density=True</span></code> with no <code class="docutils literal notranslate"><span class="pre">density_how</span></code>, as in the <em>Point density maps</em> notebook). <code class="docutils literal notranslate"><span class="pre">std</span></code> shows the spread of the values per pixel — useful for finding
 heterogeneous regions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -543,6 +576,8 @@ heterogeneous regions.</p>
 <h2>4. Datashader for large images — <code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code><a class="headerlink" href="#datashader-for-large-images-method-datashader" title="Link to this heading">#</a></h2>
 <p>Reductions also apply to images: <code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code> renders large or sparse rasters by aggregating
 pixels, instead of handing the full array to matplotlib.</p>
+<p>The image path takes a slightly different reduction vocabulary — it adds <code class="docutils literal notranslate"><span class="pre">mode</span></code>/<code class="docutils literal notranslate"><span class="pre">first</span></code>/<code class="docutils literal notranslate"><span class="pre">last</span></code> and has
+no <code class="docutils literal notranslate"><span class="pre">count</span></code>/<code class="docutils literal notranslate"><span class="pre">any</span></code> — though here we leave <code class="docutils literal notranslate"><span class="pre">datashader_reduction</span></code> at its default.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
@@ -582,13 +617,14 @@ percentile-driven contrast, render on the matplotlib backend.</p>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <ul class="simple">
+<li><p><strong>Contrast caveat first:</strong> datashader contrast follows the aggregate range, not norm percentiles —
+use the matplotlib backend when you need percentile (or any non-<code class="docutils literal notranslate"><span class="pre">vmin</span></code>/<code class="docutils literal notranslate"><span class="pre">vmax</span></code>) contrast.</p></li>
 <li><p>On the datashader backend, a continuous colour needs a <strong>reduction</strong> to combine the primitives that
 share a pixel; <code class="docutils literal notranslate"><span class="pre">datashader_reduction</span></code> sets it (default <code class="docutils literal notranslate"><span class="pre">max</span></code>).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max</span></code>/<code class="docutils literal notranslate"><span class="pre">mean</span></code>/<code class="docutils literal notranslate"><span class="pre">sum</span></code> change the picture and the colorbar scale; <code class="docutils literal notranslate"><span class="pre">count</span></code> gives a density and <code class="docutils literal notranslate"><span class="pre">std</span></code> the
-per-pixel spread.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code> applies to images too, for large or sparse rasters.</p></li>
-<li><p>Datashader contrast follows the aggregate range, not norm percentiles — use the matplotlib backend
-for percentile contrast.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max</span></code>/<code class="docutils literal notranslate"><span class="pre">mean</span></code>/<code class="docutils literal notranslate"><span class="pre">sum</span></code> change the picture and the colorbar scale; <code class="docutils literal notranslate"><span class="pre">count</span></code> gives a density (same as
+<code class="docutils literal notranslate"><span class="pre">density=True</span></code>) and <code class="docutils literal notranslate"><span class="pre">std</span></code> the per-pixel spread.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code> applies to images too, for large or sparse rasters (with a slightly different
+reduction vocabulary).</p></li>
 </ul>
 </section>
 <section id="for-reproducibility">
