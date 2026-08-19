@@ -577,7 +577,7 @@ heterogeneous regions.</p>
 <p>Reductions also apply to images: <code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code> renders large or sparse rasters by aggregating
 pixels, instead of handing the full array to matplotlib.</p>
 <p>The image path takes a slightly different reduction vocabulary — it adds <code class="docutils literal notranslate"><span class="pre">mode</span></code>/<code class="docutils literal notranslate"><span class="pre">first</span></code>/<code class="docutils literal notranslate"><span class="pre">last</span></code> and has
-no <code class="docutils literal notranslate"><span class="pre">count</span></code>/<code class="docutils literal notranslate"><span class="pre">any</span></code> — though here we leave <code class="docutils literal notranslate"><span class="pre">datashader_reduction</span></code> at its default.</p>
+no <code class="docutils literal notranslate"><span class="pre">count</span></code>/<code class="docutils literal notranslate"><span class="pre">any</span></code>/<code class="docutils literal notranslate"><span class="pre">sum</span></code> (so <code class="docutils literal notranslate"><span class="pre">sum</span></code> works on points but not images) — though here we leave <code class="docutils literal notranslate"><span class="pre">datashader_reduction</span></code> at its default.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
