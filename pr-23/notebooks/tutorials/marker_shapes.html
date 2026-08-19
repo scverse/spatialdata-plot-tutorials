@@ -476,7 +476,8 @@ with coordinate systems:
 </section>
 <section id="the-default-circles">
 <h2>1. The default — circles<a class="headerlink" href="#the-default-circles" title="Link to this heading">#</a></h2>
-<p>Circle elements are drawn as circles. <code class="docutils literal notranslate"><span class="pre">shape=&quot;circle&quot;</span></code> is the default.</p>
+<p>The default is <code class="docutils literal notranslate"><span class="pre">shape=None</span></code>, which renders each element as its stored geometry — circles here.
+Passing <code class="docutils literal notranslate"><span class="pre">shape=&quot;circle&quot;</span></code> is equivalent for circle elements.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"blobs_circles"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -510,6 +511,9 @@ radius. Handy when a tiling look reads better than overlapping discs.</p>
 <p>Visium spots sit on a hexagonal grid, and are often drawn as touching hexagons rather than dots.
 <code class="docutils literal notranslate"><span class="pre">shape=&quot;visium_hex&quot;</span></code> does exactly that. We switch to the real Visium mouse-brain section and colour by
 its brain-region clusters.</p>
+<p>We switch datasets because the synthetic <code class="docutils literal notranslate"><span class="pre">blobs_circles</span></code> are not a real hexagonal grid. The element
+name (<code class="docutils literal notranslate"><span class="pre">&quot;spots&quot;</span></code>) and the columns (<code class="docutils literal notranslate"><span class="pre">&quot;cluster&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;total_counts&quot;</span></code>) below are specific to this dataset —
+inspect <code class="docutils literal notranslate"><span class="pre">sdata.shapes</span></code> and the annotating table’s columns to find the equivalents in your own data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visium</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">visium_hne_sdata</span><span class="p">()</span>
@@ -531,6 +535,7 @@ its brain-region clusters.</p>
 <h2>4. Combining <code class="docutils literal notranslate"><span class="pre">shape=</span></code> with colour and outline<a class="headerlink" href="#combining-shape-with-colour-and-outline" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">shape=</span></code> composes with the usual styling — colour by a column, add an outline, set <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code> (see
 the <em>Styling shapes and labels</em> tutorial).</p>
+<p>(See the <em>Legends and colorbars</em> example for <code class="docutils literal notranslate"><span class="pre">legend_loc</span></code> and <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code>.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visium</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
@@ -550,7 +555,8 @@ the <em>Styling shapes and labels</em> tutorial).</p>
 <ul class="simple">
 <li><p>Circle elements (Visium spots, <code class="docutils literal notranslate"><span class="pre">blobs_circles</span></code>) carry a centre and radius; <code class="docutils literal notranslate"><span class="pre">shape=</span></code> chooses the
 marker they are drawn with, leaving the geometry unchanged.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">shape=</span></code> accepts <code class="docutils literal notranslate"><span class="pre">&quot;circle&quot;</span></code> (default), <code class="docutils literal notranslate"><span class="pre">&quot;hex&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;square&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;visium_hex&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shape=</span></code> accepts <code class="docutils literal notranslate"><span class="pre">None</span></code> (the default, render as-is), <code class="docutils literal notranslate"><span class="pre">&quot;circle&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hex&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;square&quot;</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">&quot;visium_hex&quot;</span></code>; this tutorial uses circle elements (centre + radius), which <code class="docutils literal notranslate"><span class="pre">shape=</span></code> is designed for.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">shape=&quot;visium_hex&quot;</span></code> renders Visium spots as a touching hex grid — the familiar Visium look.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">shape=</span></code> composes with colour, outline, and the other styling arguments.</p></li>
 </ul>
