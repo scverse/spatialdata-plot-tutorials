@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Interactive region annotation" href="interactive_annotate.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -438,8 +438,9 @@ point-colouring arguments. By the end you should be able to:</p>
 </ul>
 <p>We use the real Xenium <code class="docutils literal notranslate"><span class="pre">cells</span></code> dataset from <code class="docutils literal notranslate"><span class="pre">squidpy</span></code> (its <code class="docutils literal notranslate"><span class="pre">transcripts</span></code> element), downloaded and
 cached on first use. Point colouring uses the <strong>matplotlib backend</strong> (<code class="docutils literal notranslate"><span class="pre">method=&quot;matplotlib&quot;</span></code>) so every
-point keeps its own colour; <code class="docutils literal notranslate"><span class="pre">render_points</span></code> otherwise switches to datashader for very large sets — see
-the <em>Point density maps</em> and <em>Speeding up rendering</em> notebooks.</p>
+point keeps its own colour; <code class="docutils literal notranslate"><span class="pre">render_points</span></code> otherwise switches to datashader above ~10,000 points, which aggregates them and so
+cannot keep a distinct colour per point — see the <em>Point density maps</em> and <em>Speeding up rendering</em>
+notebooks.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -476,6 +477,33 @@ the <em>Point density maps</em> and <em>Speeding up rendering</em> notebooks.</p
 with coordinate systems:
     ▸ 'global', with elements:
         he_aligned (Images), he_image (Images), morphology_focus (Images), cell_labels (Labels), nucleus_labels (Labels), tissue_labels (Labels), transcripts (Points), cell_boundaries (Shapes), nucleus_boundaries (Shapes)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">cells</span></code> dataset is a small (~3 MB) crop of a real 10x <strong>Xenium</strong> breast-cancer section,
+cached locally after the first download. The colouring below draws on the columns of its
+<code class="docutils literal notranslate"><span class="pre">transcripts</span></code> points element:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s2">"transcripts"</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>['x',
+ 'y',
+ 'z',
+ 'feature_name',
+ 'cell_id',
+ 'fov_name',
+ 'codeword_index',
+ 'qv',
+ 'transcript_id',
+ 'is_gene',
+ 'codeword_category',
+ 'nucleus_distance',
+ 'overlaps_nucleus']
 </pre></div>
 </div>
 </div>
@@ -546,7 +574,8 @@ assigns the colours.</p>
 <section id="subsetting-categories-groups-and-na-color">
 <h2>4. Subsetting categories — <code class="docutils literal notranslate"><span class="pre">groups</span></code> and <code class="docutils literal notranslate"><span class="pre">na_color</span></code><a class="headerlink" href="#subsetting-categories-groups-and-na-color" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">groups</span></code> restricts colouring to selected categories; everything else is drawn in <code class="docutils literal notranslate"><span class="pre">na_color</span></code>. Here we
-pick a few marker genes and grey out the rest.</p>
+pick a few marker genes and grey out the rest. Omit <code class="docutils literal notranslate"><span class="pre">na_color</span></code> and the non-matching points are hidden
+entirely instead of greyed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span>
@@ -588,9 +617,10 @@ pile up.</p>
 <li><p>A <strong>categorical</strong> <code class="docutils literal notranslate"><span class="pre">color=</span></code> column draws a legend; set colours with <code class="docutils literal notranslate"><span class="pre">palette</span></code>, subset with <code class="docutils literal notranslate"><span class="pre">groups</span></code>,
 and style the remainder with <code class="docutils literal notranslate"><span class="pre">na_color</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">alpha</span></code> tune the markers.</p></li>
-<li><p>Per-point colouring uses the matplotlib backend; for millions of points switch to datashader
-(<code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">density=True</span></code>) — see the <em>Point density maps</em> and <em>Speeding up
-rendering</em> notebooks.</p></li>
+<li><p>Per-point colouring uses the matplotlib backend; <code class="docutils literal notranslate"><span class="pre">render_points</span></code> auto-switches to datashader above
+10,000 points (which drops per-point colour), so pass <code class="docutils literal notranslate"><span class="pre">method=&quot;matplotlib&quot;</span></code> to force it — or reach
+for datashader deliberately (<code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">density=True</span></code>) for millions of points. See
+the <em>Point density maps</em> and <em>Speeding up rendering</em> notebooks.</p></li>
 </ul>
 </section>
 <section id="for-reproducibility">
