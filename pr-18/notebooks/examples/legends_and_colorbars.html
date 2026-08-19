@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="notebooks/examples/legends_and_colorbars.html" />
 <meta property="og:site_name" content="spatialdata-plot" />
-<meta property="og:description" content="Every coloured plot needs a key. spatialdata-plot builds three kinds automatically: a legend for categorical colours, a colorbar for continuous ones, and a channel legend for multichannel images. s..." />
+<meta property="og:description" content="Every coloured plot needs a key. spatialdata-plot builds three kinds automatically: a categorical colour (named groups) gets a legend, a continuous colour (a numeric range) gets a colorbar, and a m..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="_images/social_previews/summary_notebooks_examples_legends_and_colorbars_64bcf9f2.png" />
-<meta property="og:image:alt" content="Every coloured plot needs a key. spatialdata-plot builds three kinds automatically: a legend for categorical colours, a colorbar for continuous ones, and a channel legend for multichannel images. s..." />
-<meta name="description" content="Every coloured plot needs a key. spatialdata-plot builds three kinds automatically: a legend for categorical colours, a colorbar for continuous ones, and a channel legend for multichannel images. s..." />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_examples_legends_and_colorbars_3a18b26e.png" />
+<meta property="og:image:alt" content="Every coloured plot needs a key. spatialdata-plot builds three kinds automatically: a categorical colour (named groups) gets a legend, a continuous colour (a numeric range) gets a colorbar, and a m..." />
+<meta name="description" content="Every coloured plot needs a key. spatialdata-plot builds three kinds automatically: a categorical colour (named groups) gets a legend, a continuous colour (a numeric range) gets a colorbar, and a m..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Legends and colorbars in spatialdata-plot &#8212; spatialdata-plot</title>
@@ -431,9 +431,10 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="legends-and-colorbars-in-spatialdata-plot">
 <h1>Legends and colorbars in spatialdata-plot<a class="headerlink" href="#legends-and-colorbars-in-spatialdata-plot" title="Link to this heading">#</a></h1>
-<p>Every coloured plot needs a key. <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> builds three kinds automatically: a <strong>legend</strong> for
-categorical colours, a <strong>colorbar</strong> for continuous ones, and a <strong>channel legend</strong> for multichannel
-images. <code class="docutils literal notranslate"><span class="pre">show()</span></code> exposes a family of arguments to place and style each. By the end you should be able
+<p>Every coloured plot needs a key. <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> builds three kinds automatically: a <strong>categorical</strong> colour (named groups) gets a
+<strong>legend</strong>, a <strong>continuous</strong> colour (a numeric range) gets a <strong>colorbar</strong>, and a multichannel image
+gets a <strong>channel legend</strong>. <code class="docutils literal notranslate"><span class="pre">show()</span></code> places and styles the legend and colorbar; the channel legend is
+switched on with <code class="docutils literal notranslate"><span class="pre">render_images(channels_as_legend=True)</span></code>. By the end you should be able
 to:</p>
 <ul class="simple">
 <li><p>Place a categorical legend anywhere (<code class="docutils literal notranslate"><span class="pre">legend_loc</span></code>) and restyle it (<code class="docutils literal notranslate"><span class="pre">legend_fontsize</span></code>,
@@ -544,8 +545,8 @@ text, useful over busy images) style the entries; <code class="docutils literal 
 </section>
 <section id="hiding-na-na-in-legend">
 <h2>4. Hiding NA — <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code><a class="headerlink" href="#hiding-na-na-in-legend" title="Link to this heading">#</a></h2>
-<p>When you restrict to a few <code class="docutils literal notranslate"><span class="pre">groups</span></code>, the remaining spots become NA; <code class="docutils literal notranslate"><span class="pre">na_in_legend=False</span></code> drops that
-entry from the key.</p>
+<p><code class="docutils literal notranslate"><span class="pre">groups</span></code> subsets a categorical colour to the named categories; the remaining spots become NA, and
+<code class="docutils literal notranslate"><span class="pre">na_in_legend=False</span></code> drops that NA entry from the key.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -565,6 +566,7 @@ entry from the key.</p>
 <p>Instead of the flat <code class="docutils literal notranslate"><span class="pre">legend_*</span></code> kwargs you can pass one <code class="docutils literal notranslate"><span class="pre">legend_params</span></code> dict. Accepted keys:
 <code class="docutils literal notranslate"><span class="pre">location</span></code> (or <code class="docutils literal notranslate"><span class="pre">loc</span></code>), <code class="docutils literal notranslate"><span class="pre">fontsize</span></code>, <code class="docutils literal notranslate"><span class="pre">fontweight</span></code>, <code class="docutils literal notranslate"><span class="pre">fontoutline</span></code>, <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code>; it overrides the
 matching flat kwargs, and unknown keys raise an error.</p>
+<p>Note <code class="docutils literal notranslate"><span class="pre">legend_title</span></code> is <strong>not</strong> among the accepted keys — keep it as a flat <code class="docutils literal notranslate"><span class="pre">legend_title=</span></code> kwarg.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -601,21 +603,23 @@ spot. <code class="docutils literal notranslate"><span class="pre">colorbar=True
 </section>
 <section id="placing-and-styling-the-colorbar-colorbar-params">
 <h2>7. Placing and styling the colorbar — <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code><a class="headerlink" href="#placing-and-styling-the-colorbar-colorbar-params" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code> accepts <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">loc</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code> (and matplotlib colorbar keys such as
-<code class="docutils literal notranslate"><span class="pre">orientation</span></code>). Move the bar below the plot and give it a label, or dock it to a different side.</p>
+<p><code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code> accepts <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">loc</span></code> (position — <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code> by default, or <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>/<code class="docutils literal notranslate"><span class="pre">&quot;top&quot;</span></code>/
+<code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>), <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code>, plus matplotlib colorbar keys. Set <code class="docutils literal notranslate"><span class="pre">loc</span></code> to move the bar; its orientation
+follows the side automatically (horizontal for top/bottom). Passing only <code class="docutils literal notranslate"><span class="pre">orientation</span></code> does <strong>not</strong>
+move it — the bar stays docked right.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
     <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"spots"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"total_counts"</span><span class="p">)</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
-    <span class="n">colorbar_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"label"</span><span class="p">:</span> <span class="s2">"Total counts"</span><span class="p">,</span> <span class="s2">"orientation"</span><span class="p">:</span> <span class="s2">"horizontal"</span><span class="p">},</span>
+    <span class="n">colorbar_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"loc"</span><span class="p">:</span> <span class="s2">"bottom"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">:</span> <span class="s2">"Total counts"</span><span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/98929f0af7e435228349c848d67f194ed1d15963a46b73f40fc85f3dcd633e0d.png" src="../../_images/98929f0af7e435228349c848d67f194ed1d15963a46b73f40fc85f3dcd633e0d.png" />
+<img alt="../../_images/f7619084b49ae7a0ef632f127a615f0d8293327824f01e06e0651de5b0c1b851.png" src="../../_images/f7619084b49ae7a0ef632f127a615f0d8293327824f01e06e0651de5b0c1b851.png" />
 </div>
 </div>
 </section>
@@ -672,7 +676,8 @@ one.</p>
 <li><p>Place the legend with <code class="docutils literal notranslate"><span class="pre">legend_loc</span></code> (matplotlib locations <em>or</em> <code class="docutils literal notranslate"><span class="pre">&quot;right</span> <span class="pre">margin&quot;</span></code>), and style it with
 <code class="docutils literal notranslate"><span class="pre">legend_fontsize</span></code>/<code class="docutils literal notranslate"><span class="pre">fontweight</span></code>/<code class="docutils literal notranslate"><span class="pre">fontoutline</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_title</span></code>, <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code>; or bundle in
 <code class="docutils literal notranslate"><span class="pre">legend_params</span></code>.</p></li>
-<li><p>Place and style the colorbar with <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code> (<code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">loc</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code>, <code class="docutils literal notranslate"><span class="pre">orientation</span></code>).</p></li>
+<li><p>Place and style the colorbar with <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code>; <code class="docutils literal notranslate"><span class="pre">loc</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code>/<code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>/<code class="docutils literal notranslate"><span class="pre">&quot;top&quot;</span></code>/<code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>)
+sets its position and the orientation follows.</p></li>
 <li><p>In a multi-panel <code class="docutils literal notranslate"><span class="pre">color=[...]</span></code> figure each panel gets the appropriate key.</p></li>
 </ul>
 </section>
