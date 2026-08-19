@@ -507,7 +507,9 @@ with coordinate systems:
 </section>
 <section id="a-single-channel-channel">
 <h2>2. A single channel — <code class="docutils literal notranslate"><span class="pre">channel=</span></code><a class="headerlink" href="#a-single-channel-channel" title="Link to this heading">#</a></h2>
-<p>Pass a channel <strong>name</strong> (or index) to render just that marker. <code class="docutils literal notranslate"><span class="pre">DAPI</span></code> stains nuclei.</p>
+<p>Pass a channel <strong>name</strong> to render just that marker — channels are selected by name. (An integer
+works only when the channel axis is itself integer-named, as in the synthetic <code class="docutils literal notranslate"><span class="pre">blobs</span></code> image; the
+named markers here must be selected by name.) <code class="docutils literal notranslate"><span class="pre">DAPI</span></code> stains nuclei.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s2">"DAPI"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
