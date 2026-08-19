@@ -54,6 +54,15 @@ Add a physical scalebar with `scalebar_dx`, choose units, and style
 placement, colour, length and fonts through `scalebar_params`.
 :::
 
+:::{grid-item-card} Marker shapes
+:link: /notebooks/tutorials/marker_shapes
+:link-type: doc
+:img-top: /notebooks/_static/img/marker_shapes.png
+
+Draw circle elements as circles, hexagons, or squares with `shape=`, and
+render Visium spots as a hex grid with `shape="visium_hex"`.
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -66,4 +75,5 @@ color_and_palette
 multi_panel_color
 performance
 scalebars
+marker_shapes
 ```
