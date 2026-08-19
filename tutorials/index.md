@@ -54,6 +54,16 @@ Add a physical scalebar with `scalebar_dx`, choose units, and style
 placement, colour, length and fonts through `scalebar_params`.
 :::
 
+:::{grid-item-card} Common errors and what they mean
+:link: /notebooks/tutorials/common_errors
+:link-type: doc
+:img-top: /notebooks/_static/img/common_errors.png
+
+A troubleshooting reference: the errors you are most likely to hit —
+missing elements, invalid channels, wrong-length `norm` lists — with what
+triggers each and the one-line fix.
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -66,4 +76,5 @@ color_and_palette
 multi_panel_color
 performance
 scalebars
+common_errors
 ```
