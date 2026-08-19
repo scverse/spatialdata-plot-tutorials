@@ -24,6 +24,16 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 `sdata.pl.annotate(...)` and persist them as a `ShapesModel` element.
 :::
 
+:::{grid-item-card} Colouring by expression
+:link: /notebooks/examples/colouring_by_expression
+:link-type: doc
+:img-top: /notebooks/_static/img/colouring_by_expression.png
+
+Point `render_*` at exactly the values you want: choose the table
+(`table_name`), the matrix (`table_layer`, e.g. raw vs log-normalised), and
+look genes up by symbol (`gene_symbols`).
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -33,4 +43,5 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 
 visium_mouse_brain
 interactive_annotate
+colouring_by_expression
 ```
