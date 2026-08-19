@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Colour and palettes in spatialdata-plot" href="color_and_palette.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -536,6 +536,8 @@ with coordinate systems:
 <section id="the-default-per-channel-min-max">
 <h2>1. The default — per-channel min/max<a class="headerlink" href="#the-default-per-channel-min-max" title="Link to this heading">#</a></h2>
 <p>With no <code class="docutils literal notranslate"><span class="pre">norm</span></code>, every channel is scaled independently to its own min and max. This is the historical default.</p>
+<p><code class="docutils literal notranslate"><span class="pre">blobs_image</span></code> has three channels, so with the default colormap they are composited into a single
+RGB image — channel 0 → red, 1 → green, 2 → blue.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -565,7 +567,7 @@ We render one channel with a colorbar so the limits are visible.</p>
 <section id="clipping-what-happens-outside-vmin-vmax">
 <h2>3. Clipping — what happens outside <code class="docutils literal notranslate"><span class="pre">[vmin,</span> <span class="pre">vmax]</span></code><a class="headerlink" href="#clipping-what-happens-outside-vmin-vmax" title="Link to this heading">#</a></h2>
 <p>With <code class="docutils literal notranslate"><span class="pre">clip=False</span></code> (the default), values below <code class="docutils literal notranslate"><span class="pre">vmin</span></code> or above <code class="docutils literal notranslate"><span class="pre">vmax</span></code> are drawn in the colormap’s <strong>under/over</strong>
-colors. With <code class="docutils literal notranslate"><span class="pre">clip=True</span></code>, they are clamped to the ends instead. We use a cmap with distinct under/over colors
+colors (the special colors a colormap shows for values past each end, set via <code class="docutils literal notranslate"><span class="pre">set_under</span></code> / <code class="docutils literal notranslate"><span class="pre">set_over</span></code>). With <code class="docutils literal notranslate"><span class="pre">clip=True</span></code>, they are clamped to the ends instead. We use a cmap with distinct under/over colors
 to make the difference obvious.</p>
 <p>First, <code class="docutils literal notranslate"><span class="pre">clip=False</span></code> — out-of-range pixels show magenta (under) and red (over):</p>
 <div class="cell docutils container">
@@ -596,8 +598,10 @@ to make the difference obvious.</p>
 </section>
 <section id="logarithmic-scaling-lognorm">
 <h2>4. Logarithmic scaling — <code class="docutils literal notranslate"><span class="pre">LogNorm</span></code><a class="headerlink" href="#logarithmic-scaling-lognorm" title="Link to this heading">#</a></h2>
-<p>For data spanning orders of magnitude. <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> guards the log domain: limits autoscale from the
-<strong>strictly-positive</strong> values only, so a non-positive <code class="docutils literal notranslate"><span class="pre">vmin</span></code> never raises a late “Invalid vmin or vmax”.</p>
+<p>For data spanning orders of magnitude. On the non-image renderers (shapes, points, labels),
+<code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> resolves <code class="docutils literal notranslate"><span class="pre">LogNorm</span></code> limits from the <strong>strictly-positive</strong> data and falls back to a valid
+domain when none exist, so a non-positive <code class="docutils literal notranslate"><span class="pre">vmin</span></code> never raises a late “Invalid vmin or vmax”. On images,
+as below, <code class="docutils literal notranslate"><span class="pre">LogNorm</span></code> is applied directly by matplotlib.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -794,9 +798,11 @@ fill colors and the colorbar</strong>, so the bar always matches the pixels — 
 <p>On the <strong>datashader</strong> backend, contrast autoscales to the aggregated value range, <strong>not</strong> to a norm’s
 percentiles. Explicit <code class="docutils literal notranslate"><span class="pre">vmin</span></code>/<code class="docutils literal notranslate"><span class="pre">vmax</span></code> are still honored. For percentile-driven contrast on points, use the
 default matplotlib backend.</p>
+<p>The cell below passes <code class="docutils literal notranslate"><span class="pre">PercentileNormalize(5,</span> <span class="pre">95)</span></code>, but on datashader those percentile limits are
+ignored — the contrast follows the aggregate range instead.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"blobs_points"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"instance_id"</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"datashader"</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">Normalize</span><span class="p">())</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"blobs_points"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"instance_id"</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"datashader"</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">95</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
