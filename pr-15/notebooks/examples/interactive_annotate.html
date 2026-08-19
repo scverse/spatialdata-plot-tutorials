@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=cde605d6"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Plotting a Visium dataset" href="visium_mouse_brain.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g8bcfe6c4d.d20260814" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -430,7 +430,7 @@
 <p><strong>Credit:</strong> This feature uses <a class="reference external" href="https://github.com/maartenpaul/anybioimage"><code class="docutils literal notranslate"><span class="pre">anybioimage</span></code></a>’s <code class="docutils literal notranslate"><span class="pre">BioImageViewer</span></code>, which was identified as a suitable solution during the <a class="reference external" href="https://github.com/scverse/2026_04_hackathon_padua/issues/22">scverse Padua 2026 hackathon</a>, where <a class="reference external" href="https://github.com/EricMoerthVis">&#64;EricMoerthVis</a>, <a class="reference external" href="https://github.com/Sonja-Stockhaus">&#64;Sonja-Stockhaus</a>, and <a class="reference external" href="https://github.com/asarigun">&#64;asarigun</a> implemented a first POC.</p>
 <p><strong>Dataset</strong>: a Visium H&amp;E mouse brain section, downloaded by <code class="docutils literal notranslate"><span class="pre">squidpy.datasets.visium_hne_sdata</span></code>.</p>
 <p><strong>Requires the <code class="docutils literal notranslate"><span class="pre">interactive</span></code> extra:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;spatialdata-plot[interactive]&#39;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'spatialdata-plot[interactive]'</span>
 </pre></div>
 </div>
 <section id="loading-the-dataset">
@@ -457,13 +457,13 @@
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /Users/tim.treis/Documents/GitHub/spatialdata-plot-notebooks/examples/data/spatialdata/visium_hne_sdata.zarr
 ├── Images
-│     └── &#39;hne&#39;: DataTree[cyx] (3, 11757, 11291), (3, 5878, 5645), (3, 2939, 2822), (3, 1469, 1411)
+│     └── 'hne': DataTree[cyx] (3, 11757, 11291), (3, 5878, 5645), (3, 2939, 2822), (3, 1469, 1411)
 ├── Shapes
-│     └── &#39;spots&#39;: GeoDataFrame shape: (2688, 2) (2D shapes)
+│     └── 'spots': GeoDataFrame shape: (2688, 2) (2D shapes)
 └── Tables
-      └── &#39;adata&#39;: AnnData (2688, 18078)
+      └── 'adata': AnnData (2688, 18078)
 with coordinate systems:
-    ▸ &#39;global&#39;, with elements:
+    ▸ 'global', with elements:
         hne (Images), spots (Shapes)
 </pre></div>
 </div>
@@ -475,7 +475,7 @@ with coordinate systems:
 <p>Before drawing, let’s render the image so we know what to outline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -489,8 +489,8 @@ with coordinate systems:
 <p><code class="docutils literal notranslate"><span class="pre">annotate()</span></code> is a terminal step on a render chain: it rasterises whatever you composed upstream (<code class="docutils literal notranslate"><span class="pre">render_images</span></code> / <code class="docutils literal notranslate"><span class="pre">render_shapes</span></code> / <code class="docutils literal notranslate"><span class="pre">render_points</span></code> / <code class="docutils literal notranslate"><span class="pre">render_labels</span></code>) and hands the resulting RGB to the <code class="docutils literal notranslate"><span class="pre">BioImageViewer</span></code>. Drawn shapes are mapped back from canvas pixels into the chosen coordinate system and stored in <code class="docutils literal notranslate"><span class="pre">sdata.shapes[&lt;name&gt;]</span></code> with an <code class="docutils literal notranslate"><span class="pre">Identity</span></code> transformation in that CS.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
     <span class="n">sdata</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="s2">&quot;global&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">coordinate_systems</span><span class="o">=</span><span class="s2">"global"</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -508,7 +508,7 @@ with coordinate systems:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pretend the user drew this polygon in the widget and clicked Save with</span>
-<span class="c1"># name=&quot;poly&quot;. Coordinates are in the &#39;global&#39; coordinate system</span>
+<span class="c1"># name="poly". Coordinates are in the 'global' coordinate system</span>
 <span class="c1"># of the visium_hne_sdata dataset.</span>
 <span class="n">hippocampus_polygon</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span>
     <span class="p">[</span>
@@ -538,11 +538,11 @@ with coordinate systems:
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpd</span>
 
-<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">&quot;poly&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ShapesModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
-    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">({</span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">hippocampus_polygon</span><span class="p">]}),</span>
-    <span class="n">transformations</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;global&quot;</span><span class="p">:</span> <span class="n">Identity</span><span class="p">()},</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">"poly"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ShapesModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">({</span><span class="s2">"geometry"</span><span class="p">:</span> <span class="p">[</span><span class="n">hippocampus_polygon</span><span class="p">]}),</span>
+    <span class="n">transformations</span><span class="o">=</span><span class="p">{</span><span class="s2">"global"</span><span class="p">:</span> <span class="n">Identity</span><span class="p">()},</span>
 <span class="p">)</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">&quot;poly&quot;</span><span class="p">]</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">"poly"</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -585,8 +585,8 @@ with coordinate systems:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
     <span class="n">sdata</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;poly&quot;</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"poly"</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -604,8 +604,8 @@ with coordinate systems:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">polygon_query</span><span class="p">(</span>
     <span class="n">sdata</span><span class="p">,</span>
-    <span class="n">sdata</span><span class="p">[</span><span class="s2">&quot;poly&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-    <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">&quot;global&quot;</span><span class="p">,</span>
+    <span class="n">sdata</span><span class="p">[</span><span class="s2">"poly"</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">"global"</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">subset</span>
 </pre></div>
@@ -614,14 +614,14 @@ with coordinate systems:
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object
 ├── Images
-│     └── &#39;hne&#39;: DataTree[cyx] (3, 2352, 4035), (3, 1176, 2017), (3, 588, 1008), (3, 294, 505)
+│     └── 'hne': DataTree[cyx] (3, 2352, 4035), (3, 1176, 2017), (3, 588, 1008), (3, 294, 505)
 ├── Shapes
-│     ├── &#39;poly&#39;: GeoDataFrame shape: (1, 1) (2D shapes)
-│     └── &#39;spots&#39;: GeoDataFrame shape: (351, 2) (2D shapes)
+│     ├── 'poly': GeoDataFrame shape: (1, 1) (2D shapes)
+│     └── 'spots': GeoDataFrame shape: (351, 2) (2D shapes)
 └── Tables
-      └── &#39;adata&#39;: AnnData (351, 18078)
+      └── 'adata': AnnData (351, 18078)
 with coordinate systems:
-    ▸ &#39;global&#39;, with elements:
+    ▸ 'global', with elements:
         hne (Images), poly (Shapes), spots (Shapes)
 </pre></div>
 </div>
@@ -631,8 +631,8 @@ with coordinate systems:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
     <span class="n">subset</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;hne&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">&quot;spots&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;total_counts&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"spots"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"total_counts"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>

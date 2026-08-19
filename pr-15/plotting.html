@@ -54,7 +54,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="_static/documentation_options.js?v=cde605d6"></script>
+    <script src="_static/documentation_options.js?v=d505e5a5"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -69,7 +69,7 @@
     <link rel="prev" title="API" href="api.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g8bcfe6c4d.d20260814" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -497,12 +497,12 @@ re-runs; usually you can ignore the return value.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>  <span class="c1"># noqa: F401  registers .pl</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span>
-<span class="gp">... </span>    <span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;he&quot;</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;cells&quot;</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">"he"</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">"cells"</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">annotate</span><span class="p">()</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ... user draws and clicks Save with name &quot;tumor&quot; ...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">&quot;tumor&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ... user draws and clicks Save with name "tumor" ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s2">"tumor"</span><span class="p">]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -838,12 +838,12 @@ A copy of the SpatialData object with the rendering parameters stored in its plo
 </dl>
 <p class="rubric">Examples</p>
 <p>Plain density of all transcripts:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">&quot;transcripts&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"transcripts"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Per-gene density with a categorical palette:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="s2">&quot;transcripts&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Gad1&quot;</span><span class="p">,</span> <span class="s2">&quot;Slc17a7&quot;</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;tab20&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
+<span class="gp">... </span>    <span class="s2">"transcripts"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gene"</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s2">"Gad1"</span><span class="p">,</span> <span class="s2">"Slc17a7"</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="s2">"tab20"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
 <span class="gp">... </span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>

@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=cde605d6"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Tutorials" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g8bcfe6c4d.d20260814" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -448,21 +448,21 @@
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object
 ├── Images
-│     ├── &#39;blobs_image&#39;: DataArray[cyx] (3, 512, 512)
-│     └── &#39;blobs_multiscale_image&#39;: DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
+│     ├── 'blobs_image': DataArray[cyx] (3, 512, 512)
+│     └── 'blobs_multiscale_image': DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
 ├── Labels
-│     ├── &#39;blobs_labels&#39;: DataArray[yx] (512, 512)
-│     └── &#39;blobs_multiscale_labels&#39;: DataTree[yx] (512, 512), (256, 256), (128, 128)
+│     ├── 'blobs_labels': DataArray[yx] (512, 512)
+│     └── 'blobs_multiscale_labels': DataTree[yx] (512, 512), (256, 256), (128, 128)
 ├── Points
-│     └── &#39;blobs_points&#39;: DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
+│     └── 'blobs_points': DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
 ├── Shapes
-│     ├── &#39;blobs_circles&#39;: GeoDataFrame shape: (5, 2) (2D shapes)
-│     ├── &#39;blobs_multipolygons&#39;: GeoDataFrame shape: (2, 1) (2D shapes)
-│     └── &#39;blobs_polygons&#39;: GeoDataFrame shape: (5, 1) (2D shapes)
+│     ├── 'blobs_circles': GeoDataFrame shape: (5, 2) (2D shapes)
+│     ├── 'blobs_multipolygons': GeoDataFrame shape: (2, 1) (2D shapes)
+│     └── 'blobs_polygons': GeoDataFrame shape: (5, 1) (2D shapes)
 └── Tables
-      └── &#39;table&#39;: AnnData (26, 3)
+      └── 'table': AnnData (26, 3)
 with coordinate systems:
-    ▸ &#39;global&#39;, with elements:
+    ▸ 'global', with elements:
         blobs_image (Images), blobs_multiscale_image (Images), blobs_labels (Labels), blobs_multiscale_labels (Labels), blobs_points (Points), blobs_circles (Shapes), blobs_multipolygons (Shapes), blobs_polygons (Shapes)
 </pre></div>
 </div>
@@ -480,7 +480,7 @@ with coordinate systems:
 <h3>Render an image<a class="headerlink" href="#render-an-image" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -494,7 +494,7 @@ with coordinate systems:
 <p>By default labels are filled. Use <code class="docutils literal notranslate"><span class="pre">contour_px</span></code> to draw boundaries instead, useful for overlaying segmentations on top of an image without hiding pixel-level detail.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">&quot;blobs_labels&quot;</span><span class="p">,</span> <span class="n">contour_px</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"blobs_labels"</span><span class="p">,</span> <span class="n">contour_px</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -508,7 +508,7 @@ with coordinate systems:
 <p>Points carry per-row metadata (here a <code class="docutils literal notranslate"><span class="pre">genes</span></code> column). Pass <code class="docutils literal notranslate"><span class="pre">color=</span></code> to color points by any column in the points dataframe or any var/obs column in the linked table.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">&quot;blobs_points&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;genes&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"blobs_points"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"genes"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -524,9 +524,9 @@ with coordinate systems:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
-    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">&quot;blobs_labels&quot;</span><span class="p">,</span> <span class="n">contour_px</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">outline_alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">&quot;blobs_points&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;genes&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"blobs_labels"</span><span class="p">,</span> <span class="n">contour_px</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">outline_alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"blobs_points"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"genes"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -543,8 +543,8 @@ with coordinate systems:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
-    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">&quot;blobs_labels&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;channel_0_sum&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"blobs_labels"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"channel_0_sum"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -561,15 +561,15 @@ with coordinate systems:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
-    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span>
+    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
-        <span class="s2">&quot;blobs_circles&quot;</span><span class="p">,</span>
+        <span class="s2">"blobs_circles"</span><span class="p">,</span>
         <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
         <span class="n">outline_width</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
-        <span class="n">outline_color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="n">outline_color</span><span class="o">=</span><span class="s2">"white"</span><span class="p">,</span>
         <span class="n">outline_alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">&quot;blobs_points&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;genes&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"blobs_points"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"genes"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="p">)</span>
 </pre></div>

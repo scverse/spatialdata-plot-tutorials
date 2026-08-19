@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=cde605d6"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Colour and palettes in spatialdata-plot" href="color_and_palette.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g8bcfe6c4d.d20260814" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -448,17 +448,17 @@
 <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># A categorical and (built-in) continuous columns on the table annotate blobs_labels.</span>
-<span class="n">table</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="s1">&#39;table&#39;</span><span class="p">]</span>
-<span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;cell_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
-    <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">n_obs</span><span class="p">),</span>
-    <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">],</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="s1">'table'</span><span class="p">]</span>
+<span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
+    <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">,</span> <span class="s1">'D'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">n_obs</span><span class="p">),</span>
+    <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">,</span> <span class="s1">'D'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">],</span>
 <span class="p">)</span>
 
 <span class="c1"># A categorical and a continuous column directly on a shapes GeoDataFrame.</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">&#39;blobs_polygons&#39;</span><span class="p">][</span><span class="s1">&#39;region_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
-    <span class="p">[</span><span class="s1">&#39;stroma&#39;</span><span class="p">,</span> <span class="s1">&#39;tumour&#39;</span><span class="p">,</span> <span class="s1">&#39;stroma&#39;</span><span class="p">,</span> <span class="s1">&#39;immune&#39;</span><span class="p">,</span> <span class="s1">&#39;tumour&#39;</span><span class="p">],</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">'blobs_polygons'</span><span class="p">][</span><span class="s1">'region_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">'stroma'</span><span class="p">,</span> <span class="s1">'tumour'</span><span class="p">,</span> <span class="s1">'stroma'</span><span class="p">,</span> <span class="s1">'immune'</span><span class="p">,</span> <span class="s1">'tumour'</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">&#39;blobs_polygons&#39;</span><span class="p">][</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">&#39;blobs_polygons&#39;</span><span class="p">]))</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">'blobs_polygons'</span><span class="p">][</span><span class="s1">'score'</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">'blobs_polygons'</span><span class="p">]))</span>
 <span class="n">sdata</span>
 </pre></div>
 </div>
@@ -466,21 +466,21 @@
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object
 ├── Images
-│     ├── &#39;blobs_image&#39;: DataArray[cyx] (3, 512, 512)
-│     └── &#39;blobs_multiscale_image&#39;: DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
+│     ├── 'blobs_image': DataArray[cyx] (3, 512, 512)
+│     └── 'blobs_multiscale_image': DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
 ├── Labels
-│     ├── &#39;blobs_labels&#39;: DataArray[yx] (512, 512)
-│     └── &#39;blobs_multiscale_labels&#39;: DataTree[yx] (512, 512), (256, 256), (128, 128)
+│     ├── 'blobs_labels': DataArray[yx] (512, 512)
+│     └── 'blobs_multiscale_labels': DataTree[yx] (512, 512), (256, 256), (128, 128)
 ├── Points
-│     └── &#39;blobs_points&#39;: DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
+│     └── 'blobs_points': DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
 ├── Shapes
-│     ├── &#39;blobs_circles&#39;: GeoDataFrame shape: (5, 2) (2D shapes)
-│     ├── &#39;blobs_multipolygons&#39;: GeoDataFrame shape: (2, 1) (2D shapes)
-│     └── &#39;blobs_polygons&#39;: GeoDataFrame shape: (5, 3) (2D shapes)
+│     ├── 'blobs_circles': GeoDataFrame shape: (5, 2) (2D shapes)
+│     ├── 'blobs_multipolygons': GeoDataFrame shape: (2, 1) (2D shapes)
+│     └── 'blobs_polygons': GeoDataFrame shape: (5, 3) (2D shapes)
 └── Tables
-      └── &#39;table&#39;: AnnData (26, 3)
+      └── 'table': AnnData (26, 3)
 with coordinate systems:
-    ▸ &#39;global&#39;, with elements:
+    ▸ 'global', with elements:
         blobs_image (Images), blobs_multiscale_image (Images), blobs_labels (Labels), blobs_multiscale_labels (Labels), blobs_points (Points), blobs_circles (Shapes), blobs_multipolygons (Shapes), blobs_polygons (Shapes)
 </pre></div>
 </div>
@@ -492,7 +492,7 @@ with coordinate systems:
 <p>A single string colours one panel. Pass a <strong>list</strong> and each entry becomes its own panel of the same element — one figure, many colourings. <code class="docutils literal notranslate"><span class="pre">show(ncols=...)</span></code> lays the panels out in a grid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cell_type&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">'blobs_labels'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'cell_type'</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -504,8 +504,8 @@ with coordinate systems:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Four colourings of the same labels, arranged 2x2.</span>
 <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span>
-    <span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cell_type&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_0_sum&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_1_sum&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_2_sum&#39;</span><span class="p">],</span>
+    <span class="s1">'blobs_labels'</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">,</span> <span class="s1">'channel_0_sum'</span><span class="p">,</span> <span class="s1">'channel_1_sum'</span><span class="p">,</span> <span class="s1">'channel_2_sum'</span><span class="p">],</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -521,8 +521,8 @@ with coordinate systems:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span>
-    <span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channel_0_sum&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_1_sum&#39;</span><span class="p">],</span>
+    <span class="s1">'blobs_labels'</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'channel_0_sum'</span><span class="p">,</span> <span class="s1">'channel_1_sum'</span><span class="p">],</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -538,8 +538,8 @@ with coordinate systems:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
-    <span class="s1">&#39;blobs_polygons&#39;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;region_type&#39;</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">],</span>
+    <span class="s1">'blobs_polygons'</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'region_type'</span><span class="p">,</span> <span class="s1">'score'</span><span class="p">],</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -555,8 +555,8 @@ with coordinate systems:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span>
-    <span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cell_type&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_0_sum&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_1_sum&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_2_sum&#39;</span><span class="p">],</span>
+    <span class="s1">'blobs_labels'</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">,</span> <span class="s1">'channel_0_sum'</span><span class="p">,</span> <span class="s1">'channel_1_sum'</span><span class="p">,</span> <span class="s1">'channel_2_sum'</span><span class="p">],</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -572,9 +572,9 @@ with coordinate systems:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span>
-    <span class="s1">&#39;blobs_labels&#39;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channel_0_sum&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_1_sum&#39;</span><span class="p">,</span> <span class="s1">&#39;channel_2_sum&#39;</span><span class="p">],</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">,</span>
+    <span class="s1">'blobs_labels'</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'channel_0_sum'</span><span class="p">,</span> <span class="s1">'channel_1_sum'</span><span class="p">,</span> <span class="s1">'channel_2_sum'</span><span class="p">],</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s1">'magma'</span><span class="p">,</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>

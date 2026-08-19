@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=cde605d6"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Rendering elements as points with as_points" href="as_points.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g8bcfe6c4d.d20260814" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -450,21 +450,21 @@
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object
 ├── Images
-│     ├── &#39;blobs_image&#39;: DataArray[cyx] (3, 512, 512)
-│     └── &#39;blobs_multiscale_image&#39;: DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
+│     ├── 'blobs_image': DataArray[cyx] (3, 512, 512)
+│     └── 'blobs_multiscale_image': DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
 ├── Labels
-│     ├── &#39;blobs_labels&#39;: DataArray[yx] (512, 512)
-│     └── &#39;blobs_multiscale_labels&#39;: DataTree[yx] (512, 512), (256, 256), (128, 128)
+│     ├── 'blobs_labels': DataArray[yx] (512, 512)
+│     └── 'blobs_multiscale_labels': DataTree[yx] (512, 512), (256, 256), (128, 128)
 ├── Points
-│     └── &#39;blobs_points&#39;: DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
+│     └── 'blobs_points': DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
 ├── Shapes
-│     ├── &#39;blobs_circles&#39;: GeoDataFrame shape: (5, 2) (2D shapes)
-│     ├── &#39;blobs_multipolygons&#39;: GeoDataFrame shape: (2, 1) (2D shapes)
-│     └── &#39;blobs_polygons&#39;: GeoDataFrame shape: (5, 1) (2D shapes)
+│     ├── 'blobs_circles': GeoDataFrame shape: (5, 2) (2D shapes)
+│     ├── 'blobs_multipolygons': GeoDataFrame shape: (2, 1) (2D shapes)
+│     └── 'blobs_polygons': GeoDataFrame shape: (5, 1) (2D shapes)
 └── Tables
-      └── &#39;table&#39;: AnnData (26, 3)
+      └── 'table': AnnData (26, 3)
 with coordinate systems:
-    ▸ &#39;global&#39;, with elements:
+    ▸ 'global', with elements:
         blobs_image (Images), blobs_multiscale_image (Images), blobs_labels (Labels), blobs_multiscale_labels (Labels), blobs_points (Points), blobs_circles (Shapes), blobs_multipolygons (Shapes), blobs_polygons (Shapes)
 </pre></div>
 </div>
@@ -478,9 +478,9 @@ with coordinate systems:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PX_SIZE_UM</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># physical size of one pixel, taken from the acquisition metadata</span>
 
-<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
     <span class="n">scalebar_dx</span><span class="o">=</span><span class="n">PX_SIZE_UM</span><span class="p">,</span>
-    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">&quot;um&quot;</span><span class="p">,</span>
+    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">"um"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -501,10 +501,10 @@ with coordinate systems:
 <p><code class="docutils literal notranslate"><span class="pre">scalebar_units</span></code> is simply the unit your <code class="docutils literal notranslate"><span class="pre">scalebar_dx</span></code> is expressed in. In the background, it uses <a class="reference external" href="https://pypi.org/project/matplotlib-scalebar/">matplotlib-scalebar</a>, which picks a human-friendly magnitude automatically — a bar spanning thousands of µm is relabelled in mm. Here the same image at a coarse 50 µm/pixel crosses that threshold:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
     <span class="n">scalebar_dx</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span>  <span class="c1"># coarse resolution: 50 µm per pixel</span>
-    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">&quot;um&quot;</span><span class="p">,</span>
-    <span class="n">scalebar_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;lower right&quot;</span><span class="p">},</span>
+    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">"um"</span><span class="p">,</span>
+    <span class="n">scalebar_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"location"</span><span class="p">:</span> <span class="s2">"lower right"</span><span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -527,16 +527,16 @@ with coordinate systems:
 <p>The default box is <strong>white</strong>, so on a dark image like <code class="docutils literal notranslate"><span class="pre">blobs</span></code> you either keep the default (dark bar on a white box) or, if you switch to <code class="docutils literal notranslate"><span class="pre">color=&quot;white&quot;</span></code>, pair it with a dark box (<code class="docutils literal notranslate"><span class="pre">box_color</span></code>/<code class="docutils literal notranslate"><span class="pre">box_alpha</span></code>) or <code class="docutils literal notranslate"><span class="pre">frameon=False</span></code> — otherwise the white bar lands on the white box and disappears.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
     <span class="n">scalebar_dx</span><span class="o">=</span><span class="n">PX_SIZE_UM</span><span class="p">,</span>
-    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">&quot;um&quot;</span><span class="p">,</span>
+    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">"um"</span><span class="p">,</span>
     <span class="n">scalebar_params</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;lower left&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;box_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;box_alpha&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
-        <span class="s2">&quot;length_fraction&quot;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
-        <span class="s2">&quot;scale_loc&quot;</span><span class="p">:</span> <span class="s2">&quot;top&quot;</span><span class="p">,</span>
+        <span class="s2">"location"</span><span class="p">:</span> <span class="s2">"lower left"</span><span class="p">,</span>
+        <span class="s2">"color"</span><span class="p">:</span> <span class="s2">"white"</span><span class="p">,</span>
+        <span class="s2">"box_color"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span>
+        <span class="s2">"box_alpha"</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+        <span class="s2">"length_fraction"</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
+        <span class="s2">"scale_loc"</span><span class="p">:</span> <span class="s2">"top"</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
@@ -549,15 +549,15 @@ with coordinate systems:
 <p>Font styling goes through <code class="docutils literal notranslate"><span class="pre">font_properties</span></code>, a matplotlib font dict:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
     <span class="n">scalebar_dx</span><span class="o">=</span><span class="n">PX_SIZE_UM</span><span class="p">,</span>
-    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">&quot;um&quot;</span><span class="p">,</span>
+    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">"um"</span><span class="p">,</span>
     <span class="n">scalebar_params</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;box_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;box_alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="s2">&quot;font_properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">},</span>
+        <span class="s2">"location"</span><span class="p">:</span> <span class="s2">"lower right"</span><span class="p">,</span>
+        <span class="s2">"color"</span><span class="p">:</span> <span class="s2">"white"</span><span class="p">,</span>
+        <span class="s2">"box_color"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span>
+        <span class="s2">"box_alpha"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s2">"font_properties"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"size"</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span> <span class="s2">"weight"</span><span class="p">:</span> <span class="s2">"bold"</span><span class="p">},</span>
     <span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
@@ -573,16 +573,16 @@ with coordinate systems:
 <p>By default the bar snaps to a round length near <code class="docutils literal notranslate"><span class="pre">length_fraction</span></code>. To force an exact length — e.g. a 100 µm bar for a figure panel — set <code class="docutils literal notranslate"><span class="pre">fixed_value</span></code> (and <code class="docutils literal notranslate"><span class="pre">fixed_units</span></code>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
     <span class="n">scalebar_dx</span><span class="o">=</span><span class="n">PX_SIZE_UM</span><span class="p">,</span>
-    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">&quot;um&quot;</span><span class="p">,</span>
+    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">"um"</span><span class="p">,</span>
     <span class="n">scalebar_params</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;box_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;box_alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="s2">&quot;fixed_value&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-        <span class="s2">&quot;fixed_units&quot;</span><span class="p">:</span> <span class="s2">&quot;um&quot;</span><span class="p">,</span>
+        <span class="s2">"location"</span><span class="p">:</span> <span class="s2">"lower right"</span><span class="p">,</span>
+        <span class="s2">"color"</span><span class="p">:</span> <span class="s2">"white"</span><span class="p">,</span>
+        <span class="s2">"box_color"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span>
+        <span class="s2">"box_alpha"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s2">"fixed_value"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">"fixed_units"</span><span class="p">:</span> <span class="s2">"um"</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
@@ -598,19 +598,19 @@ with coordinate systems:
 <p>Two more <code class="docutils literal notranslate"><span class="pre">scalebar_params</span></code> round things out. <code class="docutils literal notranslate"><span class="pre">rotation</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;horizontal&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;vertical&quot;</span></code>) turns the bar on its side — useful when the free space in a panel is a tall strip rather than a wide one. <code class="docutils literal notranslate"><span class="pre">label</span></code> adds your own text alongside the automatic value, effectively a title for the bar, and <code class="docutils literal notranslate"><span class="pre">label_loc</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;top&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>) places it relative to the bar.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">&quot;blobs_image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
     <span class="n">scalebar_dx</span><span class="o">=</span><span class="n">PX_SIZE_UM</span><span class="p">,</span>
-    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">&quot;um&quot;</span><span class="p">,</span>
+    <span class="n">scalebar_units</span><span class="o">=</span><span class="s2">"um"</span><span class="p">,</span>
     <span class="n">scalebar_params</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;box_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;box_alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="s2">&quot;fixed_value&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-        <span class="s2">&quot;fixed_units&quot;</span><span class="p">:</span> <span class="s2">&quot;um&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;rotation&quot;</span><span class="p">:</span> <span class="s2">&quot;vertical&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;scale&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;label_loc&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span>
+        <span class="s2">"location"</span><span class="p">:</span> <span class="s2">"lower right"</span><span class="p">,</span>
+        <span class="s2">"color"</span><span class="p">:</span> <span class="s2">"white"</span><span class="p">,</span>
+        <span class="s2">"box_color"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span>
+        <span class="s2">"box_alpha"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s2">"fixed_value"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">"fixed_units"</span><span class="p">:</span> <span class="s2">"um"</span><span class="p">,</span>
+        <span class="s2">"rotation"</span><span class="p">:</span> <span class="s2">"vertical"</span><span class="p">,</span>
+        <span class="s2">"label"</span><span class="p">:</span> <span class="s2">"scale"</span><span class="p">,</span>
+        <span class="s2">"label_loc"</span><span class="p">:</span> <span class="s2">"left"</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
