@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Interactive region annotation" href="interactive_annotate.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -438,7 +438,8 @@ heatmap, so you can see where signal concentrates. By the end you should be able
 <li><p>Recognise which parameters density ignores, and why.</p></li>
 </ul>
 <p>We use the full 10x <strong>Xenium</strong> breast-cancer sample (Janesick et al.) from the SpatialData sandbox —
-about <strong>43 million</strong> transcripts. It is a ~3.6 GB download, fetched and cached on first use.</p>
+about <strong>43 million</strong> transcripts. It is a ~3.6 GB download (allow several minutes and ~4 GB free disk on the first run); it is cached
+afterwards, and this notebook is not re-executed in CI — its outputs are committed.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -487,24 +488,26 @@ with coordinate systems:
 </section>
 <section id="the-overplotting-problem">
 <h2>1. The overplotting problem<a class="headerlink" href="#the-overplotting-problem" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">transcripts</span></code> holds ~43 million points — far too many to draw as markers. Even zoomed into a small
-2 mm² window the markers already overlap into a solid mass, and the full sample would be
-both unreadable and very slow to render.</p>
+<p><code class="docutils literal notranslate"><span class="pre">transcripts</span></code> holds ~43 million points — far too many to draw as markers. Zoomed into a small
+0.25 mm² window (500×500 µm, in global-coordinate-system units) and forced onto the
+matplotlib backend with <code class="docutils literal notranslate"><span class="pre">method=&quot;matplotlib&quot;</span></code>, the individual markers already overlap into a solid
+mass; the full sample would be both unreadable and very slow. Without <code class="docutils literal notranslate"><span class="pre">method</span></code>, <code class="docutils literal notranslate"><span class="pre">render_points</span></code> would
+itself switch to datashader above 10,000 points — the very aggregation we make explicit next.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="kn">import</span> <span class="n">bounding_box_query</span>
 
 <span class="n">window</span> <span class="o">=</span> <span class="n">bounding_box_query</span><span class="p">(</span>
     <span class="n">sdata</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">),</span>
-    <span class="n">min_coordinate</span><span class="o">=</span><span class="p">[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">12000</span><span class="p">],</span> <span class="n">max_coordinate</span><span class="o">=</span><span class="p">[</span><span class="mi">11000</span><span class="p">,</span> <span class="mi">13000</span><span class="p">],</span>
+    <span class="n">min_coordinate</span><span class="o">=</span><span class="p">[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">12000</span><span class="p">],</span> <span class="n">max_coordinate</span><span class="o">=</span><span class="p">[</span><span class="mi">10500</span><span class="p">,</span> <span class="mi">12500</span><span class="p">],</span>
     <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">"global"</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">window</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"transcripts"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">window</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"transcripts"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"matplotlib"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/722459b09144be4f7f4f408e77943d039fd9343109e381b0c825f3a4f9aae416.png" src="../../_images/722459b09144be4f7f4f408e77943d039fd9343109e381b0c825f3a4f9aae416.png" />
+<img alt="../../_images/419be786d555239bc89bfcf70a33f8f80551febf77959334e56d7050a857d478.png" src="../../_images/419be786d555239bc89bfcf70a33f8f80551febf77959334e56d7050a857d478.png" />
 </div>
 </div>
 </section>
@@ -531,7 +534,7 @@ the range), and <code class="docutils literal notranslate"><span class="pre">eq_
 drops the count axis).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">how</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"linear"</span><span class="p">,</span> <span class="s2">"log"</span><span class="p">,</span> <span class="s2">"eq_hist"</span><span class="p">]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">how</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"linear"</span><span class="p">,</span> <span class="s2">"log"</span><span class="p">,</span> <span class="s2">"cbrt"</span><span class="p">,</span> <span class="s2">"eq_hist"</span><span class="p">]:</span>
     <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"transcripts"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">density_how</span><span class="o">=</span><span class="n">how</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -539,6 +542,7 @@ drops the count axis).</p>
 <div class="cell_output docutils container">
 <img alt="../../_images/72f1e354d62316e3da95c2ba26f193c6bb876f55097c71bbdb32c224d8ab29c9.png" src="../../_images/72f1e354d62316e3da95c2ba26f193c6bb876f55097c71bbdb32c224d8ab29c9.png" />
 <img alt="../../_images/9d083c0bd83c171f8368b7a605f10bc625a1cd94ab550a2cdfaee5bec76c07f2.png" src="../../_images/9d083c0bd83c171f8368b7a605f10bc625a1cd94ab550a2cdfaee5bec76c07f2.png" />
+<img alt="../../_images/5bb540817569d78ea56e4eba0c27152ca93ef643bcc77e393a49fe4b5b00b1b0.png" src="../../_images/5bb540817569d78ea56e4eba0c27152ca93ef643bcc77e393a49fe4b5b00b1b0.png" />
 <img alt="../../_images/82ecde3c11e9f93a8f05079f8f96e45b7690ab5d511b8b0e507ff04d24380091.png" src="../../_images/82ecde3c11e9f93a8f05079f8f96e45b7690ab5d511b8b0e507ff04d24380091.png" />
 </div>
 </div>
@@ -591,7 +595,8 @@ density</strong> heatmap you can actually read.</p></li>
 surfaces the most structure at the cost of the count axis.</p></li>
 <li><p>A categorical <code class="docutils literal notranslate"><span class="pre">color</span></code> draws one density per category; <code class="docutils literal notranslate"><span class="pre">color=None</span></code> gives the overall density.</p></li>
 <li><p>Density ignores marker-level parameters (<code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">transfunc</span></code>, <code class="docutils literal notranslate"><span class="pre">norm</span></code> limits,
-<code class="docutils literal notranslate"><span class="pre">datashader_reduction</span></code>) — for those, plot markers or use <code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code> without <code class="docutils literal notranslate"><span class="pre">density</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">datashader_reduction</span></code>) — for those, plot markers on a cropped or smaller element, or use <code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code> without
+<code class="docutils literal notranslate"><span class="pre">density</span></code>.</p></li>
 </ul>
 </section>
 <section id="for-reproducibility">
