@@ -11,12 +11,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="notebooks/examples/legends_and_colorbars.html" />
 <meta property="og:site_name" content="spatialdata-plot" />
-<meta property="og:description" content="Every coloured plot needs a key: a legend for categorical colours and a colorbar for continuous ones. show() builds both automatically and exposes a family of arguments to place and style them. By ..." />
+<meta property="og:description" content="Every coloured plot needs a key. spatialdata-plot builds three kinds automatically: a legend for categorical colours, a colorbar for continuous ones, and a channel legend for multichannel images. s..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="_images/social_previews/summary_notebooks_examples_legends_and_colorbars_b542ed54.png" />
-<meta property="og:image:alt" content="Every coloured plot needs a key: a legend for categorical colours and a colorbar for continuous ones. show() builds both automatically and exposes a family of arguments to place and style them. By ..." />
-<meta name="description" content="Every coloured plot needs a key: a legend for categorical colours and a colorbar for continuous ones. show() builds both automatically and exposes a family of arguments to place and style them. By ..." />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_examples_legends_and_colorbars_64bcf9f2.png" />
+<meta property="og:image:alt" content="Every coloured plot needs a key. spatialdata-plot builds three kinds automatically: a legend for categorical colours, a colorbar for continuous ones, and a channel legend for multichannel images. s..." />
+<meta name="description" content="Every coloured plot needs a key. spatialdata-plot builds three kinds automatically: a legend for categorical colours, a colorbar for continuous ones, and a channel legend for multichannel images. s..." />
 <meta name="twitter:card" content="summary_large_image" />
 
     <title>Legends and colorbars in spatialdata-plot &#8212; spatialdata-plot</title>
@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Interactive region annotation" href="interactive_annotate.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -408,12 +408,14 @@
                 <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-default-categorical-legend">1. The default categorical legend</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placing-and-restyling-the-legend">2. Placing and restyling the legend</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#titles-and-hiding-na-legend-title-na-in-legend">3. Titles and hiding NA — <code class="docutils literal notranslate"><span class="pre">legend_title</span></code>, <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bundling-options-legend-params">4. Bundling options — <code class="docutils literal notranslate"><span class="pre">legend_params</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-colours-get-a-colorbar">5. Continuous colours get a colorbar</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#styling-the-colorbar-colorbar-params">6. Styling the colorbar — <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-legend-and-a-colorbar-together">7. A legend and a colorbar together</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placing-the-legend-legend-loc">2. Placing the legend — <code class="docutils literal notranslate"><span class="pre">legend_loc</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#restyling-the-legend">3. Restyling the legend</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hiding-na-na-in-legend">4. Hiding NA — <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bundling-options-legend-params">5. Bundling options — <code class="docutils literal notranslate"><span class="pre">legend_params</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-colours-get-a-colorbar">6. Continuous colours get a colorbar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placing-and-styling-the-colorbar-colorbar-params">7. Placing and styling the colorbar — <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labelling-a-multichannel-image-channels-as-legend">8. Labelling a multichannel image — <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-keys-in-one-figure">9. Several keys in one figure</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
@@ -429,18 +431,20 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="legends-and-colorbars-in-spatialdata-plot">
 <h1>Legends and colorbars in spatialdata-plot<a class="headerlink" href="#legends-and-colorbars-in-spatialdata-plot" title="Link to this heading">#</a></h1>
-<p>Every coloured plot needs a key: a <strong>legend</strong> for categorical colours and a <strong>colorbar</strong> for
-continuous ones. <code class="docutils literal notranslate"><span class="pre">show()</span></code> builds both automatically and exposes a family of arguments to place and
-style them. By the end you should be able to:</p>
+<p>Every coloured plot needs a key. <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> builds three kinds automatically: a <strong>legend</strong> for
+categorical colours, a <strong>colorbar</strong> for continuous ones, and a <strong>channel legend</strong> for multichannel
+images. <code class="docutils literal notranslate"><span class="pre">show()</span></code> exposes a family of arguments to place and style each. By the end you should be able
+to:</p>
 <ul class="simple">
-<li><p>Reposition and restyle a categorical legend (<code class="docutils literal notranslate"><span class="pre">legend_loc</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_fontsize</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_fontweight</span></code>,
-<code class="docutils literal notranslate"><span class="pre">legend_fontoutline</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_title</span></code>).</p></li>
-<li><p>Control which categories appear with <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code>, and bundle options with <code class="docutils literal notranslate"><span class="pre">legend_params</span></code>.</p></li>
-<li><p>Turn colorbars on and off and style them with <code class="docutils literal notranslate"><span class="pre">colorbar</span></code> / <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code>.</p></li>
-<li><p>Combine a legend and a colorbar in one multi-panel figure.</p></li>
+<li><p>Place a categorical legend anywhere (<code class="docutils literal notranslate"><span class="pre">legend_loc</span></code>) and restyle it (<code class="docutils literal notranslate"><span class="pre">legend_fontsize</span></code>,
+<code class="docutils literal notranslate"><span class="pre">legend_fontweight</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_fontoutline</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_title</span></code>), or bundle those in <code class="docutils literal notranslate"><span class="pre">legend_params</span></code>.</p></li>
+<li><p>Control which categories appear with <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code>.</p></li>
+<li><p>Place and style a colorbar with <code class="docutils literal notranslate"><span class="pre">colorbar</span></code> / <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code>.</p></li>
+<li><p>Label a multichannel composite with <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code>.</p></li>
+<li><p>Combine keys across a multi-panel figure.</p></li>
 </ul>
-<p>We use the real 10x <strong>Visium</strong> mouse-brain dataset from <code class="docutils literal notranslate"><span class="pre">squidpy</span></code> (<code class="docutils literal notranslate"><span class="pre">spots</span></code> annotated with <code class="docutils literal notranslate"><span class="pre">leiden</span></code>
-clusters and per-spot counts), downloaded and cached on first use.</p>
+<p>We use the real 10x <strong>Visium</strong> mouse-brain dataset from <code class="docutils literal notranslate"><span class="pre">squidpy</span></code> for the legend and colorbar, and the
+Xenium <strong><code class="docutils literal notranslate"><span class="pre">cells</span></code></strong> fluorescence image for the channel legend — both cached on first use.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -455,13 +459,7 @@ clusters and per-spot counts), downloaded and cached on first use.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Downloading visium_hne_sdata.zip from https://exampledata.scverse.org/squidpy/visium_hne_sdata.zip
-<span class=" -Color -Color-Blue">INFO    </span> Extracting                                                                                                
-         <span class=" -Color -Color-Magenta">/Users/tim.treis/Documents/GitHub/spatialdata-plot/docs/notebooks/examples/data/spatialdata/</span>visium_hne_sda
-         ta.zip to data/spatialdata
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                               | 0.00/419M [00:00&lt;?, ?B/s]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/visium_hne_sdata.zarr
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /Users/tim.treis/Documents/GitHub/spatialdata-plot/docs/notebooks/examples/data/spatialdata/visium_hne_sdata.zarr
@@ -497,11 +495,33 @@ we render the spots over the H&amp;E image.</p>
 </div>
 </div>
 </section>
-<section id="placing-and-restyling-the-legend">
-<h2>2. Placing and restyling the legend<a class="headerlink" href="#placing-and-restyling-the-legend" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">legend_loc</span></code> takes any matplotlib location (<code class="docutils literal notranslate"><span class="pre">&quot;upper</span> <span class="pre">left&quot;</span></code>, …) or a margin
-(<code class="docutils literal notranslate"><span class="pre">&quot;right</span> <span class="pre">margin&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;left</span> <span class="pre">margin&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;top</span> <span class="pre">margin&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bottom</span> <span class="pre">margin&quot;</span></code>). <code class="docutils literal notranslate"><span class="pre">legend_fontsize</span></code>,
-<code class="docutils literal notranslate"><span class="pre">legend_fontweight</span></code>, and <code class="docutils literal notranslate"><span class="pre">legend_fontoutline</span></code> (a contrasting outline around the text) style it.</p>
+<section id="placing-the-legend-legend-loc">
+<h2>2. Placing the legend — <code class="docutils literal notranslate"><span class="pre">legend_loc</span></code><a class="headerlink" href="#placing-the-legend-legend-loc" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">legend_loc</span></code> takes any matplotlib location (<code class="docutils literal notranslate"><span class="pre">&quot;upper</span> <span class="pre">right&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;lower</span> <span class="pre">left&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;center</span> <span class="pre">left&quot;</span></code>, …) <strong>or</strong>
+<code class="docutils literal notranslate"><span class="pre">&quot;right</span> <span class="pre">margin&quot;</span></code> to park the legend outside the axes. The margin keeps the legend off the data; the
+matplotlib locations place it on top. Here are four placements of the same plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">loc</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"right margin"</span><span class="p">,</span> <span class="s2">"upper right"</span><span class="p">,</span> <span class="s2">"lower left"</span><span class="p">,</span> <span class="s2">"center left"</span><span class="p">]:</span>
+    <span class="p">(</span>
+        <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"spots"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"cluster"</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">legend_loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">legend_fontsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">legend_title</span><span class="o">=</span><span class="n">loc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6d799d780aafb506581bd04a6c7240f5b16c61e225937603d441ed80bd9789f8.png" src="../../_images/6d799d780aafb506581bd04a6c7240f5b16c61e225937603d441ed80bd9789f8.png" />
+<img alt="../../_images/51b8a44d5f4426268c1ae054d05a52fe6872452dd1401a75d18cc9ef34389f0e.png" src="../../_images/51b8a44d5f4426268c1ae054d05a52fe6872452dd1401a75d18cc9ef34389f0e.png" />
+<img alt="../../_images/b3efaf67775658fb8030c198216c7411cc2076d1424da728913f67edc66b525b.png" src="../../_images/b3efaf67775658fb8030c198216c7411cc2076d1424da728913f67edc66b525b.png" />
+<img alt="../../_images/6c0c3352fd9759b2f3dcd656c5b050e4cb992b87c7fd5d7c326111952e95dcfa.png" src="../../_images/6c0c3352fd9759b2f3dcd656c5b050e4cb992b87c7fd5d7c326111952e95dcfa.png" />
+</div>
+</div>
+</section>
+<section id="restyling-the-legend">
+<h2>3. Restyling the legend<a class="headerlink" href="#restyling-the-legend" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">legend_fontsize</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_fontweight</span></code>, and <code class="docutils literal notranslate"><span class="pre">legend_fontoutline</span></code> (a contrasting outline around the
+text, useful over busy images) style the entries; <code class="docutils literal notranslate"><span class="pre">legend_title</span></code> names it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -512,39 +532,36 @@ we render the spots over the H&amp;E image.</p>
     <span class="n">legend_fontsize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
     <span class="n">legend_fontweight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span>
     <span class="n">legend_fontoutline</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">legend_title</span><span class="o">=</span><span class="s2">"Region"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4acdca5ab0cde382d71b56172fae826cfa5a736d3053e00281c33eb49d372151.png" src="../../_images/4acdca5ab0cde382d71b56172fae826cfa5a736d3053e00281c33eb49d372151.png" />
+<img alt="../../_images/6e19b49f14800d2f57e85657facabd85f04c23a55b452e25edc918162a404f48.png" src="../../_images/6e19b49f14800d2f57e85657facabd85f04c23a55b452e25edc918162a404f48.png" />
 </div>
 </div>
 </section>
-<section id="titles-and-hiding-na-legend-title-na-in-legend">
-<h2>3. Titles and hiding NA — <code class="docutils literal notranslate"><span class="pre">legend_title</span></code>, <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code><a class="headerlink" href="#titles-and-hiding-na-legend-title-na-in-legend" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">legend_title</span></code> names the legend. When you restrict to a few <code class="docutils literal notranslate"><span class="pre">groups</span></code>, the remaining spots become NA;
-<code class="docutils literal notranslate"><span class="pre">na_in_legend=False</span></code> drops that entry from the key.</p>
+<section id="hiding-na-na-in-legend">
+<h2>4. Hiding NA — <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code><a class="headerlink" href="#hiding-na-na-in-legend" title="Link to this heading">#</a></h2>
+<p>When you restrict to a few <code class="docutils literal notranslate"><span class="pre">groups</span></code>, the remaining spots become NA; <code class="docutils literal notranslate"><span class="pre">na_in_legend=False</span></code> drops that
+entry from the key.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
     <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"hne"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"spots"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"cluster"</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s2">"Cortex_1"</span><span class="p">,</span> <span class="s2">"Cortex_2"</span><span class="p">,</span> <span class="s2">"Hippocampus"</span><span class="p">])</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
-    <span class="n">legend_title</span><span class="o">=</span><span class="s2">"Region"</span><span class="p">,</span>
-    <span class="n">na_in_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">legend_fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">na_in_legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend_fontsize</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/008fe0e1f277c1ede43fecc1a84914e37192b8321940cf44171ab2920178b1a1.png" src="../../_images/008fe0e1f277c1ede43fecc1a84914e37192b8321940cf44171ab2920178b1a1.png" />
+<img alt="../../_images/8b7007806bf8e4cf3782c6386cc440d0c007027970186d24dbc48a55b51c527d.png" src="../../_images/8b7007806bf8e4cf3782c6386cc440d0c007027970186d24dbc48a55b51c527d.png" />
 </div>
 </div>
 </section>
 <section id="bundling-options-legend-params">
-<h2>4. Bundling options — <code class="docutils literal notranslate"><span class="pre">legend_params</span></code><a class="headerlink" href="#bundling-options-legend-params" title="Link to this heading">#</a></h2>
+<h2>5. Bundling options — <code class="docutils literal notranslate"><span class="pre">legend_params</span></code><a class="headerlink" href="#bundling-options-legend-params" title="Link to this heading">#</a></h2>
 <p>Instead of the flat <code class="docutils literal notranslate"><span class="pre">legend_*</span></code> kwargs you can pass one <code class="docutils literal notranslate"><span class="pre">legend_params</span></code> dict. Accepted keys:
 <code class="docutils literal notranslate"><span class="pre">location</span></code> (or <code class="docutils literal notranslate"><span class="pre">loc</span></code>), <code class="docutils literal notranslate"><span class="pre">fontsize</span></code>, <code class="docutils literal notranslate"><span class="pre">fontweight</span></code>, <code class="docutils literal notranslate"><span class="pre">fontoutline</span></code>, <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code>; it overrides the
 matching flat kwargs, and unknown keys raise an error.</p>
@@ -565,7 +582,7 @@ matching flat kwargs, and unknown keys raise an error.</p>
 </div>
 </section>
 <section id="continuous-colours-get-a-colorbar">
-<h2>5. Continuous colours get a colorbar<a class="headerlink" href="#continuous-colours-get-a-colorbar" title="Link to this heading">#</a></h2>
+<h2>6. Continuous colours get a colorbar<a class="headerlink" href="#continuous-colours-get-a-colorbar" title="Link to this heading">#</a></h2>
 <p>Colouring by a continuous column draws a <strong>colorbar</strong> instead of a legend. Here, total counts per
 spot. <code class="docutils literal notranslate"><span class="pre">colorbar=True</span></code> is the default; pass <code class="docutils literal notranslate"><span class="pre">colorbar=False</span></code> to suppress it.</p>
 <div class="cell docutils container">
@@ -582,10 +599,10 @@ spot. <code class="docutils literal notranslate"><span class="pre">colorbar=True
 </div>
 </div>
 </section>
-<section id="styling-the-colorbar-colorbar-params">
-<h2>6. Styling the colorbar — <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code><a class="headerlink" href="#styling-the-colorbar-colorbar-params" title="Link to this heading">#</a></h2>
+<section id="placing-and-styling-the-colorbar-colorbar-params">
+<h2>7. Placing and styling the colorbar — <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code><a class="headerlink" href="#placing-and-styling-the-colorbar-colorbar-params" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code> accepts <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">loc</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code> (and matplotlib colorbar keys such as
-<code class="docutils literal notranslate"><span class="pre">orientation</span></code>). Give the bar a label and move it below the plot.</p>
+<code class="docutils literal notranslate"><span class="pre">orientation</span></code>). Move the bar below the plot and give it a label, or dock it to a different side.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -602,11 +619,38 @@ spot. <code class="docutils literal notranslate"><span class="pre">colorbar=True
 </div>
 </div>
 </section>
-<section id="a-legend-and-a-colorbar-together">
-<h2>7. A legend and a colorbar together<a class="headerlink" href="#a-legend-and-a-colorbar-together" title="Link to this heading">#</a></h2>
-<p>Passing a list to <code class="docutils literal notranslate"><span class="pre">color=</span></code> renders one panel per colouring (see the <em>Multi-panel colouring</em>
-tutorial). Each panel gets the right key: a legend for the categorical panel, a colorbar for the
-continuous one.</p>
+<section id="labelling-a-multichannel-image-channels-as-legend">
+<h2>8. Labelling a multichannel image — <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code><a class="headerlink" href="#labelling-a-multichannel-image-channels-as-legend" title="Link to this heading">#</a></h2>
+<p>A multichannel image has no single colour to key, so <code class="docutils literal notranslate"><span class="pre">channels_as_legend=True</span></code> adds a <strong>channel
+legend</strong> mapping each channel to its rendered colour. We switch to the Xenium <code class="docutils literal notranslate"><span class="pre">cells</span></code> fluorescence
+image, whose channels are named markers (see the <em>Multichannel &amp; fluorescence images</em> tutorial).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata_plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">PercentileNormalize</span>
+
+<span class="n">cells</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">cells</span><span class="p">()</span>
+<span class="n">n_channels</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cells</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
+    <span class="s2">"morphology_focus"</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">)]</span> <span class="o">*</span> <span class="n">n_channels</span><span class="p">,</span>
+    <span class="n">channels_as_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/cells.zarr
+</pre></div>
+</div>
+<img alt="../../_images/5a016ada2dfcd15fb49e279bb51c21186235b03eec4d91339e24073343b4a7e0.png" src="../../_images/5a016ada2dfcd15fb49e279bb51c21186235b03eec4d91339e24073343b4a7e0.png" />
+</div>
+</div>
+</section>
+<section id="several-keys-in-one-figure">
+<h2>9. Several keys in one figure<a class="headerlink" href="#several-keys-in-one-figure" title="Link to this heading">#</a></h2>
+<p>Passing a list to <code class="docutils literal notranslate"><span class="pre">color=</span></code> renders one panel per colouring (see the <em>Multi-panel colouring</em> tutorial).
+Each panel gets the right key: a legend for the categorical panel, a colorbar for the continuous
+one.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -623,12 +667,12 @@ continuous one.</p>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Categorical colours draw a <strong>legend</strong>; continuous colours draw a <strong>colorbar</strong> — automatically.</p></li>
-<li><p>Place and style the legend with <code class="docutils literal notranslate"><span class="pre">legend_loc</span></code> (matplotlib locations or <code class="docutils literal notranslate"><span class="pre">&quot;*</span> <span class="pre">margin&quot;</span></code>),
-<code class="docutils literal notranslate"><span class="pre">legend_fontsize</span></code>/<code class="docutils literal notranslate"><span class="pre">fontweight</span></code>/<code class="docutils literal notranslate"><span class="pre">fontoutline</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_title</span></code>, and <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code>; or bundle them in
+<li><p>Categorical colours draw a <strong>legend</strong>, continuous colours a <strong>colorbar</strong>, and multichannel images a
+<strong>channel legend</strong> (<code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code>) — all automatically.</p></li>
+<li><p>Place the legend with <code class="docutils literal notranslate"><span class="pre">legend_loc</span></code> (matplotlib locations <em>or</em> <code class="docutils literal notranslate"><span class="pre">&quot;right</span> <span class="pre">margin&quot;</span></code>), and style it with
+<code class="docutils literal notranslate"><span class="pre">legend_fontsize</span></code>/<code class="docutils literal notranslate"><span class="pre">fontweight</span></code>/<code class="docutils literal notranslate"><span class="pre">fontoutline</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_title</span></code>, <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code>; or bundle in
 <code class="docutils literal notranslate"><span class="pre">legend_params</span></code>.</p></li>
-<li><p>Toggle the colorbar with <code class="docutils literal notranslate"><span class="pre">colorbar=</span></code> and style it with <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code> (<code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">loc</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>,
-<code class="docutils literal notranslate"><span class="pre">pad</span></code>, <code class="docutils literal notranslate"><span class="pre">orientation</span></code>).</p></li>
+<li><p>Place and style the colorbar with <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code> (<code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">loc</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code>, <code class="docutils literal notranslate"><span class="pre">orientation</span></code>).</p></li>
 <li><p>In a multi-panel <code class="docutils literal notranslate"><span class="pre">color=[...]</span></code> figure each panel gets the appropriate key.</p></li>
 </ul>
 </section>
@@ -722,12 +766,14 @@ Architecture: 64bit
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-default-categorical-legend">1. The default categorical legend</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placing-and-restyling-the-legend">2. Placing and restyling the legend</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#titles-and-hiding-na-legend-title-na-in-legend">3. Titles and hiding NA — <code class="docutils literal notranslate"><span class="pre">legend_title</span></code>, <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bundling-options-legend-params">4. Bundling options — <code class="docutils literal notranslate"><span class="pre">legend_params</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-colours-get-a-colorbar">5. Continuous colours get a colorbar</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#styling-the-colorbar-colorbar-params">6. Styling the colorbar — <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-legend-and-a-colorbar-together">7. A legend and a colorbar together</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placing-the-legend-legend-loc">2. Placing the legend — <code class="docutils literal notranslate"><span class="pre">legend_loc</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#restyling-the-legend">3. Restyling the legend</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hiding-na-na-in-legend">4. Hiding NA — <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bundling-options-legend-params">5. Bundling options — <code class="docutils literal notranslate"><span class="pre">legend_params</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-colours-get-a-colorbar">6. Continuous colours get a colorbar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placing-and-styling-the-colorbar-colorbar-params">7. Placing and styling the colorbar — <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labelling-a-multichannel-image-channels-as-legend">8. Labelling a multichannel image — <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#several-keys-in-one-figure">9. Several keys in one figure</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
