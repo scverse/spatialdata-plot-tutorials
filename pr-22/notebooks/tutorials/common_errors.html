@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Scalebars in spatialdata-plot" href="scalebars.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -407,12 +407,14 @@
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributeerror-object-has-no-attribute-pl">0. <code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">...</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'pl'</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#element-not-found">1. Element not found</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colouring-by-a-column-with-no-annotating-table">2. Colouring by a column with no annotating table</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invalid-image-channel">3. Invalid image channel</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-per-channel-norm-list-of-the-wrong-length">4. A per-channel <code class="docutils literal notranslate"><span class="pre">norm</span></code> list of the wrong length</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grayscale-needs-exactly-three-channels">5. <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> needs exactly three channels</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invalid-percentilenormalize-bounds">6. Invalid <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> bounds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambiguous-colour-column-name">3. Ambiguous colour/column name</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invalid-image-channel">4. Invalid image channel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-per-channel-norm-list-of-the-wrong-length">5. A per-channel <code class="docutils literal notranslate"><span class="pre">norm</span></code> list of the wrong length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grayscale-needs-exactly-three-channels">6. <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> needs exactly three channels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invalid-percentilenormalize-bounds">7. Invalid <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> bounds</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
@@ -472,6 +474,37 @@ with coordinate systems:
 </div>
 </div>
 </section>
+<section id="attributeerror-object-has-no-attribute-pl">
+<h2>0. <code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">...</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'pl'</span></code><a class="headerlink" href="#attributeerror-object-has-no-attribute-pl" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">.pl</span></code> accessor is only attached when you <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">spatialdata_plot</span></code>. Forget that import and every
+<code class="docutils literal notranslate"><span class="pre">sdata.pl.…</span></code> call raises <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> — the first wall most newcomers hit. The <code class="docutils literal notranslate"><span class="pre">Setup</span></code> cell above
+already does the import; the cell below runs a <em>fresh</em> interpreter without it to show the message.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="c1"># A fresh interpreter that never imports spatialdata_plot, so `.pl` is unregistered.</span>
+<span class="c1"># PYTHON_COLORS=0 keeps the captured traceback free of ANSI colour codes.</span>
+<span class="n">snippet</span> <span class="o">=</span> <span class="s2">"import spatialdata as sd; sd.datasets.blobs().pl.render_shapes('blobs_circles')"</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">"-c"</span><span class="p">,</span> <span class="n">snippet</span><span class="p">],</span>
+    <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">env</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">,</span> <span class="s2">"PYTHON_COLORS"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="s2">"NO_COLOR"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AttributeError: 'SpatialData' object has no attribute 'pl'
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="element-not-found">
 <h2>1. Element not found<a class="headerlink" href="#element-not-found" title="Link to this heading">#</a></h2>
 <p>A typo in the element name raises a <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> naming the element it looked for. Check
@@ -513,8 +546,32 @@ the column.</p>
 </div>
 </div>
 </section>
+<section id="ambiguous-colour-column-name">
+<h2>3. Ambiguous colour/column name<a class="headerlink" href="#ambiguous-colour-column-name" title="Link to this heading">#</a></h2>
+<p>If a <code class="docutils literal notranslate"><span class="pre">color</span></code> string is <strong>both</strong> a valid matplotlib colour name and a column in the element or its
+annotating table, <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> cannot tell which you meant and raises. Disambiguate with a hex
+string or an RGB(A) tuple, or rename the column. Here we deliberately add a column called <code class="docutils literal notranslate"><span class="pre">red</span></code> to
+force the clash.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circles</span> <span class="o">=</span> <span class="n">sdata</span><span class="p">[</span><span class="s2">"blobs_circles"</span><span class="p">]</span>
+<span class="n">circles</span><span class="p">[</span><span class="s2">"red"</span><span class="p">]</span> <span class="o">=</span> <span class="n">circles</span><span class="p">[</span><span class="s2">"radius"</span><span class="p">]</span>  <span class="c1"># a column whose name is also a colour</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"blobs_circles"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"ValueError:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ValueError: `color='red'` is ambiguous: it is a valid matplotlib color name AND a column name in element 'blobs_circles'. Disambiguate by either passing an unambiguous color form (hex string like '#ffa500' or an RGB(A) tuple), or by renaming the column.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="invalid-image-channel">
-<h2>3. Invalid image channel<a class="headerlink" href="#invalid-image-channel" title="Link to this heading">#</a></h2>
+<h2>4. Invalid image channel<a class="headerlink" href="#invalid-image-channel" title="Link to this heading">#</a></h2>
 <p>Selecting a channel that does not exist raises a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> that lists the valid channels — helpful
 when you are unsure how a multichannel image is indexed (see the <em>Multichannel &amp; fluorescence images</em>
 tutorial).</p>
@@ -535,7 +592,7 @@ tutorial).</p>
 </div>
 </section>
 <section id="a-per-channel-norm-list-of-the-wrong-length">
-<h2>4. A per-channel <code class="docutils literal notranslate"><span class="pre">norm</span></code> list of the wrong length<a class="headerlink" href="#a-per-channel-norm-list-of-the-wrong-length" title="Link to this heading">#</a></h2>
+<h2>5. A per-channel <code class="docutils literal notranslate"><span class="pre">norm</span></code> list of the wrong length<a class="headerlink" href="#a-per-channel-norm-list-of-the-wrong-length" title="Link to this heading">#</a></h2>
 <p>When you pass a list of norms for an image, its length must match the number of channels you are
 rendering (see the <em>Normalization and contrast</em> tutorial).</p>
 <div class="cell docutils container">
@@ -555,7 +612,7 @@ rendering (see the <em>Normalization and contrast</em> tutorial).</p>
 </div>
 </section>
 <section id="grayscale-needs-exactly-three-channels">
-<h2>5. <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> needs exactly three channels<a class="headerlink" href="#grayscale-needs-exactly-three-channels" title="Link to this heading">#</a></h2>
+<h2>6. <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> needs exactly three channels<a class="headerlink" href="#grayscale-needs-exactly-three-channels" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">grayscale=True</span></code> collapses a three-channel selection into one intensity, so it requires exactly three
 channels.</p>
 <div class="cell docutils container">
@@ -576,11 +633,17 @@ channels.</p>
 </div>
 </section>
 <section id="invalid-percentilenormalize-bounds">
-<h2>6. Invalid <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> bounds<a class="headerlink" href="#invalid-percentilenormalize-bounds" title="Link to this heading">#</a></h2>
+<h2>7. Invalid <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> bounds<a class="headerlink" href="#invalid-percentilenormalize-bounds" title="Link to this heading">#</a></h2>
 <p>Percentile bounds are validated at construction time: they must satisfy <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">pmin</span> <span class="pre">&lt;</span> <span class="pre">pmax</span> <span class="pre">&lt;=</span> <span class="pre">100</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">bad</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">)]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bad_bounds</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>   <span class="c1"># pmin == pmax (must be strictly increasing)</span>
+    <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>   <span class="c1"># pmin &gt; pmax</span>
+    <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>   <span class="c1"># pmin &lt; 0</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span>   <span class="c1"># pmax &gt; 100</span>
+<span class="p">]</span>
+<span class="k">for</span> <span class="n">bad</span> <span class="ow">in</span> <span class="n">bad_bounds</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">PercentileNormalize</span><span class="p">(</span><span class="o">*</span><span class="n">bad</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -603,8 +666,10 @@ PercentileNormalize(0, 101) -&gt; Require 0 &lt;= pmin &lt; pmax &lt;= 100, got 
 <p><code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> fails fast with messages that name the offending element, column, channel, or
 bound:</p>
 <ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">...</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'pl'</span></code></strong> — you forgot <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">spatialdata_plot</span></code>.</p></li>
 <li><p><strong>Element not found</strong> — check the key in <code class="docutils literal notranslate"><span class="pre">sdata</span></code>.</p></li>
 <li><p><strong>No column to colour by</strong> — put the value on the element or its annotating table.</p></li>
+<li><p><strong>Ambiguous colour/column name</strong> — pass a hex/RGB(A) colour, or rename the column.</p></li>
 <li><p><strong>Invalid channel</strong> — the message lists the valid channels.</p></li>
 <li><p><strong>Wrong-length <code class="docutils literal notranslate"><span class="pre">norm</span></code> list</strong> — one norm per rendered channel.</p></li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">grayscale</span></code> needs three channels</strong> — select exactly three.</p></li>
@@ -700,12 +765,14 @@ Architecture: 64bit
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributeerror-object-has-no-attribute-pl">0. <code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">...</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'pl'</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#element-not-found">1. Element not found</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colouring-by-a-column-with-no-annotating-table">2. Colouring by a column with no annotating table</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invalid-image-channel">3. Invalid image channel</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-per-channel-norm-list-of-the-wrong-length">4. A per-channel <code class="docutils literal notranslate"><span class="pre">norm</span></code> list of the wrong length</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grayscale-needs-exactly-three-channels">5. <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> needs exactly three channels</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invalid-percentilenormalize-bounds">6. Invalid <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> bounds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ambiguous-colour-column-name">3. Ambiguous colour/column name</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invalid-image-channel">4. Invalid image channel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-per-channel-norm-list-of-the-wrong-length">5. A per-channel <code class="docutils literal notranslate"><span class="pre">norm</span></code> list of the wrong length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grayscale-needs-exactly-three-channels">6. <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> needs exactly three channels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invalid-percentilenormalize-bounds">7. Invalid <code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> bounds</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
