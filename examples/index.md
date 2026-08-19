@@ -24,6 +24,16 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 `sdata.pl.annotate(...)` and persist them as a `ShapesModel` element.
 :::
 
+:::{grid-item-card} Datashader reductions
+:link: /notebooks/examples/datashader_reductions
+:link-type: doc
+:img-top: /notebooks/_static/img/datashader_reductions.png
+
+How overlapping primitives aggregate a continuous colour on the datashader
+backend: `datashader_reduction` (`max`/`mean`/`sum`/`count`/`std`),
+`method="datashader"` for images, and the contrast caveat.
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -33,4 +43,5 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 
 visium_mouse_brain
 interactive_annotate
+datashader_reductions
 ```
