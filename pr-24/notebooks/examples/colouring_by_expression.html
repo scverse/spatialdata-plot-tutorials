@@ -1,0 +1,725 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Colouring by expression: tables, layers, and gene symbols" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="notebooks/examples/colouring_by_expression.html" />
+<meta property="og:site_name" content="spatialdata-plot" />
+<meta property="og:description" content="When you colour an element by a gene, spatialdata-plot reads the value from the table that annotates it. Three arguments control exactly which values it uses: table_name(which table), table_layer(w..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_examples_colouring_by_expression_bd7f0329.png" />
+<meta property="og:image:alt" content="When you colour an element by a gene, spatialdata-plot reads the value from the table that annotates it. Three arguments control exactly which values it uses: table_name(which table), table_layer(w..." />
+<meta name="description" content="When you colour an element by a gene, spatialdata-plot reads the value from the table that annotates it. Three arguments control exactly which values it uses: table_name(which table), table_layer(w..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Colouring by expression: tables, layers, and gene symbols &#8212; spatialdata-plot</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=4418a689" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=05624691" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f2dec995" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/examples/colouring_by_expression';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="API" href="../../api.html" />
+    <link rel="prev" title="Interactive region annotation" href="interactive_annotate.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-light" alt="spatialdata-plot - Home"/>
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-dark pst-js-only" alt="spatialdata-plot - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../gallery.html">Gallery</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/multi_panel_color.html">Multi-panel colouring in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/performance.html">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/scalebars.html">Scalebars in spatialdata-plot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Examples</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="visium_mouse_brain.html">Plotting a Visium dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interactive_annotate.html">Interactive region annotation</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Colouring by expression: tables, layers, and gene symbols</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api.html">API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../plotting.html">Plotting (<code class="docutils literal notranslate"><span class="pre">.pl</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/scverse/spatialdata-plot.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/examples/colouring_by_expression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Colouring by expression: tables, layers, and gene symbols</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-by-a-gene">1. Colour by a gene</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-matrix-table-layer">2. Choosing the matrix — <code class="docutils literal notranslate"><span class="pre">table_layer</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#looking-up-by-symbol-gene-symbols">3. Looking up by symbol — <code class="docutils literal notranslate"><span class="pre">gene_symbols</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-table-table-name">4. Choosing the table — <code class="docutils literal notranslate"><span class="pre">table_name</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="colouring-by-expression-tables-layers-and-gene-symbols">
+<h1>Colouring by expression: tables, layers, and gene symbols<a class="headerlink" href="#colouring-by-expression-tables-layers-and-gene-symbols" title="Link to this heading">#</a></h1>
+<p>When you colour an element by a gene, <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> reads the value from the <strong>table</strong> that
+annotates it. Three arguments control exactly which values it uses: <code class="docutils literal notranslate"><span class="pre">table_name</span></code> (which table),
+<code class="docutils literal notranslate"><span class="pre">table_layer</span></code> (which matrix within that table), and <code class="docutils literal notranslate"><span class="pre">gene_symbols</span></code> (how to look a gene up in <code class="docutils literal notranslate"><span class="pre">var</span></code>).
+By the end you should be able to:</p>
+<ul class="simple">
+<li><p>Colour spots by a gene’s expression.</p></li>
+<li><p>Read from a specific matrix with <code class="docutils literal notranslate"><span class="pre">table_layer</span></code> (e.g. raw counts vs a normalised layer).</p></li>
+<li><p>Look genes up by symbol when <code class="docutils literal notranslate"><span class="pre">var</span></code> is indexed by IDs, with <code class="docutils literal notranslate"><span class="pre">gene_symbols</span></code>.</p></li>
+<li><p>Choose between several annotating tables with <code class="docutils literal notranslate"><span class="pre">table_name</span></code>.</p></li>
+</ul>
+<p>We use the real 10x <strong>Visium</strong> mouse-brain dataset from <code class="docutils literal notranslate"><span class="pre">squidpy</span></code>. It ships with a single raw table, so
+we <strong>construct</strong> the extra layer, the gene-ID index, and the second table in-notebook to demonstrate
+each argument — real datasets often already carry them.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">anndata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ad</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">squidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sq</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">TableModel</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>  <span class="c1"># noqa: F401  # registers the .pl accessor</span>
+
+<span class="n">sdata</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">visium_hne_sdata</span><span class="p">()</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="s2">"adata"</span><span class="p">]</span>
+<span class="n">gene</span> <span class="o">=</span> <span class="s2">"Mbp"</span>  <span class="c1"># myelin basic protein, a white-matter marker</span>
+<span class="n">sdata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/visium_hne_sdata.zarr
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /Users/tim.treis/Documents/GitHub/spatialdata-plot/docs/notebooks/examples/data/spatialdata/visium_hne_sdata.zarr
+├── Images
+│     └── 'hne': DataTree[cyx] (3, 11757, 11291), (3, 5878, 5645), (3, 2939, 2822), (3, 1469, 1411)
+├── Shapes
+│     └── 'spots': GeoDataFrame shape: (2688, 2) (2D shapes)
+└── Tables
+      └── 'adata': AnnData (2688, 18078)
+with coordinate systems:
+    ▸ 'global', with elements:
+        hne (Images), spots (Shapes)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="colour-by-a-gene">
+<h2>1. Colour by a gene<a class="headerlink" href="#colour-by-a-gene" title="Link to this heading">#</a></h2>
+<p>Passing a <code class="docutils literal notranslate"><span class="pre">var</span></code> name to <code class="docutils literal notranslate"><span class="pre">color=</span></code> colours each spot by that gene’s expression, from the annotating
+table’s main matrix (<code class="docutils literal notranslate"><span class="pre">X</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"spots"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">gene</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/669d37e67b25750e6c5a44279879dafaca34da608f7121c6ff31b27d4599e22c.png" src="../../_images/669d37e67b25750e6c5a44279879dafaca34da608f7121c6ff31b27d4599e22c.png" />
+</div>
+</div>
+</section>
+<section id="choosing-the-matrix-table-layer">
+<h2>2. Choosing the matrix — <code class="docutils literal notranslate"><span class="pre">table_layer</span></code><a class="headerlink" href="#choosing-the-matrix-table-layer" title="Link to this heading">#</a></h2>
+<p>A table can hold several matrices in <code class="docutils literal notranslate"><span class="pre">.layers</span></code> (raw counts, normalised, scaled). <code class="docutils literal notranslate"><span class="pre">table_layer=</span></code> picks
+which one to colour from. Here we add a log-normalised layer and compare it with the raw <code class="docutils literal notranslate"><span class="pre">X</span></code> above —
+the log scale compresses the bright outliers and reveals more structure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">X</span><span class="p">)</span> <span class="k">else</span> <span class="n">table</span><span class="o">.</span><span class="n">X</span>
+<span class="n">table</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="s2">"lognorm"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"spots"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="n">table_layer</span><span class="o">=</span><span class="s2">"lognorm"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/aca40bbe605546305354bc11d3463d8480d5f5d05a25445a2489eadc0e73ac3e.png" src="../../_images/aca40bbe605546305354bc11d3463d8480d5f5d05a25445a2489eadc0e73ac3e.png" />
+</div>
+</div>
+</section>
+<section id="looking-up-by-symbol-gene-symbols">
+<h2>3. Looking up by symbol — <code class="docutils literal notranslate"><span class="pre">gene_symbols</span></code><a class="headerlink" href="#looking-up-by-symbol-gene-symbols" title="Link to this heading">#</a></h2>
+<p>Many datasets index <code class="docutils literal notranslate"><span class="pre">var</span></code> by a stable ID (Ensembl) and keep the human-readable symbol in a column.
+<code class="docutils literal notranslate"><span class="pre">color=</span></code> then can’t find a symbol directly. <code class="docutils literal notranslate"><span class="pre">gene_symbols=</span></code> names the column to map through. We
+simulate that layout by moving the current symbols into a column and indexing <code class="docutils literal notranslate"><span class="pre">var</span></code> by <code class="docutils literal notranslate"><span class="pre">gene_ids</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s2">"symbol"</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">var_names</span>
+<span class="n">table</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s2">"gene_ids"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>  <span class="c1"># now var is indexed by Ensembl IDs</span>
+
+<span class="c1"># color= still takes the symbol; gene_symbols tells the renderer where to find it</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"spots"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="n">gene_symbols</span><span class="o">=</span><span class="s2">"symbol"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e4fc5fc54aa50d222d12edd81b20fe6fb1220a36f46eb6a039550b8c4b6a29d8.png" src="../../_images/e4fc5fc54aa50d222d12edd81b20fe6fb1220a36f46eb6a039550b8c4b6a29d8.png" />
+</div>
+</div>
+</section>
+<section id="choosing-the-table-table-name">
+<h2>4. Choosing the table — <code class="docutils literal notranslate"><span class="pre">table_name</span></code><a class="headerlink" href="#choosing-the-table-table-name" title="Link to this heading">#</a></h2>
+<p>An element can be annotated by more than one table. When there is only one, it is used automatically;
+with several you disambiguate with <code class="docutils literal notranslate"><span class="pre">table_name=</span></code>. We add a second table of per-spot QC flags and
+colour by it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">attrs</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="s2">"spatialdata_attrs"</span><span class="p">]</span>
+<span class="n">region_key</span><span class="p">,</span> <span class="n">instance_key</span><span class="p">,</span> <span class="n">region</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">"region_key"</span><span class="p">],</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">"instance_key"</span><span class="p">],</span> <span class="n">attrs</span><span class="p">[</span><span class="s2">"region"</span><span class="p">]</span>
+
+<span class="n">qc_obs</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[[</span><span class="n">region_key</span><span class="p">,</span> <span class="n">instance_key</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">qc_obs</span><span class="p">[</span><span class="s2">"qc"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">"total_counts"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">"total_counts"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="s2">"high"</span><span class="p">,</span> <span class="s2">"low"</span><span class="p">)</span>
+<span class="n">qc_table</span> <span class="o">=</span> <span class="n">TableModel</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+    <span class="n">ad</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">obs</span><span class="o">=</span><span class="n">qc_obs</span><span class="p">),</span> <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span> <span class="n">region_key</span><span class="o">=</span><span class="n">region_key</span><span class="p">,</span> <span class="n">instance_key</span><span class="o">=</span><span class="n">instance_key</span>
+<span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="s2">"qc"</span><span class="p">]</span> <span class="o">=</span> <span class="n">qc_table</span>
+
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"spots"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"qc"</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="s2">"qc"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Yellow">WARNING </span> render_shapes: Converting copy of <span class=" -Color -Color-Green">'qc'</span> column to categorical dtype for categorical plotting. Consider     
+         converting before plotting.
+</pre></div>
+</div>
+<img alt="../../_images/270ff4c8fb512a9c7ce780c3a3a3fbf6d592d4359831ea4860158231896f191e.png" src="../../_images/270ff4c8fb512a9c7ce780c3a3a3fbf6d592d4359831ea4860158231896f191e.png" />
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Colouring by a gene reads from the <strong>annotating table</strong> of the element.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">table_layer=</span></code> selects the matrix within that table (e.g. raw <code class="docutils literal notranslate"><span class="pre">X</span></code> vs a <code class="docutils literal notranslate"><span class="pre">lognorm</span></code> layer).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gene_symbols=</span></code> names the <code class="docutils literal notranslate"><span class="pre">var</span></code> column of symbols to look <code class="docutils literal notranslate"><span class="pre">color=</span></code> up in, for ID-indexed tables.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">table_name=</span></code> picks the table when an element has more than one; with a single table it is
+automatic.</p></li>
+</ul>
+<p>Together these let you point <code class="docutils literal notranslate"><span class="pre">render_*</span></code> at exactly the values you want to visualise, without
+reshaping your <code class="docutils literal notranslate"><span class="pre">SpatialData</span></code> object.</p>
+</section>
+<section id="for-reproducibility">
+<h2>For reproducibility<a class="headerlink" href="#for-reproducibility" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ruff: noqa: F401, F811, I001, E402</span>
+<span class="c1"># fmt: off</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>
+
+<span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="c1"># fmt: on</span>
+
+<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,squidpy,anndata,numpy
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python implementation: CPython
+Python version       : 3.14.6
+IPython version      : 9.14.1
+
+spatialdata     : 0.7.3
+spatialdata_plot: 0.4.1
+squidpy         : 1.8.2
+anndata         : 0.12.17
+numpy           : 2.4.6
+
+Compiler    : Clang 20.1.8 
+OS          : Darwin
+Release     : 25.2.0
+Machine     : arm64
+Processor   : arm
+CPU cores   : 8
+Architecture: 64bit
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="interactive_annotate.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Interactive region annotation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../api.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-by-a-gene">1. Colour by a gene</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-matrix-table-layer">2. Choosing the matrix — <code class="docutils literal notranslate"><span class="pre">table_layer</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#looking-up-by-symbol-gene-symbols">3. Looking up by symbol — <code class="docutils literal notranslate"><span class="pre">gene_symbols</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-table-table-name">4. Choosing the table — <code class="docutils literal notranslate"><span class="pre">table_name</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By scverse
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, scverse..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
