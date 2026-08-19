@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Scalebars in spatialdata-plot" href="scalebars.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -481,7 +481,9 @@ with coordinate systems:
 </section>
 <section id="default-shapes">
 <h2>1. Default shapes<a class="headerlink" href="#default-shapes" title="Link to this heading">#</a></h2>
-<p>By default, shapes are drawn as filled patches with no outline. We start from <code class="docutils literal notranslate"><span class="pre">blobs_polygons</span></code>.</p>
+<p>The element names used below (<code class="docutils literal notranslate"><span class="pre">blobs_polygons</span></code>, <code class="docutils literal notranslate"><span class="pre">blobs_labels</span></code>, <code class="docutils literal notranslate"><span class="pre">blobs_image</span></code>) are the keys shown in
+the <code class="docutils literal notranslate"><span class="pre">sdata</span></code> repr above. By default, shapes are drawn as filled patches with no outline. We start from
+<code class="docutils literal notranslate"><span class="pre">blobs_polygons</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s1">'blobs_polygons'</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -510,8 +512,8 @@ shapes overlap or sit on top of an image you still want to see.</p>
 </section>
 <section id="outlines-the-outline-toggle">
 <h2>3. Outlines — the <code class="docutils literal notranslate"><span class="pre">outline</span></code> toggle<a class="headerlink" href="#outlines-the-outline-toggle" title="Link to this heading">#</a></h2>
-<p>Pass <code class="docutils literal notranslate"><span class="pre">outline=True</span></code> to draw a border around each shape. Outlines are off by default; turning the toggle
-on gives every shape a crisp edge.</p>
+<p>Pass <code class="docutils literal notranslate"><span class="pre">outline=True</span></code> to draw a border around each shape. Outlines are off by default (<code class="docutils literal notranslate"><span class="pre">outline=None</span></code> infers visibility from the <code class="docutils literal notranslate"><span class="pre">outline_*</span></code> settings); turning
+the toggle on gives every shape a crisp edge.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s1">'blobs_polygons'</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -581,8 +583,8 @@ emphasise them. Here the polygons are drawn at 60% size with an outline.</p>
 </section>
 <section id="labels-use-the-same-vocabulary">
 <h2>7. Labels use the same vocabulary<a class="headerlink" href="#labels-use-the-same-vocabulary" title="Link to this heading">#</a></h2>
-<p>Label (segmentation-mask) rendering shares the fill/outline arguments. By default, masks are drawn as
-solid filled regions.</p>
+<p>Label (segmentation-mask) rendering shares the fill/outline arguments. By default, masks are drawn
+semi-transparent (<code class="docutils literal notranslate"><span class="pre">fill_alpha=0.4</span></code>), not solid — so anything layered beneath them still shows through.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">'blobs_labels'</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -596,19 +598,19 @@ solid filled regions.</p>
 </section>
 <section id="translucent-masks-over-an-image-fill-alpha">
 <h2>8. Translucent masks over an image — <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code><a class="headerlink" href="#translucent-masks-over-an-image-fill-alpha" title="Link to this heading">#</a></h2>
-<p>Lowering <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code> lets the underlying image show through — the standard way to overlay a
+<p>Lowering <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code> below its <code class="docutils literal notranslate"><span class="pre">0.4</span></code> default lets more of the underlying image show through — the standard way to overlay a
 segmentation on the raw data. We layer the labels on top of <code class="docutils literal notranslate"><span class="pre">blobs_image</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
     <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s1">'blobs_image'</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">'blobs_labels'</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">'blobs_labels'</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/aebe579d8d3199875d19c8ae14c89ba3dec61c165eabebd250c4b9f97b807f2b.png" src="../../_images/aebe579d8d3199875d19c8ae14c89ba3dec61c165eabebd250c4b9f97b807f2b.png" />
+<img alt="../../_images/52bf0ab8bfdc0e9679139e2742dc392c0f3057bf84f0f4b0865b269e8ae28cce.png" src="../../_images/52bf0ab8bfdc0e9679139e2742dc392c0f3057bf84f0f4b0865b269e8ae28cce.png" />
 </div>
 </div>
 </section>
@@ -666,7 +668,7 @@ combination you will reach for most often.</p>
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code> sets fill opacity for both shapes and labels.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">outline=True</span></code> adds a border (restored for shapes <em>and</em> labels); style it with <code class="docutils literal notranslate"><span class="pre">outline_width</span></code>,
+<li><p><code class="docutils literal notranslate"><span class="pre">outline=True</span></code> adds a border for shapes and labels; style it with <code class="docutils literal notranslate"><span class="pre">outline_width</span></code>,
 <code class="docutils literal notranslate"><span class="pre">outline_color</span></code>, and <code class="docutils literal notranslate"><span class="pre">outline_alpha</span></code>, and for labels set the boundary thickness with <code class="docutils literal notranslate"><span class="pre">contour_px</span></code>.</p></li>
 <li><p>A transparent fill plus an outline gives hollow shapes or boundary-only segmentation overlays.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code> resizes shape geometries about their centroids.</p></li>
