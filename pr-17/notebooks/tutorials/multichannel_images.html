@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=6ef967b8"></script>
+    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Scalebars in spatialdata-plot" href="scalebars.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260818" />
+  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -436,7 +436,7 @@ image with <strong>several channels</strong> — one per stain or marker — rat
 what colour each gets, and how each is contrasted. By the end you should be able to:</p>
 <ul class="simple">
 <li><p>Inspect an image’s named channels and render a single one by name.</p></li>
-<li><p>Composite several channels at once and give each its own colour with <code class="docutils literal notranslate"><span class="pre">palette</span></code> (a lookup table).</p></li>
+<li><p>Composite several channels at once and give each its own colour with <code class="docutils literal notranslate"><span class="pre">palette</span></code> (a lookup table, or LUT).</p></li>
 <li><p>Fix the dim, heavy-tailed look of raw fluorescence with per-channel contrast.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> and <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code> to finish a publication-ready panel.</p></li>
 </ul>
@@ -554,9 +554,11 @@ See the <em>Normalization and contrast</em> tutorial for norms in depth.</p>
 </section>
 <section id="recolouring-channels-cmap-vs-palette">
 <h2>5. Recolouring channels — <code class="docutils literal notranslate"><span class="pre">cmap</span></code> vs <code class="docutils literal notranslate"><span class="pre">palette</span></code><a class="headerlink" href="#recolouring-channels-cmap-vs-palette" title="Link to this heading">#</a></h2>
-<p>You can hand each channel its own colourmap with a list of <code class="docutils literal notranslate"><span class="pre">cmap</span></code>s. For fluorescence this prints a
+<p>You can hand each channel its own colourmap with a list of <code class="docutils literal notranslate"><span class="pre">cmap</span></code>s. For fluorescence this emits a
 warning: colourmaps run to <strong>white</strong>, so overlapping channels wash each other out. For additive
 compositing, prefer <code class="docutils literal notranslate"><span class="pre">palette</span></code> (next section).</p>
+<p>Mechanically, a <code class="docutils literal notranslate"><span class="pre">cmap</span></code> list <em>averages</em> the channels (dividing by their count), which dims the
+result, whereas <code class="docutils literal notranslate"><span class="pre">palette</span></code> <em>adds</em> them — the source of the cleaner composite in the next section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
@@ -580,8 +582,8 @@ compositing, prefer <code class="docutils literal notranslate"><span class="pre"
 </section>
 <section id="fluorescence-luts-per-channel-palette">
 <h2>6. Fluorescence LUTs — per-channel <code class="docutils literal notranslate"><span class="pre">palette</span></code><a class="headerlink" href="#fluorescence-luts-per-channel-palette" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">palette</span></code> assigns each channel a single colour that fades to <strong>transparent</strong>, so channels add together
-cleanly — the lookup-table (LUT) model used in microscopy. Assign a colour per marker to build a
+<p><code class="docutils literal notranslate"><span class="pre">palette</span></code> assigns each channel a single colour that fades to <strong>black</strong>, and the channels are then added
+together, so they combine cleanly — the lookup-table (LUT) model used in microscopy. Assign a colour per marker to build a
 readable composite.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -604,6 +606,10 @@ readable composite.</p>
 <p><code class="docutils literal notranslate"><span class="pre">grayscale=True</span></code> collapses a <strong>three-channel</strong> selection into a single grayscale intensity — useful
 for a structural, colour-free view. It requires exactly three channels, and takes a single <code class="docutils literal notranslate"><span class="pre">norm</span></code>
 (broadcast across them) rather than a per-channel list.</p>
+<p>The three channels are mapped to red, green and blue and combined with the standard luminance
+weights (Rec. 601: 0.299 / 0.587 / 0.114), so <strong>the order you list them in changes the result</strong>. Those
+weights are tuned for natural RGB photographs, not fluorescence, so read the grayscale view as
+structural rather than quantitative. A selection that is not exactly three channels raises an error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
@@ -624,6 +630,8 @@ for a structural, colour-free view. It requires exactly three channels, and take
 <h2>8. Labelling the composite — <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code><a class="headerlink" href="#labelling-the-composite-channels-as-legend" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">channels_as_legend=True</span></code> adds a legend mapping each channel to its rendered colour — handy when a
 composite would otherwise be ambiguous.</p>
+<p>The channel legend applies to per-channel composites; it has no effect on a true RGB image, or when
+a single shared <code class="docutils literal notranslate"><span class="pre">cmap</span></code> is used across channels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
@@ -646,7 +654,7 @@ composite would otherwise be ambiguous.</p>
 several by passing a list (or omitting <code class="docutils literal notranslate"><span class="pre">channel</span></code>).</p></li>
 <li><p>Fluorescence is heavy-tailed — pass a <strong>list of norms</strong> (<code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> per channel) so each
 marker is contrasted independently.</p></li>
-<li><p>For additive fluorescence compositing use <code class="docutils literal notranslate"><span class="pre">palette</span></code> (colour-to-transparent LUTs), not <code class="docutils literal notranslate"><span class="pre">cmap</span></code>
+<li><p>For additive fluorescence compositing use <code class="docutils literal notranslate"><span class="pre">palette</span></code> (colour-to-black additive LUTs), not <code class="docutils literal notranslate"><span class="pre">cmap</span></code>
 (colour-to-white), which washes overlapping channels out.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">grayscale</span></code> gives a colour-free three-channel view; <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code> labels the composite.</p></li>
 </ul>
