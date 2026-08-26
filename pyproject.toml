@@ -53,7 +53,7 @@ watermark = "*"
 
 [tool.pixi.pypi-dependencies]
 spatialdata-plot = { version = ">=0.4.1", extras = ["interactive"] }
-squidpy = "*"
+squidpy = ">=1.8.2"
 
 [tool.pixi.tasks]
 kernel-install = 'python -m ipykernel install --user --name sdata-plot-tutorials --display-name "sdata-plot-tutorials"'
