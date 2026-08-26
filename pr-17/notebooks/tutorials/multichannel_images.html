@@ -638,8 +638,9 @@ distinct per-channel colours — pass <code class="docutils literal notranslate"
 a single shared <code class="docutils literal notranslate"><span class="pre">cmap</span></code> there is nothing to map, and the flag is ignored with a warning.</p>
 <p>Prefer <code class="docutils literal notranslate"><span class="pre">palette</span></code> here: sequential colormaps like <code class="docutils literal notranslate"><span class="pre">Blues</span></code>/<code class="docutils literal notranslate"><span class="pre">Reds</span></code>/<code class="docutils literal notranslate"><span class="pre">Greens</span></code> run from <em>white</em> to colour,
 so blending several of them washes the composite out, whereas <code class="docutils literal notranslate"><span class="pre">palette</span></code> colours are additive on black.</p>
-<p>The legend is a plain Matplotlib legend: place it with <code class="docutils literal notranslate"><span class="pre">legend_loc</span></code> and restyle it through the
-returned axes — on a black composite, white frameless labels read best.</p>
+<p>The legend is a plain Matplotlib legend: place it with <code class="docutils literal notranslate"><span class="pre">legend_params</span></code> (<code class="docutils literal notranslate"><span class="pre">loc</span></code>, <code class="docutils literal notranslate"><span class="pre">fontsize</span></code>,
+<code class="docutils literal notranslate"><span class="pre">fontweight</span></code>, <code class="docutils literal notranslate"><span class="pre">fontoutline</span></code>) and restyle anything else through the returned axes — on a black
+composite, white frameless labels read best.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
@@ -648,7 +649,7 @@ returned axes — on a black composite, white frameless labels read best.</p>
     <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">"blue"</span><span class="p">,</span> <span class="s2">"red"</span><span class="p">,</span> <span class="s2">"green"</span><span class="p">],</span>
     <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
     <span class="n">channels_as_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">legend_loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">,</span> <span class="n">return_ax</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">legend_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"loc"</span><span class="p">:</span> <span class="s2">"lower left"</span><span class="p">},</span> <span class="n">return_ax</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">legend</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span>
 <span class="n">legend</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
