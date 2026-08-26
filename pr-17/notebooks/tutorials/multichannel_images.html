@@ -638,23 +638,17 @@ distinct per-channel colours — pass <code class="docutils literal notranslate"
 a single shared <code class="docutils literal notranslate"><span class="pre">cmap</span></code> there is nothing to map, and the flag is ignored with a warning.</p>
 <p>Prefer <code class="docutils literal notranslate"><span class="pre">palette</span></code> here: sequential colormaps like <code class="docutils literal notranslate"><span class="pre">Blues</span></code>/<code class="docutils literal notranslate"><span class="pre">Reds</span></code>/<code class="docutils literal notranslate"><span class="pre">Greens</span></code> run from <em>white</em> to colour,
 so blending several of them washes the composite out, whereas <code class="docutils literal notranslate"><span class="pre">palette</span></code> colours are additive on black.</p>
-<p>The legend is a plain Matplotlib legend: place it with <code class="docutils literal notranslate"><span class="pre">legend_params</span></code> (<code class="docutils literal notranslate"><span class="pre">loc</span></code>, <code class="docutils literal notranslate"><span class="pre">fontsize</span></code>,
-<code class="docutils literal notranslate"><span class="pre">fontweight</span></code>, <code class="docutils literal notranslate"><span class="pre">fontoutline</span></code>) and restyle anything else through the returned axes — on a black
-composite, white frameless labels read best.</p>
+<p>Style the legend through <code class="docutils literal notranslate"><span class="pre">legend_params</span></code> — here placed in the empty lower-left corner, frameless,
+with white labels so it reads on the black composite.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
     <span class="s2">"morphology_focus"</span><span class="p">,</span>
     <span class="n">channel</span><span class="o">=</span><span class="p">[</span><span class="s2">"DAPI"</span><span class="p">,</span> <span class="s2">"ATP1A1/CD45/E-Cadherin"</span><span class="p">,</span> <span class="s2">"AlphaSMA/Vimentin"</span><span class="p">],</span>
     <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">"blue"</span><span class="p">,</span> <span class="s2">"red"</span><span class="p">,</span> <span class="s2">"green"</span><span class="p">],</span>
     <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
     <span class="n">channels_as_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">legend_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"loc"</span><span class="p">:</span> <span class="s2">"lower left"</span><span class="p">},</span> <span class="n">return_ax</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">legend</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span>
-<span class="n">legend</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">legend</span><span class="o">.</span><span class="n">get_texts</span><span class="p">():</span>
-    <span class="n">text</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">"white"</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">legend_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"loc"</span><span class="p">:</span> <span class="s2">"lower left"</span><span class="p">,</span> <span class="s2">"frameon"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"labelcolor"</span><span class="p">:</span> <span class="s2">"white"</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
@@ -697,7 +691,7 @@ Python version       : 3.14.4
 IPython version      : 9.13.0
 
 spatialdata     : 0.7.3
-spatialdata_plot: 0.4.1
+spatialdata_plot: 0.4.2.dev11+g1d833abbf.d20260826
 squidpy         : 1.8.3
 matplotlib      : 3.10.9
 numpy           : 2.4.4
