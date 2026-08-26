@@ -7,19 +7,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Multi-panel colouring in spatialdata-plot" />
+<meta property="og:title" content="Marker shapes for circle elements in spatialdata-plot" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="notebooks/tutorials/multi_panel_color.html" />
+<meta property="og:url" content="notebooks/tutorials/marker_shapes.html" />
 <meta property="og:site_name" content="spatialdata-plot" />
-<meta property="og:description" content="Passing a list to color= renders one panel per colouring in a single figure, the same way scanpy ’s color=[...] works. By the end you should be able to: Turn a single render_labels/ render_shapes c..." />
+<meta property="og:description" content="render_shapes stores circle elements as a centre point plus a radius (Visium spots, blobs_circles). The shape= argument controls the marker each is drawn with — a circle, a hexagon, a square, or a ..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="_images/social_previews/summary_notebooks_tutorials_multi_panel_color_ba77a7c8.png" />
-<meta property="og:image:alt" content="Passing a list to color= renders one panel per colouring in a single figure, the same way scanpy ’s color=[...] works. By the end you should be able to: Turn a single render_labels/ render_shapes c..." />
-<meta name="description" content="Passing a list to color= renders one panel per colouring in a single figure, the same way scanpy ’s color=[...] works. By the end you should be able to: Turn a single render_labels/ render_shapes c..." />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_tutorials_marker_shapes_bc29635a.png" />
+<meta property="og:image:alt" content="render_shapes stores circle elements as a centre point plus a radius (Visium spots, blobs_circles). The shape= argument controls the marker each is drawn with — a circle, a hexagon, a square, or a ..." />
+<meta name="description" content="render_shapes stores circle elements as a centre point plus a radius (Visium spots, blobs_circles). The shape= argument controls the marker each is drawn with — a circle, a hexagon, a square, or a ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Multi-panel colouring in spatialdata-plot &#8212; spatialdata-plot</title>
+    <title>Marker shapes for circle elements in spatialdata-plot &#8212; spatialdata-plot</title>
   
   
   
@@ -63,12 +63,12 @@
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/tutorials/multi_panel_color';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/tutorials/marker_shapes';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Speeding up the rendering of large data" href="performance.html" />
-    <link rel="prev" title="Colour and palettes in spatialdata-plot" href="color_and_palette.html" />
+    <link rel="next" title="Multichannel and fluorescence images in spatialdata-plot" href="multichannel_images.html" />
+    <link rel="prev" title="Scalebars in spatialdata-plot" href="scalebars.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1.dev1+ge33f196d6.d20260826" />
@@ -219,11 +219,11 @@
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="getting_started.html">Getting started with spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">Multi-panel colouring in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multi_panel_color.html">Multi-panel colouring in spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="performance.html">Speeding up the rendering of large data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="as_points.html">Rendering elements as points with <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="scalebars.html">Scalebars in spatialdata-plot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="marker_shapes.html">Marker shapes for circle elements in spatialdata-plot</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Marker shapes for circle elements in spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="multichannel_images.html">Multichannel and fluorescence images in spatialdata-plot</a></li>
 </ul>
 </details></li>
@@ -316,7 +316,7 @@
       
       
       
-      <li><a href="../../_sources/notebooks/tutorials/multi_panel_color.ipynb" target="_blank"
+      <li><a href="../../_sources/notebooks/tutorials/marker_shapes.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -399,7 +399,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Multi-panel colouring in spatialdata-plot</h1>
+    <h1>Marker shapes for circle elements in spatialdata-plot</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -410,11 +410,11 @@
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-one-colouring-to-many">1. From one colouring to many</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mixing-categorical-and-continuous">2. Mixing categorical and continuous</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-panel-render-shapes">3. Multi-panel <code class="docutils literal notranslate"><span class="pre">render_shapes</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlling-the-grid-with-ncols">4. Controlling the grid with <code class="docutils literal notranslate"><span class="pre">ncols</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shared-palette-cmap-norm-across-panels">5. Shared <code class="docutils literal notranslate"><span class="pre">palette</span></code> / <code class="docutils literal notranslate"><span class="pre">cmap</span></code> / <code class="docutils literal notranslate"><span class="pre">norm</span></code> across panels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-default-circles">1. The default — circles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hexagons-and-squares-shape">2. Hexagons and squares — <code class="docutils literal notranslate"><span class="pre">shape=</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visium-spots-as-a-hex-grid-shape-visium-hex">3. Visium spots as a hex grid — <code class="docutils literal notranslate"><span class="pre">shape="visium_hex"</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-shape-with-colour-and-outline">4. Combining <code class="docutils literal notranslate"><span class="pre">shape=</span></code> with colour and outline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
             </nav>
@@ -427,41 +427,28 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="multi-panel-colouring-in-spatialdata-plot">
-<h1>Multi-panel colouring in spatialdata-plot<a class="headerlink" href="#multi-panel-colouring-in-spatialdata-plot" title="Link to this heading">#</a></h1>
-<p>Passing a <strong>list</strong> to <code class="docutils literal notranslate"><span class="pre">color=</span></code> renders one panel per colouring in a single figure, the same way <code class="docutils literal notranslate"><span class="pre">scanpy</span></code>’s <code class="docutils literal notranslate"><span class="pre">color=[...]</span></code> works. By the end you should be able to:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="marker-shapes-for-circle-elements-in-spatialdata-plot">
+<h1>Marker shapes for circle elements in spatialdata-plot<a class="headerlink" href="#marker-shapes-for-circle-elements-in-spatialdata-plot" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">render_shapes</span></code> stores circle elements as a centre point plus a radius (Visium spots, <code class="docutils literal notranslate"><span class="pre">blobs_circles</span></code>).
+The <code class="docutils literal notranslate"><span class="pre">shape=</span></code> argument controls the <strong>marker</strong> each is drawn with — a circle, a hexagon, a square, or a
+Visium-style hexagon — without changing the underlying geometry. By the end you should be able to:</p>
 <ul class="simple">
-<li><p>Turn a single <code class="docutils literal notranslate"><span class="pre">render_labels</span></code>/<code class="docutils literal notranslate"><span class="pre">render_shapes</span></code> call into a grid of panels.</p></li>
-<li><p>Mix categorical and continuous colourings in one figure, each with its own legend or colourbar.</p></li>
-<li><p>Control the grid width with <code class="docutils literal notranslate"><span class="pre">show(ncols=...)</span></code> and share <code class="docutils literal notranslate"><span class="pre">palette</span></code>/<code class="docutils literal notranslate"><span class="pre">cmap</span></code> across panels.</p></li>
+<li><p>Draw circle elements as circles, hexagons, or squares with <code class="docutils literal notranslate"><span class="pre">shape=</span></code>.</p></li>
+<li><p>Render Visium spots as a hex grid with <code class="docutils literal notranslate"><span class="pre">shape=&quot;visium_hex&quot;</span></code>.</p></li>
+<li><p>Combine <code class="docutils literal notranslate"><span class="pre">shape=</span></code> with colouring and outlines.</p></li>
 </ul>
-<p>We use the synthetic <code class="docutils literal notranslate"><span class="pre">blobs</span></code> dataset throughout so the notebook stays small and reproducible.</p>
+<p>We use the synthetic <code class="docutils literal notranslate"><span class="pre">blobs</span></code> dataset for the basic shapes and the real 10x <strong>Visium</strong> mouse-brain
+dataset from <code class="docutils literal notranslate"><span class="pre">squidpy</span></code> for the Visium hexagons, both cached on first use.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">squidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sq</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>  <span class="c1"># noqa: F401  # registers the .pl accessor</span>
 
 <span class="n">sdata</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">blobs</span><span class="p">()</span>
-
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># A categorical and (built-in) continuous columns on the table annotate blobs_labels.</span>
-<span class="n">table</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="s1">'table'</span><span class="p">]</span>
-<span class="n">table</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
-    <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">,</span> <span class="s1">'D'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">n_obs</span><span class="p">),</span>
-    <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">,</span> <span class="s1">'D'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">],</span>
-<span class="p">)</span>
-
-<span class="c1"># A categorical and a continuous column directly on a shapes GeoDataFrame.</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">'blobs_polygons'</span><span class="p">][</span><span class="s1">'region_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span>
-    <span class="p">[</span><span class="s1">'stroma'</span><span class="p">,</span> <span class="s1">'tumour'</span><span class="p">,</span> <span class="s1">'stroma'</span><span class="p">,</span> <span class="s1">'immune'</span><span class="p">,</span> <span class="s1">'tumour'</span><span class="p">],</span>
-<span class="p">)</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">'blobs_polygons'</span><span class="p">][</span><span class="s1">'score'</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sdata</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="s1">'blobs_polygons'</span><span class="p">]))</span>
 <span class="n">sdata</span>
 </pre></div>
 </div>
@@ -479,7 +466,7 @@
 ├── Shapes
 │     ├── 'blobs_circles': GeoDataFrame shape: (5, 2) (2D shapes)
 │     ├── 'blobs_multipolygons': GeoDataFrame shape: (2, 1) (2D shapes)
-│     └── 'blobs_polygons': GeoDataFrame shape: (5, 3) (2D shapes)
+│     └── 'blobs_polygons': GeoDataFrame shape: (5, 1) (2D shapes)
 └── Tables
       └── 'table': AnnData (26, 3)
 with coordinate systems:
@@ -490,102 +477,92 @@ with coordinate systems:
 </div>
 </div>
 </section>
-<section id="from-one-colouring-to-many">
-<h2>1. From one colouring to many<a class="headerlink" href="#from-one-colouring-to-many" title="Link to this heading">#</a></h2>
-<p>A single string colours one panel. Pass a <strong>list</strong> and each entry becomes its own panel of the same element — one figure, many colourings. <code class="docutils literal notranslate"><span class="pre">show(ncols=...)</span></code> lays the panels out in a grid.</p>
+<section id="the-default-circles">
+<h2>1. The default — circles<a class="headerlink" href="#the-default-circles" title="Link to this heading">#</a></h2>
+<p>The default is <code class="docutils literal notranslate"><span class="pre">shape=None</span></code>, which renders each element as its stored geometry — circles here.
+Passing <code class="docutils literal notranslate"><span class="pre">shape=&quot;circle&quot;</span></code> is equivalent for circle elements.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s1">'blobs_labels'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'cell_type'</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"blobs_circles"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c2a8a561619e156323d5e1c7d373e412ea130633087ce6d19be834f706c31d1c.png" src="../../_images/c2a8a561619e156323d5e1c7d373e412ea130633087ce6d19be834f706c31d1c.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Four colourings of the same labels, arranged 2x2.</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span>
-    <span class="s1">'blobs_labels'</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">,</span> <span class="s1">'channel_0_sum'</span><span class="p">,</span> <span class="s1">'channel_1_sum'</span><span class="p">,</span> <span class="s1">'channel_2_sum'</span><span class="p">],</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/d23fc2f795da3280e4c67e5286f5aaf239163d7d9ad713998dc75a4eddb362b3.png" src="../../_images/d23fc2f795da3280e4c67e5286f5aaf239163d7d9ad713998dc75a4eddb362b3.png" />
+<img alt="../../_images/c7e3613233f53e7684b2bd93408911a36b3a23e9054def27d360494f806c117e.png" src="../../_images/c7e3613233f53e7684b2bd93408911a36b3a23e9054def27d360494f806c117e.png" />
 </div>
 </div>
 </section>
-<section id="mixing-categorical-and-continuous">
-<h2>2. Mixing categorical and continuous<a class="headerlink" href="#mixing-categorical-and-continuous" title="Link to this heading">#</a></h2>
-<p>The panels above already mix a categorical colouring (<code class="docutils literal notranslate"><span class="pre">cell_type</span></code>, drawn with a legend) with continuous ones (the channel sums, drawn with colourbars). Each panel <strong>auto-scales independently</strong>, so a channel with a small dynamic range still uses the full colourmap rather than being flattened against a brighter channel.</p>
+<section id="hexagons-and-squares-shape">
+<h2>2. Hexagons and squares — <code class="docutils literal notranslate"><span class="pre">shape=</span></code><a class="headerlink" href="#hexagons-and-squares-shape" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">shape=&quot;hex&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">shape=&quot;square&quot;</span></code> redraw the same circles as hexagons or squares, sized to the
+radius. Handy when a tiling look reads better than overlapping discs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span>
-    <span class="s1">'blobs_labels'</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'channel_0_sum'</span><span class="p">,</span> <span class="s1">'channel_1_sum'</span><span class="p">],</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"hex"</span><span class="p">,</span> <span class="s2">"square"</span><span class="p">]:</span>
+    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"blobs_circles"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5926556370d2740cbe92dc1f9f8c195b1496740f2353e9486e1ffb6bbeaa79bf.png" src="../../_images/5926556370d2740cbe92dc1f9f8c195b1496740f2353e9486e1ffb6bbeaa79bf.png" />
+<img alt="../../_images/309db6b4131fb075697e09bf0ab3a0130592e1f17806d68523259c57501faafb.png" src="../../_images/309db6b4131fb075697e09bf0ab3a0130592e1f17806d68523259c57501faafb.png" />
+<img alt="../../_images/9f56c18a2e363297dfc4c04153d8de81f03bebaeb83372c4f567611bd7075849.png" src="../../_images/9f56c18a2e363297dfc4c04153d8de81f03bebaeb83372c4f567611bd7075849.png" />
 </div>
 </div>
 </section>
-<section id="multi-panel-render-shapes">
-<h2>3. Multi-panel <code class="docutils literal notranslate"><span class="pre">render_shapes</span></code><a class="headerlink" href="#multi-panel-render-shapes" title="Link to this heading">#</a></h2>
-<p>The list form works identically for shapes. Here a categorical (<code class="docutils literal notranslate"><span class="pre">region_type</span></code>) and a continuous column (<code class="docutils literal notranslate"><span class="pre">score</span></code>) on the same polygons render side by side.</p>
+<section id="visium-spots-as-a-hex-grid-shape-visium-hex">
+<h2>3. Visium spots as a hex grid — <code class="docutils literal notranslate"><span class="pre">shape=&quot;visium_hex&quot;</span></code><a class="headerlink" href="#visium-spots-as-a-hex-grid-shape-visium-hex" title="Link to this heading">#</a></h2>
+<p>Visium spots sit on a hexagonal grid, and are often drawn as touching hexagons rather than dots.
+<code class="docutils literal notranslate"><span class="pre">shape=&quot;visium_hex&quot;</span></code> does exactly that. We switch to the real Visium mouse-brain section and colour by
+its brain-region clusters.</p>
+<p>We switch datasets because the synthetic <code class="docutils literal notranslate"><span class="pre">blobs_circles</span></code> are not a real hexagonal grid. The element
+name (<code class="docutils literal notranslate"><span class="pre">&quot;spots&quot;</span></code>) and the columns (<code class="docutils literal notranslate"><span class="pre">&quot;cluster&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;total_counts&quot;</span></code>) below are specific to this dataset —
+inspect <code class="docutils literal notranslate"><span class="pre">sdata.shapes</span></code> and the annotating table’s columns to find the equivalents in your own data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
-    <span class="s1">'blobs_polygons'</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'region_type'</span><span class="p">,</span> <span class="s1">'score'</span><span class="p">],</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visium</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">visium_hne_sdata</span><span class="p">()</span>
+<span class="n">visium</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">"spots"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">"visium_hex"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"cluster"</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">legend_loc</span><span class="o">=</span><span class="s2">"right margin"</span><span class="p">,</span> <span class="n">legend_fontsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b89018407f9de7c6e4c823ebf0aabeb25850de1f3f9685650a8f6b502fed20c1.png" src="../../_images/b89018407f9de7c6e4c823ebf0aabeb25850de1f3f9685650a8f6b502fed20c1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/visium_hne_sdata.zarr
+</pre></div>
+</div>
+<img alt="../../_images/804ca5e7fc354896c89a620127bf16861ff75951ebd6edd06c40ccac6fe548d1.png" src="../../_images/804ca5e7fc354896c89a620127bf16861ff75951ebd6edd06c40ccac6fe548d1.png" />
 </div>
 </div>
 </section>
-<section id="controlling-the-grid-with-ncols">
-<h2>4. Controlling the grid with <code class="docutils literal notranslate"><span class="pre">ncols</span></code><a class="headerlink" href="#controlling-the-grid-with-ncols" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">ncols</span></code> sets how many panels sit in a row; the rest wrap onto new rows. The same four colourings become a single row with <code class="docutils literal notranslate"><span class="pre">ncols=4</span></code> or a 2x2 grid with <code class="docutils literal notranslate"><span class="pre">ncols=2</span></code>.</p>
+<section id="combining-shape-with-colour-and-outline">
+<h2>4. Combining <code class="docutils literal notranslate"><span class="pre">shape=</span></code> with colour and outline<a class="headerlink" href="#combining-shape-with-colour-and-outline" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">shape=</span></code> composes with the usual styling — colour by a column, add an outline, set <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code> (see
+the <em>Styling shapes and labels</em> tutorial).</p>
+<p>(See the <em>Legends and colorbars</em> example for <code class="docutils literal notranslate"><span class="pre">legend_loc</span></code> and <code class="docutils literal notranslate"><span class="pre">colorbar_params</span></code>.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span>
-    <span class="s1">'blobs_labels'</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">,</span> <span class="s1">'channel_0_sum'</span><span class="p">,</span> <span class="s1">'channel_1_sum'</span><span class="p">,</span> <span class="s1">'channel_2_sum'</span><span class="p">],</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visium</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">"spots"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">"visium_hex"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"total_counts"</span><span class="p">,</span>
+    <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outline_width</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">colorbar_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"label"</span><span class="p">:</span> <span class="s2">"Total counts"</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5b8dd33453ec9259f89fd14befbcbfacbace4d8a52a2146f5d0418f2c7c3dfde.png" src="../../_images/5b8dd33453ec9259f89fd14befbcbfacbace4d8a52a2146f5d0418f2c7c3dfde.png" />
+<img alt="../../_images/efb88b2d12239d602607366d0d69e5c4cea963d0fa08f237c4bbd00d7c51179c.png" src="../../_images/efb88b2d12239d602607366d0d69e5c4cea963d0fa08f237c4bbd00d7c51179c.png" />
 </div>
 </div>
 </section>
-<section id="shared-palette-cmap-norm-across-panels">
-<h2>5. Shared <code class="docutils literal notranslate"><span class="pre">palette</span></code> / <code class="docutils literal notranslate"><span class="pre">cmap</span></code> / <code class="docutils literal notranslate"><span class="pre">norm</span></code> across panels<a class="headerlink" href="#shared-palette-cmap-norm-across-panels" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">palette</span></code>, <code class="docutils literal notranslate"><span class="pre">cmap</span></code>, <code class="docutils literal notranslate"><span class="pre">norm</span></code> and <code class="docutils literal notranslate"><span class="pre">groups</span></code> are applied to <strong>every</strong> panel, so a single keyword styles the whole figure. Autoscaling still happens per panel unless you pin it with an explicit <code class="docutils literal notranslate"><span class="pre">norm</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span>
-    <span class="s1">'blobs_labels'</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">'channel_0_sum'</span><span class="p">,</span> <span class="s1">'channel_1_sum'</span><span class="p">,</span> <span class="s1">'channel_2_sum'</span><span class="p">],</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="s1">'magma'</span><span class="p">,</span>
-<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/6702496f94d7abcb1913991037ef23ee45b991008a3c41b88e9c51c95e742748.png" src="../../_images/6702496f94d7abcb1913991037ef23ee45b991008a3c41b88e9c51c95e742748.png" />
-</div>
-</div>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Circle elements (Visium spots, <code class="docutils literal notranslate"><span class="pre">blobs_circles</span></code>) carry a centre and radius; <code class="docutils literal notranslate"><span class="pre">shape=</span></code> chooses the
+marker they are drawn with, leaving the geometry unchanged.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shape=</span></code> accepts <code class="docutils literal notranslate"><span class="pre">None</span></code> (the default, render as-is), <code class="docutils literal notranslate"><span class="pre">&quot;circle&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hex&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;square&quot;</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">&quot;visium_hex&quot;</span></code>; this tutorial uses circle elements (centre + radius), which <code class="docutils literal notranslate"><span class="pre">shape=</span></code> is designed for.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shape=&quot;visium_hex&quot;</span></code> renders Visium spots as a touching hex grid — the familiar Visium look.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shape=</span></code> composes with colour, outline, and the other styling arguments.</p></li>
+</ul>
 </section>
 <section id="for-reproducibility">
 <h2>For reproducibility<a class="headerlink" href="#for-reproducibility" title="Link to this heading">#</a></h2>
@@ -594,26 +571,25 @@ with coordinate systems:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ruff: noqa: F401, F811, I001, E402</span>
 <span class="c1"># fmt: off</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">dask</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>
 
 <span class="o">%</span><span class="k">load_ext</span> watermark
 <span class="c1"># fmt: on</span>
 
-<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,matplotlib,numpy,pandas
+<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,squidpy,matplotlib,numpy
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python implementation: CPython
-Python version       : 3.14.4
-IPython version      : 9.13.0
+Python version       : 3.14.6
+IPython version      : 9.14.1
 
 spatialdata     : 0.7.3
 spatialdata_plot: 0.4.1
-matplotlib      : 3.10.9
-numpy           : 2.4.4
-pandas          : 2.3.3
+squidpy         : 1.8.2
+matplotlib      : 3.11.0
+numpy           : 2.4.6
 
 Compiler    : Clang 20.1.8 
 OS          : Darwin
@@ -641,20 +617,20 @@ Architecture: 64bit
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="color_and_palette.html"
+       href="scalebars.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Colour and palettes in spatialdata-plot</p>
+        <p class="prev-next-title">Scalebars in spatialdata-plot</p>
       </div>
     </a>
     <a class="right-next"
-       href="performance.html"
+       href="multichannel_images.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Speeding up the rendering of large data</p>
+        <p class="prev-next-title">Multichannel and fluorescence images in spatialdata-plot</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -677,11 +653,11 @@ Architecture: 64bit
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-one-colouring-to-many">1. From one colouring to many</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mixing-categorical-and-continuous">2. Mixing categorical and continuous</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-panel-render-shapes">3. Multi-panel <code class="docutils literal notranslate"><span class="pre">render_shapes</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlling-the-grid-with-ncols">4. Controlling the grid with <code class="docutils literal notranslate"><span class="pre">ncols</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shared-palette-cmap-norm-across-panels">5. Shared <code class="docutils literal notranslate"><span class="pre">palette</span></code> / <code class="docutils literal notranslate"><span class="pre">cmap</span></code> / <code class="docutils literal notranslate"><span class="pre">norm</span></code> across panels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-default-circles">1. The default — circles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hexagons-and-squares-shape">2. Hexagons and squares — <code class="docutils literal notranslate"><span class="pre">shape=</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visium-spots-as-a-hex-grid-shape-visium-hex">3. Visium spots as a hex grid — <code class="docutils literal notranslate"><span class="pre">shape="visium_hex"</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-shape-with-colour-and-outline">4. Combining <code class="docutils literal notranslate"><span class="pre">shape=</span></code> with colour and outline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
   </nav></div>

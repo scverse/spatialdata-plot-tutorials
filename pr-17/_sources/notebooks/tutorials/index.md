@@ -45,6 +45,16 @@ selection for images, and the `datashader` backend for large collections
 of shapes and points.
 :::
 
+:::{grid-item-card} Rendering elements as points
+:link: /notebooks/tutorials/as_points
+:link-type: doc
+:img-top: /notebooks/_static/img/as_points.png
+
+Draw shapes and label masks as one dot per centroid with `as_points=True`
+— a fast overview that trades geometry for speed, including the matplotlib
+→ datashader switch above ~50k elements.
+:::
+
 :::{grid-item-card} Scalebars
 :link: /notebooks/tutorials/scalebars
 :link-type: doc
@@ -52,6 +62,15 @@ of shapes and points.
 
 Add a physical scalebar with `scalebar_dx`, choose units, and style
 placement, colour, length and fonts through `scalebar_params`.
+:::
+
+:::{grid-item-card} Marker shapes
+:link: /notebooks/tutorials/marker_shapes
+:link-type: doc
+:img-top: /notebooks/_static/img/marker_shapes.png
+
+Draw circle elements as circles, hexagons, or squares with `shape=`, and
+render Visium spots as a hex grid with `shape="visium_hex"`.
 :::
 
 :::{grid-item-card} Multichannel & fluorescence images
@@ -75,6 +94,8 @@ getting_started
 color_and_palette
 multi_panel_color
 performance
+as_points
 scalebars
+marker_shapes
 multichannel_images
 ```
