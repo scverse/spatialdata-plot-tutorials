@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="_static/documentation_options.js?v=d505e5a5"></script>
+    <script src="_static/documentation_options.js?v=9879977d"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="spatialdata-plot: rich static plotting from SpatialData objects" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
+  <meta name="docsearch:version" content="0.1.dev1+g9f19b7d93.d20260827" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -221,12 +221,17 @@
 <li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/multi_panel_color.html">Multi-panel colouring in spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/performance.html">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/as_points.html">Rendering elements as points with <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/scalebars.html">Scalebars in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/marker_shapes.html">Marker shapes for circle elements in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/multichannel_images.html">Multichannel and fluorescence images in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/cropping.html">Cropping a plot with <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code></a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="notebooks/examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/examples/visium_mouse_brain.html">Plotting a Visium dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/examples/interactive_annotate.html">Interactive region annotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/examples/colouring_points.html">Colouring points in spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/examples/point_density.html">Point density maps in spatialdata-plot</a></li>
 </ul>
 </details></li>
@@ -481,6 +486,18 @@ of shapes and points.</p>
 </div>
 <div class="sd-col sd-d-flex-row docutils">
 <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/as_points.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Rendering elements as points</div>
+<p class="sd-card-text">Draw shapes and label masks as one dot per centroid with <code class="docutils literal notranslate"><span class="pre">as_points=True</span></code>
+— a fast overview that trades geometry for speed, including the matplotlib
+→ datashader switch above ~50k elements.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="notebooks/tutorials/as_points.html"><span class="doc">Rendering elements as points with as_points</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
 <img alt="" class="sd-card-img-top" src="_images/scalebars.png" />
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
@@ -489,6 +506,41 @@ Scalebars</div>
 placement, colour, length and fonts through <code class="docutils literal notranslate"><span class="pre">scalebar_params</span></code>.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="notebooks/tutorials/scalebars.html"><span class="doc">Scalebars in spatialdata-plot</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/marker_shapes.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Marker shapes</div>
+<p class="sd-card-text">Draw circle elements as circles, hexagons, or squares with <code class="docutils literal notranslate"><span class="pre">shape=</span></code>, and
+render Visium spots as a hex grid with <code class="docutils literal notranslate"><span class="pre">shape=&quot;visium_hex&quot;</span></code>.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="notebooks/tutorials/marker_shapes.html"><span class="doc">Marker shapes for circle elements in spatialdata-plot</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/multichannel_images.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Multichannel &amp; fluorescence images</div>
+<p class="sd-card-text">Render multiplexed and fluorescence images: select channels by name,
+composite them with per-channel <code class="docutils literal notranslate"><span class="pre">palette</span></code> LUTs, fix heavy-tailed contrast
+per channel, and label the composite with <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code>.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="notebooks/tutorials/multichannel_images.html"><span class="doc">Multichannel and fluorescence images in spatialdata-plot</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/cropping.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Cropping a plot</div>
+<p class="sd-card-text">Zoom into a bounding box with <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code> — every layer windowed at draw
+time, images rasterized for the window only, and how it differs from
+<code class="docutils literal notranslate"><span class="pre">bounding_box_query</span></code>.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="notebooks/tutorials/cropping.html"><span class="doc">Cropping a plot with crop_coord</span></a></div>
 </div>
 </div>
 </div>
@@ -519,6 +571,18 @@ Interactive region annotation</div>
 <code class="docutils literal notranslate"><span class="pre">sdata.pl.annotate(...)</span></code> and persist them as a <code class="docutils literal notranslate"><span class="pre">ShapesModel</span></code> element.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="notebooks/examples/interactive_annotate.html"><span class="doc">Interactive region annotation</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/colouring_points.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Colouring points</div>
+<p class="sd-card-text">Colour a point element by continuous (<code class="docutils literal notranslate"><span class="pre">cmap</span></code>, <code class="docutils literal notranslate"><span class="pre">norm</span></code>, colorbar) or
+categorical (<code class="docutils literal notranslate"><span class="pre">palette</span></code>, <code class="docutils literal notranslate"><span class="pre">groups</span></code>, <code class="docutils literal notranslate"><span class="pre">na_color</span></code>, legend) columns, and tune
+<code class="docutils literal notranslate"><span class="pre">size</span></code>/<code class="docutils literal notranslate"><span class="pre">alpha</span></code>, on real Xenium transcripts.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="notebooks/examples/colouring_points.html"><span class="doc">Colouring points in spatialdata-plot</span></a></div>
 </div>
 <div class="sd-col sd-d-flex-row docutils">
 <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">

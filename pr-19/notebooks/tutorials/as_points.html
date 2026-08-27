@@ -1,0 +1,973 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Rendering elements as points with as_points" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="notebooks/tutorials/as_points.html" />
+<meta property="og:site_name" content="spatialdata-plot" />
+<meta property="og:description" content="By default, spatialdata-plot draws each element as its full geometry: a shape as its polygon or circle, a labels element as its filled segmentation mask. Passing as_points=True to render_shapes() o..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_tutorials_as_points_f9d0e017.png" />
+<meta property="og:image:alt" content="By default, spatialdata-plot draws each element as its full geometry: a shape as its polygon or circle, a labels element as its filled segmentation mask. Passing as_points=True to render_shapes() o..." />
+<meta name="description" content="By default, spatialdata-plot draws each element as its full geometry: a shape as its polygon or circle, a labels element as its filled segmentation mask. Passing as_points=True to render_shapes() o..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Rendering elements as points with as_points &#8212; spatialdata-plot</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=4418a689" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=05624691" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f2dec995" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9879977d"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/tutorials/as_points';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Scalebars in spatialdata-plot" href="scalebars.html" />
+    <link rel="prev" title="Speeding up the rendering of large data" href="performance.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g9f19b7d93.d20260827" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-light" alt="spatialdata-plot - Home"/>
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-dark pst-js-only" alt="spatialdata-plot - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../gallery.html">Gallery</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html">Getting started with spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multi_panel_color.html">Multi-panel colouring in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="performance.html">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Rendering elements as points with <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="scalebars.html">Scalebars in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marker_shapes.html">Marker shapes for circle elements in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multichannel_images.html">Multichannel and fluorescence images in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cropping.html">Cropping a plot with <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/visium_mouse_brain.html">Plotting a Visium dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/interactive_annotate.html">Interactive region annotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/colouring_points.html">Colouring points in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/point_density.html">Point density maps in spatialdata-plot</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api.html">API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../plotting.html">Plotting (<code class="docutils literal notranslate"><span class="pre">.pl</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/scverse/spatialdata-plot.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/tutorials/as_points.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Rendering elements as points with as_points</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shapes-full-geometry-vs-one-dot-per-centroid">1. Shapes: full geometry vs one dot per centroid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-and-size-still-apply">2. Colour and size still apply</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-segmentation-masks-as-centroids">3. Labels: segmentation masks as centroids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-speed-trade-off">4. The speed trade-off</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-and-the-50000-rule">5. Backend and the 50000 rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-reach-for-as-points">When to reach for <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="rendering-elements-as-points-with-as-points">
+<h1>Rendering elements as points with <code class="docutils literal notranslate"><span class="pre">as_points</span></code><a class="headerlink" href="#rendering-elements-as-points-with-as-points" title="Link to this heading">#</a></h1>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> draws each element as its full geometry: a shape
+as its polygon or circle, a labels element as its filled segmentation mask.
+Passing <code class="docutils literal notranslate"><span class="pre">as_points=True</span></code> to <code class="docutils literal notranslate"><span class="pre">render_shapes()</span></code> or <code class="docutils literal notranslate"><span class="pre">render_labels()</span></code> draws one dot
+per element at its centroid (its geometric centre) instead. You keep where each object sits and what
+colour it has, and you give up its size and outline.</p>
+<p>This notebook covers:</p>
+<ul class="simple">
+<li><p>what the option looks like on real data, for shapes and for labels,</p></li>
+<li><p>the appearance controls that still apply (<code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">cmap</span></code>, <code class="docutils literal notranslate"><span class="pre">palette</span></code>),</p></li>
+<li><p>the backend it picks and the 50000-element rule,</p></li>
+<li><p>what it costs, measured on the full dataset.</p></li>
+</ul>
+<p>The data is a Xenium human breast-cancer section with 167780 cells, so the
+timings reflect a real workload rather than a toy one.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<p>The dataset is the Xenium replicate 1 human breast-cancer sample, converted to
+the SpatialData Zarr format and hosted on the scverse example-data bucket. It is
+about 3.4 GB. <code class="docutils literal notranslate"><span class="pre">pooch</span></code> downloads it once and caches it, so later runs are instant.</p>
+<p><strong>This notebook is not re-executed in CI, because the download is too large. Its
+outputs are committed and trusted; run it locally to reproduce them.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pooch</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>  <span class="c1"># noqa: F401  (registers the .pl accessor)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpatialData</span><span class="p">,</span> <span class="n">bounding_box_query</span><span class="p">,</span> <span class="n">rasterize</span>
+
+<span class="n">XENIUM_URL</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">"https://s3.embl.de/spatialdata/spatialdata-sandbox/"</span>
+    <span class="s2">"xenium_rep1_io_spatialdata_0.7.1.zip"</span>
+<span class="p">)</span>
+<span class="n">unzipped</span> <span class="o">=</span> <span class="n">pooch</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span>
+    <span class="n">XENIUM_URL</span><span class="p">,</span>
+    <span class="n">known_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">fname</span><span class="o">=</span><span class="s2">"xenium_rep1_io_spatialdata_0.7.1.zip"</span><span class="p">,</span>
+    <span class="n">processor</span><span class="o">=</span><span class="n">pooch</span><span class="o">.</span><span class="n">Unzip</span><span class="p">(),</span>
+    <span class="n">progressbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">zarr_path</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">".zarr"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">".zarr"</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">unzipped</span> <span class="k">if</span> <span class="s2">".zarr"</span> <span class="ow">in</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">sdata</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">read_zarr</span><span class="p">(</span><span class="n">zarr_path</span><span class="p">)</span>
+<span class="n">sdata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /Users/tim.treis/Library/Caches/pooch/xenium_rep1_io_spatialdata_0.7.1.zip.unzip/data.zarr
+├── Images
+│     ├── 'morphology_focus': DataTree[cyx] (1, 25778, 35416), (1, 12889, 17708), (1, 6444, 8854), (1, 3222, 4427), (1, 1611, 2213)
+│     └── 'morphology_mip': DataTree[cyx] (1, 25778, 35416), (1, 12889, 17708), (1, 6444, 8854), (1, 3222, 4427), (1, 1611, 2213)
+├── Points
+│     └── 'transcripts': DataFrame with shape: (&lt;Delayed&gt;, 8) (3D points)
+├── Shapes
+│     ├── 'cell_boundaries': GeoDataFrame shape: (167780, 1) (2D shapes)
+│     ├── 'cell_circles': GeoDataFrame shape: (167780, 2) (2D shapes)
+│     └── 'xenium_landmarks': GeoDataFrame shape: (3, 2) (2D shapes)
+└── Tables
+      └── 'table': AnnData (167780, 313)
+with coordinate systems:
+    ▸ 'aligned', with elements:
+        morphology_focus (Images)
+    ▸ 'global', with elements:
+        morphology_focus (Images), morphology_mip (Images), transcripts (Points), cell_boundaries (Shapes), cell_circles (Shapes), xenium_landmarks (Shapes)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The object above holds 167780 cells. Xenium ships the cell outlines as shapes
+(<code class="docutils literal notranslate"><span class="pre">cell_circles</span></code> and <code class="docutils literal notranslate"><span class="pre">cell_boundaries</span></code>) and has no labels element, so there is no
+segmentation-mask raster. We build one further down by rasterizing the
+boundaries, which lets us show <code class="docutils literal notranslate"><span class="pre">as_points</span></code> on labels too.</p>
+<p>We use a small crop for the pictures, so individual cells stay visible, and the
+full section for the timings.</p>
+</section>
+<section id="shapes-full-geometry-vs-one-dot-per-centroid">
+<h2>1. Shapes: full geometry vs one dot per centroid<a class="headerlink" href="#shapes-full-geometry-vs-one-dot-per-centroid" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">render_shapes(...,</span> <span class="pre">as_points=True)</span></code> replaces each circle or polygon with a
+single marker at its centroid. Only the centroid is drawn, so <code class="docutils literal notranslate"><span class="pre">outline_width</span></code>,
+<code class="docutils literal notranslate"><span class="pre">outline_color</span></code> and <code class="docutils literal notranslate"><span class="pre">shape</span></code> have no effect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">XMIN</span><span class="p">,</span> <span class="n">YMIN</span><span class="p">,</span> <span class="n">XMAX</span><span class="p">,</span> <span class="n">YMAX</span> <span class="o">=</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">5000</span>  <span class="c1"># a 1000 x 1000 micron window</span>
+<span class="n">crop</span> <span class="o">=</span> <span class="n">bounding_box_query</span><span class="p">(</span>
+    <span class="n">sdata</span><span class="p">,</span>
+    <span class="n">min_coordinate</span><span class="o">=</span><span class="p">[</span><span class="n">XMIN</span><span class="p">,</span> <span class="n">YMIN</span><span class="p">],</span>
+    <span class="n">max_coordinate</span><span class="o">=</span><span class="p">[</span><span class="n">XMAX</span><span class="p">,</span> <span class="n">YMAX</span><span class="p">],</span>
+    <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">),</span>
+    <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">"global"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">n_crop</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">crop</span><span class="p">[</span><span class="s2">"cell_circles"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n_crop</span><span class="si">}</span><span class="s2"> cells in the crop"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"cell_circles"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"full geometry (</span><span class="si">{</span><span class="n">n_crop</span><span class="si">}</span><span class="s2"> circles)"</span>
+<span class="p">)</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"cell_circles"</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"as_points=True (centroids)"</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>332 cells in the crop
+</pre></div>
+</div>
+<img alt="../../_images/a87f5b88eedb93f85fe2da89e6b9ba6dc2aff1c2e02b26198c1328b29b218128.png" src="../../_images/a87f5b88eedb93f85fe2da89e6b9ba6dc2aff1c2e02b26198c1328b29b218128.png" />
+</div>
+</div>
+</section>
+<section id="colour-and-size-still-apply">
+<h2>2. Colour and size still apply<a class="headerlink" href="#colour-and-size-still-apply" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">as_points</span></code> changes what is drawn at each location, not how colour is resolved.
+<code class="docutils literal notranslate"><span class="pre">color</span></code> accepts a gene name (looked up in the annotating table), a column on the
+element or its table, or a literal colour. Continuous values use <code class="docutils literal notranslate"><span class="pre">cmap</span></code> and
+categorical values use <code class="docutils literal notranslate"><span class="pre">palette</span></code>, exactly as for the full geometry, and legends
+and colourbars behave the same way.</p>
+<p>Here we colour by <code class="docutils literal notranslate"><span class="pre">EPCAM</span></code>, an epithelial marker. Its expression follows the
+tissue: the ductal and tumour regions are bright, the surrounding stroma is dark.
+The centroid view keeps that spatial trend after dropping the outlines.</p>
+<p>The two panels below share a single colourbar only because they plot the same
+<code class="docutils literal notranslate"><span class="pre">EPCAM</span></code> values. To guarantee a shared scale across panels that differ, pass an
+explicit <code class="docutils literal notranslate"><span class="pre">norm</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">matplotlib.colors.Normalize(vmin,</span> <span class="pre">vmax)</span></code>) to each render call.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="c1"># Both panels share the same EPCAM scale, so we draw a single colourbar (right).</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"cell_circles"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"EPCAM"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"full geometry, colour = EPCAM"</span>
+<span class="p">)</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">"cell_circles"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"EPCAM"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">30</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"as_points, colour = EPCAM"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/2e89be7ab5f6f3e9ec0c3660503479d32fcf1e947cc2a0693d3592de6a1f6544.png" src="../../_images/2e89be7ab5f6f3e9ec0c3660503479d32fcf1e947cc2a0693d3592de6a1f6544.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">size</span></code> sets the marker area (matplotlib’s scatter <code class="docutils literal notranslate"><span class="pre">s</span></code>), independent of the data.
+It is a styling choice, not the cell’s real size, which the centroid view does
+not carry. Larger markers read better when zoomed out; smaller ones keep dense
+regions from overlapping into a blob.</p>
+<p>The default is <code class="docutils literal notranslate"><span class="pre">size=1.0</span></code>, deliberately tiny so that dense point sets do not merge
+into a blob; you will usually raise it, as every example here does.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">"cell_circles"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"EPCAM"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"size=8"</span><span class="p">)</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">"cell_circles"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"EPCAM"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">80</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"size=80"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7d5e0e9f388852ae2adba09bfae619e6fdb43ebe4c40b88edb23bdea02385df2.png" src="../../_images/7d5e0e9f388852ae2adba09bfae619e6fdb43ebe4c40b88edb23bdea02385df2.png" />
+</div>
+</div>
+</section>
+<section id="labels-segmentation-masks-as-centroids">
+<h2>3. Labels: segmentation masks as centroids<a class="headerlink" href="#labels-segmentation-masks-as-centroids" title="Link to this heading">#</a></h2>
+<p>Xenium has no labels element, so we build one from the real cell boundaries.
+<code class="docutils literal notranslate"><span class="pre">rasterize(...,</span> <span class="pre">return_regions_as_labels=True)</span></code> paints each cell’s polygon with
+its integer id, producing a segmentation mask whose pixel value is the cell id.</p>
+<p><code class="docutils literal notranslate"><span class="pre">render_labels(...,</span> <span class="pre">as_points=True)</span></code> then draws one dot per label. The centroids
+come from the rendered, display-resolution raster, so the computation stays
+cheap. <code class="docutils literal notranslate"><span class="pre">contour_px</span></code> and the outline options are ignored.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cell_masks</span> <span class="o">=</span> <span class="n">rasterize</span><span class="p">(</span>
+    <span class="n">crop</span><span class="p">[</span><span class="s2">"cell_boundaries"</span><span class="p">],</span>
+    <span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">],</span>
+    <span class="n">min_coordinate</span><span class="o">=</span><span class="p">[</span><span class="n">XMIN</span><span class="p">,</span> <span class="n">YMIN</span><span class="p">],</span>
+    <span class="n">max_coordinate</span><span class="o">=</span><span class="p">[</span><span class="n">XMAX</span><span class="p">,</span> <span class="n">YMAX</span><span class="p">],</span>
+    <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">"global"</span><span class="p">,</span>
+    <span class="n">target_unit_to_pixels</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">return_regions_as_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">crop</span><span class="p">[</span><span class="s2">"cell_masks"</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell_masks</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"cell_masks"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"full mask"</span><span class="p">)</span>
+<span class="n">crop</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"cell_masks"</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"as_points=True (centroids)"</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5032bee393be51423f0f9a439a72fc1dc6e8f01bc58ca7e9c5719541c5c1f539.png" src="../../_images/5032bee393be51423f0f9a439a72fc1dc6e8f01bc58ca7e9c5719541c5c1f539.png" />
+</div>
+</div>
+</section>
+<section id="the-speed-trade-off">
+<h2>4. The speed trade-off<a class="headerlink" href="#the-speed-trade-off" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">as_points</span></code> exists mainly for speed. We subsample the real cells across a range
+of counts, up to the full 167780, and time each render. The backend is held at
+matplotlib, so the comparison is drawing N polygons or masks against drawing N
+dots.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">time_best</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># Best wall-clock of `repeat` runs, closing figures between them.</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeat</span><span class="p">):</span>
+        <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">fn</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s2">"all"</span><span class="p">)</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">best</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Shapes: draw N circles against N centroid dots, up to every cell in the section.</span>
+<span class="n">circ</span> <span class="o">=</span> <span class="n">sdata</span><span class="p">[</span><span class="s2">"cell_circles"</span><span class="p">]</span>
+<span class="n">shape_ns</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1_000</span><span class="p">,</span> <span class="mi">5_000</span><span class="p">,</span> <span class="mi">20_000</span><span class="p">,</span> <span class="mi">50_000</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">circ</span><span class="p">)]</span>
+<span class="n">shape_full</span><span class="p">,</span> <span class="n">shape_pts</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">shape_ns</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">SpatialData</span><span class="p">(</span><span class="n">shapes</span><span class="o">=</span><span class="p">{</span><span class="s2">"c"</span><span class="p">:</span> <span class="n">circ</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()})</span>
+    <span class="n">shape_full</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time_best</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"c"</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"matplotlib"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()))</span>  <span class="c1"># noqa: B023</span>
+    <span class="n">shape_pts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">time_best</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"c"</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"matplotlib"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">())</span>  <span class="c1"># noqa: B023</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"N=</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">&gt;7</span><span class="si">}</span><span class="s2">:  full </span><span class="si">{</span><span class="n">shape_full</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">s   as_points </span><span class="si">{</span><span class="n">shape_pts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">5.2f</span><span class="si">}</span><span class="s2">s   "</span>
+          <span class="sa">f</span><span class="s2">"(</span><span class="si">{</span><span class="n">shape_full</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">shape_pts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">x)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   1000:  full   0.03s   as_points  0.01s   (4x)
+N=   5000:  full   0.14s   as_points  0.02s   (9x)
+N=  20000:  full   0.51s   as_points  0.04s   (13x)
+N=  50000:  full   1.29s   as_points  0.09s   (14x)
+N= 100000:  full   2.53s   as_points  0.16s   (15x)
+N= 167780:  full   4.31s   as_points  0.27s   (16x)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Labels: draw the filled mask against N centroid dots. We rasterize progressively</span>
+<span class="c1"># larger crops to grow the cell count.</span>
+<span class="n">label_sides</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1_000</span><span class="p">,</span> <span class="mi">4_000</span><span class="p">,</span> <span class="mi">8_000</span><span class="p">,</span> <span class="mi">12_000</span><span class="p">]</span>
+<span class="n">x0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">=</span> <span class="mi">2_000</span><span class="p">,</span> <span class="mi">2_000</span>
+<span class="n">label_ns</span><span class="p">,</span> <span class="n">label_full</span><span class="p">,</span> <span class="n">label_pts</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">side</span> <span class="ow">in</span> <span class="n">label_sides</span><span class="p">:</span>
+    <span class="n">cb</span> <span class="o">=</span> <span class="n">bounding_box_query</span><span class="p">(</span>
+        <span class="n">sdata</span><span class="p">[</span><span class="s2">"cell_boundaries"</span><span class="p">],</span>
+        <span class="n">min_coordinate</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">],</span>
+        <span class="n">max_coordinate</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span> <span class="o">+</span> <span class="n">side</span><span class="p">,</span> <span class="n">y0</span> <span class="o">+</span> <span class="n">side</span><span class="p">],</span>
+        <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">),</span>
+        <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">"global"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">rasterize</span><span class="p">(</span>
+        <span class="n">cb</span><span class="p">,</span> <span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">],</span>
+        <span class="n">min_coordinate</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">],</span> <span class="n">max_coordinate</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span> <span class="o">+</span> <span class="n">side</span><span class="p">,</span> <span class="n">y0</span> <span class="o">+</span> <span class="n">side</span><span class="p">],</span>
+        <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">"global"</span><span class="p">,</span> <span class="n">target_unit_to_pixels</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">return_regions_as_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">SpatialData</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">"m"</span><span class="p">:</span> <span class="n">m</span><span class="p">})</span>
+    <span class="n">label_ns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cb</span><span class="p">))</span>
+    <span class="n">label_full</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time_best</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"m"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()))</span>  <span class="c1"># noqa: B023</span>
+    <span class="n">label_pts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">time_best</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"m"</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"matplotlib"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">())</span>  <span class="c1"># noqa: B023</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"N=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span><span class="si">:</span><span class="s2">&gt;6</span><span class="si">}</span><span class="s2">:  full mask </span><span class="si">{</span><span class="n">label_full</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">5.2f</span><span class="si">}</span><span class="s2">s   as_points </span><span class="si">{</span><span class="n">label_pts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">5.2f</span><span class="si">}</span><span class="s2">s"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N=   424:  full mask  0.10s   as_points  0.09s
+N=  5833:  full mask  0.11s   as_points  0.10s
+N= 18606:  full mask  0.12s   as_points  0.12s
+N= 39125:  full mask  0.17s   as_points  0.15s
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">axL</span><span class="p">,</span> <span class="n">axR</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+<span class="n">axL</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">shape_ns</span><span class="p">,</span> <span class="n">shape_full</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"full geometry"</span><span class="p">)</span>
+<span class="n">axL</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">shape_ns</span><span class="p">,</span> <span class="n">shape_pts</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"as_points"</span><span class="p">)</span>
+<span class="n">axL</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Shapes"</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"cells"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"render time (s)"</span><span class="p">)</span>
+<span class="n">axL</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
+<span class="n">axL</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">axR</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label_ns</span><span class="p">,</span> <span class="n">label_full</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"full mask"</span><span class="p">)</span>
+<span class="n">axR</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label_ns</span><span class="p">,</span> <span class="n">label_pts</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"as_points"</span><span class="p">)</span>
+<span class="n">axR</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Labels"</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"cells"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"render time (s)"</span><span class="p">)</span>
+<span class="n">axR</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
+<span class="n">axR</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/afcfc277052b7e4bca010e00717bebda3f74d8df53528a2615951e595f1f175e.png" src="../../_images/afcfc277052b7e4bca010e00717bebda3f74d8df53528a2615951e595f1f175e.png" />
+</div>
+</div>
+<p>The two panels behave differently:</p>
+<ul class="simple">
+<li><p>Shapes: a large gain that grows with cell count. Each circle is a vector
+primitive matplotlib draws one at a time, while a centroid is a single scatter
+point. At the full section (167780 cells) <code class="docutils literal notranslate"><span class="pre">as_points</span></code> is roughly 15 times
+faster.</p></li>
+<li><p>Labels: about the same either way. A labels element renders as a raster (an
+<code class="docutils literal notranslate"><span class="pre">imshow</span></code> downsampled to the display), whose cost tracks display pixels rather
+than cell count, and computing centroids costs about as much. For labels,
+<code class="docutils literal notranslate"><span class="pre">as_points</span></code> gives a different look, not a speedup.</p></li>
+</ul>
+<p>Use <code class="docutils literal notranslate"><span class="pre">as_points</span></code> on shapes when you have many objects and do not need their
+morphology. Use it on labels when you want the centroid representation.</p>
+</section>
+<section id="backend-and-the-50000-rule">
+<h2>5. Backend and the 50000 rule<a class="headerlink" href="#backend-and-the-50000-rule" title="Link to this heading">#</a></h2>
+<p><strong>datashader</strong> is a library that renders very large point sets by aggregating them
+into a pixel grid instead of drawing each dot individually; <code class="docutils literal notranslate"><span class="pre">spatialdata-plot</span></code> uses
+it as an optional backend. The dots can be drawn by either backend, set with <code class="docutils literal notranslate"><span class="pre">method</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">method=&quot;matplotlib&quot;</span></code>: per-glyph scatter, exact, good up to tens of thousands
+of dots.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method=&quot;datashader&quot;</span></code>: density raster, scales to millions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method=None</span></code> (default): matplotlib, switching to datashader above 50000
+centroids (<code class="docutils literal notranslate"><span class="pre">AS_POINTS_DS_AUTO</span> <span class="pre">=</span> <span class="pre">50000</span></code>), because matplotlib’s per-glyph cost
+starts to dominate around there.</p></li>
+</ul>
+<p>datashader aggregates and then shades, so it cannot represent one distinct random
+colour per cell, which is the default colouring of a labels element with no
+colour column. In that case it falls back to matplotlib with a warning. With a
+real colour column, as below, both backends work and differ only in appearance.</p>
+<p>As in section 2, the single colourbar below is valid only because both panels map the
+same values; pass an explicit <code class="docutils literal notranslate"><span class="pre">norm</span></code> to guarantee a shared scale otherwise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="c1"># Shared EPCAM scale, so the colourbar is drawn once on the right panel.</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">"cell_circles"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"EPCAM"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"matplotlib"</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"matplotlib (167780 dots)"</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s2">"cell_circles"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"EPCAM"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">as_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"datashader"</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"datashader"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e28f798adecfd1ca661a777460494c2bb3ac4ac13ed8edd3311e084d60e5daab.png" src="../../_images/e28f798adecfd1ca661a777460494c2bb3ac4ac13ed8edd3311e084d60e5daab.png" />
+</div>
+</div>
+</section>
+<section id="when-to-reach-for-as-points">
+<h2>When to reach for <code class="docutils literal notranslate"><span class="pre">as_points</span></code><a class="headerlink" href="#when-to-reach-for-as-points" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Many shapes, morphology not needed: a fast overview of hundreds of thousands of
+cells coloured by a value, without waiting on polygon drawing.</p></li>
+<li><p>Positions over an image: dots read more clearly than filled masks on top of
+tissue.</p></li>
+<li><p>Not for label speed: rendering a mask is already fast, so use <code class="docutils literal notranslate"><span class="pre">as_points</span></code> on
+labels only for the dot look.</p></li>
+<li><p>Remember what is dropped: the cell’s real size, outline and shape. The marker
+<code class="docutils literal notranslate"><span class="pre">size</span></code> is a styling value, not the cell’s area. When those properties carry
+meaning, keep the full geometry.</p></li>
+</ul>
+</section>
+<section id="for-reproducibility">
+<h2>For reproducibility<a class="headerlink" href="#for-reproducibility" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ruff: noqa: F401, F811, I001, E402</span>
+<span class="c1"># fmt: off</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>
+
+<span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="c1"># fmt: on</span>
+<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,matplotlib,numpy,datashader,pooch
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python implementation: CPython
+Python version       : 3.14.4
+IPython version      : 9.13.0
+
+spatialdata     : 0.7.3
+spatialdata_plot: 0.4.1
+matplotlib      : 3.10.9
+numpy           : 2.4.4
+datashader      : 0.19.0
+pooch           : 1.9.0
+
+Compiler    : Clang 20.1.8 
+OS          : Darwin
+Release     : 25.2.0
+Machine     : arm64
+Processor   : arm
+CPU cores   : 8
+Architecture: 64bit
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="performance.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Speeding up the rendering of large data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="scalebars.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Scalebars in spatialdata-plot</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shapes-full-geometry-vs-one-dot-per-centroid">1. Shapes: full geometry vs one dot per centroid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colour-and-size-still-apply">2. Colour and size still apply</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-segmentation-masks-as-centroids">3. Labels: segmentation masks as centroids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-speed-trade-off">4. The speed trade-off</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-and-the-50000-rule">5. Backend and the 50000 rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-reach-for-as-points">When to reach for <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By scverse
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, scverse..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,827 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Multichannel and fluorescence images in spatialdata-plot" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="notebooks/tutorials/multichannel_images.html" />
+<meta property="og:site_name" content="spatialdata-plot" />
+<meta property="og:description" content="A fluorescence or multiplexed-imaging experiment (Xenium morphology, CODEX, IMC, CyCIF) produces an image with several channels — one per stain or marker — rather than a single RGB photo. render_im..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_notebooks_tutorials_multichannel_images_57b33fb2.png" />
+<meta property="og:image:alt" content="A fluorescence or multiplexed-imaging experiment (Xenium morphology, CODEX, IMC, CyCIF) produces an image with several channels — one per stain or marker — rather than a single RGB photo. render_im..." />
+<meta name="description" content="A fluorescence or multiplexed-imaging experiment (Xenium morphology, CODEX, IMC, CyCIF) produces an image with several channels — one per stain or marker — rather than a single RGB photo. render_im..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Multichannel and fluorescence images in spatialdata-plot &#8212; spatialdata-plot</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=4418a689" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=05624691" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f2dec995" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../../_static/documentation_options.js?v=9879977d"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/tutorials/multichannel_images';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cropping a plot with crop_coord" href="cropping.html" />
+    <link rel="prev" title="Marker shapes for circle elements in spatialdata-plot" href="marker_shapes.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.dev1+g9f19b7d93.d20260827" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-light" alt="spatialdata-plot - Home"/>
+    <img src="../../_static/spatialdata_horizontal.png" class="logo__image only-dark pst-js-only" alt="spatialdata-plot - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../gallery.html">Gallery</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html">Getting started with spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multi_panel_color.html">Multi-panel colouring in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="performance.html">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="as_points.html">Rendering elements as points with <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="scalebars.html">Scalebars in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marker_shapes.html">Marker shapes for circle elements in spatialdata-plot</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Multichannel and fluorescence images in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cropping.html">Cropping a plot with <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/visium_mouse_brain.html">Plotting a Visium dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/interactive_annotate.html">Interactive region annotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/colouring_points.html">Colouring points in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/point_density.html">Point density maps in spatialdata-plot</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api.html">API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../plotting.html">Plotting (<code class="docutils literal notranslate"><span class="pre">.pl</span></code>)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/scverse/spatialdata-plot.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/tutorials/multichannel_images.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Multichannel and fluorescence images in spatialdata-plot</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-channels">1. Inspect the channels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-single-channel-channel">2. A single channel — <code class="docutils literal notranslate"><span class="pre">channel=</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-default-composite">3. The default composite</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#per-channel-contrast-the-fluorescence-essential">4. Per-channel contrast — the fluorescence essential</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recolouring-channels-cmap-vs-palette">5. Recolouring channels — <code class="docutils literal notranslate"><span class="pre">cmap</span></code> vs <code class="docutils literal notranslate"><span class="pre">palette</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fluorescence-luts-per-channel-palette">6. Fluorescence LUTs — per-channel <code class="docutils literal notranslate"><span class="pre">palette</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-desaturated-view-grayscale">7. A desaturated view — <code class="docutils literal notranslate"><span class="pre">grayscale</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labelling-the-composite-channels-as-legend">8. Labelling the composite — <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="multichannel-and-fluorescence-images-in-spatialdata-plot">
+<h1>Multichannel and fluorescence images in spatialdata-plot<a class="headerlink" href="#multichannel-and-fluorescence-images-in-spatialdata-plot" title="Link to this heading">#</a></h1>
+<p>A fluorescence or multiplexed-imaging experiment (Xenium morphology, CODEX, IMC, CyCIF) produces an
+image with <strong>several channels</strong> — one per stain or marker — rather than a single RGB photo.
+<code class="docutils literal notranslate"><span class="pre">render_images</span></code> renders these directly, and gives you per-channel control over which channels to show,
+what colour each gets, and how each is contrasted. By the end you should be able to:</p>
+<ul class="simple">
+<li><p>Inspect an image’s named channels and render a single one by name.</p></li>
+<li><p>Composite several channels at once and give each its own colour with <code class="docutils literal notranslate"><span class="pre">palette</span></code> (a lookup table, or LUT).</p></li>
+<li><p>Fix the dim, heavy-tailed look of raw fluorescence with per-channel contrast.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">grayscale</span></code> and <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code> to finish a publication-ready panel.</p></li>
+</ul>
+<p>We use the Xenium <code class="docutils literal notranslate"><span class="pre">cells</span></code> dataset from <code class="docutils literal notranslate"><span class="pre">squidpy</span></code> (<code class="docutils literal notranslate"><span class="pre">morphology_focus</span></code> is a real four-channel
+fluorescence image), downloaded and cached on first use.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">squidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sq</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>  <span class="c1"># noqa: F401  # registers the .pl accessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata_plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">PercentileNormalize</span>
+
+<span class="n">sdata</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">cells</span><span class="p">()</span>
+<span class="n">sdata</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/cells.zarr
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /Users/tim.treis/Documents/GitHub/spatialdata-plot-notebooks/tutorials/data/spatialdata/cells.zarr
+├── Images
+│     ├── 'he_aligned': DataTree[cyx] (3, 430, 540), (3, 215, 270)
+│     ├── 'he_image': DataTree[cyx] (3, 423, 339), (3, 211, 169)
+│     └── 'morphology_focus': DataTree[cyx] (4, 430, 540), (4, 215, 270)
+├── Labels
+│     ├── 'cell_labels': DataTree[yx] (430, 540), (215, 270)
+│     ├── 'nucleus_labels': DataTree[yx] (430, 540), (215, 270)
+│     └── 'tissue_labels': DataTree[yx] (430, 540), (215, 270)
+├── Points
+│     └── 'transcripts': DataFrame with shape: (&lt;Delayed&gt;, 13) (3D points)
+├── Shapes
+│     ├── 'cell_boundaries': GeoDataFrame shape: (94, 1) (2D shapes)
+│     └── 'nucleus_boundaries': GeoDataFrame shape: (94, 2) (2D shapes)
+└── Tables
+      └── 'table': AnnData (94, 5101)
+with coordinate systems:
+    ▸ 'global', with elements:
+        he_aligned (Images), he_image (Images), morphology_focus (Images), cell_labels (Labels), nucleus_labels (Labels), tissue_labels (Labels), transcripts (Points), cell_boundaries (Shapes), nucleus_boundaries (Shapes)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="inspect-the-channels">
+<h2>1. Inspect the channels<a class="headerlink" href="#inspect-the-channels" title="Link to this heading">#</a></h2>
+<p>A multichannel image carries a named channel axis. Here are the four markers of the Xenium
+<code class="docutils literal notranslate"><span class="pre">morphology_focus</span></code> image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">sdata</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="s2">"morphology_focus"</span><span class="p">]</span>
+<span class="c1"># multiscale images are a datatree; read the channel names off the full-resolution level</span>
+<span class="n">full_res</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="s2">"scale0"</span><span class="p">]</span><span class="o">.</span><span class="n">image</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s2">"keys"</span><span class="p">)</span> <span class="k">else</span> <span class="n">image</span>
+<span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">full_res</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">"c"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+<span class="n">channels</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>['DAPI', 'ATP1A1/CD45/E-Cadherin', '18S', 'AlphaSMA/Vimentin']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-single-channel-channel">
+<h2>2. A single channel — <code class="docutils literal notranslate"><span class="pre">channel=</span></code><a class="headerlink" href="#a-single-channel-channel" title="Link to this heading">#</a></h2>
+<p>Pass a channel <strong>name</strong> to render just that marker — channels are selected by name. (An integer
+works only when the channel axis is itself integer-named, as in the synthetic <code class="docutils literal notranslate"><span class="pre">blobs</span></code> image; the
+named markers here must be selected by name.) <code class="docutils literal notranslate"><span class="pre">DAPI</span></code> stains nuclei.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s2">"DAPI"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/99cd1b1bfd4d1f88534b210958fa1870af9d6ac52ed945b23281c57077befaba.png" src="../../_images/99cd1b1bfd4d1f88534b210958fa1870af9d6ac52ed945b23281c57077befaba.png" />
+</div>
+</div>
+</section>
+<section id="the-default-composite">
+<h2>3. The default composite<a class="headerlink" href="#the-default-composite" title="Link to this heading">#</a></h2>
+<p>With no <code class="docutils literal notranslate"><span class="pre">channel</span></code>, all channels are composited into one image, each assigned a colour automatically.
+This already shows the tissue structure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6a21f41d90a1d43fe5b761e73b7633f682cfa46a8d532b2f2d4f7b1f0fe1a1fb.png" src="../../_images/6a21f41d90a1d43fe5b761e73b7633f682cfa46a8d532b2f2d4f7b1f0fe1a1fb.png" />
+</div>
+</div>
+</section>
+<section id="per-channel-contrast-the-fluorescence-essential">
+<h2>4. Per-channel contrast — the fluorescence essential<a class="headerlink" href="#per-channel-contrast-the-fluorescence-essential" title="Link to this heading">#</a></h2>
+<p>Raw fluorescence is <strong>heavy-tailed</strong>: a few bright pixels stretch the range and crush everything else
+toward black. Pass a <strong>list</strong> of norms — one per channel — to set contrast independently.
+<code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> clips to data percentiles, which is exactly what viewers like Xenium Explorer do.
+See the <em>Normalization and contrast</em> tutorial for norms in depth.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norms</span> <span class="o">=</span> <span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">)]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">channels</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norms</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/25cff9989177b4525fef1aef7dca6a6a89c19847e18242512816094da1b3e5e9.png" src="../../_images/25cff9989177b4525fef1aef7dca6a6a89c19847e18242512816094da1b3e5e9.png" />
+</div>
+</div>
+</section>
+<section id="recolouring-channels-cmap-vs-palette">
+<h2>5. Recolouring channels — <code class="docutils literal notranslate"><span class="pre">cmap</span></code> vs <code class="docutils literal notranslate"><span class="pre">palette</span></code><a class="headerlink" href="#recolouring-channels-cmap-vs-palette" title="Link to this heading">#</a></h2>
+<p>You can hand each channel its own colourmap with a list of <code class="docutils literal notranslate"><span class="pre">cmap</span></code>s. For fluorescence this emits a
+warning: colourmaps run to <strong>white</strong>, so overlapping channels wash each other out. For additive
+compositing, prefer <code class="docutils literal notranslate"><span class="pre">palette</span></code> (next section).</p>
+<p>Mechanically, a <code class="docutils literal notranslate"><span class="pre">cmap</span></code> list <em>averages</em> the channels (dividing by their count), which dims the
+result, whereas <code class="docutils literal notranslate"><span class="pre">palette</span></code> <em>adds</em> them — the source of the cleaner composite in the next section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
+    <span class="s2">"morphology_focus"</span><span class="p">,</span>
+    <span class="n">channel</span><span class="o">=</span><span class="p">[</span><span class="s2">"DAPI"</span><span class="p">,</span> <span class="s2">"18S"</span><span class="p">],</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="p">[</span><span class="s2">"Blues"</span><span class="p">,</span> <span class="s2">"Greens"</span><span class="p">],</span>
+    <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Yellow">WARNING </span> render_images: You're blending multiple cmaps. If the plot doesn't look like you expect, it might be      
+         because your cmaps go from a given color to <span class=" -Color -Color-Green">'white'</span>, and not to <span class=" -Color -Color-Green">'transparent'</span>. Therefore, the <span class=" -Color -Color-Green">'white'</span> of  
+         higher layers will overlay the lower layers. Consider using <span class=" -Color -Color-Green">'palette'</span> instead.
+</pre></div>
+</div>
+<img alt="../../_images/45f9170501451b9221254e52079fe70317f6228dbc9e786fa2e2bbfe648fd4d8.png" src="../../_images/45f9170501451b9221254e52079fe70317f6228dbc9e786fa2e2bbfe648fd4d8.png" />
+</div>
+</div>
+</section>
+<section id="fluorescence-luts-per-channel-palette">
+<h2>6. Fluorescence LUTs — per-channel <code class="docutils literal notranslate"><span class="pre">palette</span></code><a class="headerlink" href="#fluorescence-luts-per-channel-palette" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">palette</span></code> assigns each channel a single colour that fades to <strong>black</strong>, and the channels are then added
+together, so they combine cleanly — the lookup-table (LUT) model used in microscopy. Assign a colour per marker to build a
+readable composite.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
+    <span class="s2">"morphology_focus"</span><span class="p">,</span>
+    <span class="n">channel</span><span class="o">=</span><span class="p">[</span><span class="s2">"DAPI"</span><span class="p">,</span> <span class="s2">"ATP1A1/CD45/E-Cadherin"</span><span class="p">,</span> <span class="s2">"AlphaSMA/Vimentin"</span><span class="p">],</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">"cyan"</span><span class="p">,</span> <span class="s2">"magenta"</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">],</span>
+    <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5d7a32d897c9f4c6ece21f9bee2ae8ae2b698095d00014b59b5e243ff4766db7.png" src="../../_images/5d7a32d897c9f4c6ece21f9bee2ae8ae2b698095d00014b59b5e243ff4766db7.png" />
+</div>
+</div>
+</section>
+<section id="a-desaturated-view-grayscale">
+<h2>7. A desaturated view — <code class="docutils literal notranslate"><span class="pre">grayscale</span></code><a class="headerlink" href="#a-desaturated-view-grayscale" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">grayscale=True</span></code> collapses a <strong>three-channel</strong> selection into a single grayscale intensity — useful
+for a structural, colour-free view. It requires exactly three channels, and takes a single <code class="docutils literal notranslate"><span class="pre">norm</span></code>
+(broadcast across them) rather than a per-channel list.</p>
+<p>The three channels are mapped to red, green and blue and combined with the standard luminance
+weights (Rec. 601: 0.299 / 0.587 / 0.114), so <strong>the order you list them in changes the result</strong>. Those
+weights are tuned for natural RGB photographs, not fluorescence, so read the grayscale view as
+structural rather than quantitative. A selection that is not exactly three channels raises an error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
+    <span class="s2">"morphology_focus"</span><span class="p">,</span>
+    <span class="n">channel</span><span class="o">=</span><span class="p">[</span><span class="s2">"DAPI"</span><span class="p">,</span> <span class="s2">"ATP1A1/CD45/E-Cadherin"</span><span class="p">,</span> <span class="s2">"18S"</span><span class="p">],</span>
+    <span class="n">grayscale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9a35980bf5f4a8d3a7c3ed9ebd07603e347becf5be0201a603a6f93f6538e488.png" src="../../_images/9a35980bf5f4a8d3a7c3ed9ebd07603e347becf5be0201a603a6f93f6538e488.png" />
+</div>
+</div>
+</section>
+<section id="labelling-the-composite-channels-as-legend">
+<h2>8. Labelling the composite — <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code><a class="headerlink" href="#labelling-the-composite-channels-as-legend" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">channels_as_legend=True</span></code> adds a legend mapping each channel to its compositing colour. It needs
+distinct per-channel colours — pass <code class="docutils literal notranslate"><span class="pre">palette</span></code> (or a list of <code class="docutils literal notranslate"><span class="pre">cmap</span></code>s); with the default composite or
+a single shared <code class="docutils literal notranslate"><span class="pre">cmap</span></code> there is nothing to map, and the flag is ignored with a warning.</p>
+<p>Prefer <code class="docutils literal notranslate"><span class="pre">palette</span></code> here: sequential colormaps like <code class="docutils literal notranslate"><span class="pre">Blues</span></code>/<code class="docutils literal notranslate"><span class="pre">Reds</span></code>/<code class="docutils literal notranslate"><span class="pre">Greens</span></code> run from <em>white</em> to colour,
+so blending several of them washes the composite out, whereas <code class="docutils literal notranslate"><span class="pre">palette</span></code> colours are additive on black.</p>
+<p>Style the legend through <code class="docutils literal notranslate"><span class="pre">legend_params</span></code> — here placed in the empty lower-left corner, frameless,
+with white labels so it reads on the black composite.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
+    <span class="s2">"morphology_focus"</span><span class="p">,</span>
+    <span class="n">channel</span><span class="o">=</span><span class="p">[</span><span class="s2">"DAPI"</span><span class="p">,</span> <span class="s2">"ATP1A1/CD45/E-Cadherin"</span><span class="p">,</span> <span class="s2">"AlphaSMA/Vimentin"</span><span class="p">],</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">"blue"</span><span class="p">,</span> <span class="s2">"red"</span><span class="p">,</span> <span class="s2">"green"</span><span class="p">],</span>
+    <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">channels_as_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">legend_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"loc"</span><span class="p">:</span> <span class="s2">"lower left"</span><span class="p">,</span> <span class="s2">"frameon"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"labelcolor"</span><span class="p">:</span> <span class="s2">"white"</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d0c2a506c117d5c96a5dfff3e8b0e0ac94f7059b702d5f355be81131c8a13991.png" src="../../_images/d0c2a506c117d5c96a5dfff3e8b0e0ac94f7059b702d5f355be81131c8a13991.png" />
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A multichannel image has a <strong>named channel axis</strong>; render one with <code class="docutils literal notranslate"><span class="pre">channel=&quot;name&quot;</span></code> or composite
+several by passing a list (or omitting <code class="docutils literal notranslate"><span class="pre">channel</span></code>).</p></li>
+<li><p>Fluorescence is heavy-tailed — pass a <strong>list of norms</strong> (<code class="docutils literal notranslate"><span class="pre">PercentileNormalize</span></code> per channel) so each
+marker is contrasted independently.</p></li>
+<li><p>For additive fluorescence compositing use <code class="docutils literal notranslate"><span class="pre">palette</span></code> (colour-to-black additive LUTs), not <code class="docutils literal notranslate"><span class="pre">cmap</span></code>
+(colour-to-white), which washes overlapping channels out.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">grayscale</span></code> gives a colour-free three-channel view; <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code> labels the composite.</p></li>
+</ul>
+</section>
+<section id="for-reproducibility">
+<h2>For reproducibility<a class="headerlink" href="#for-reproducibility" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ruff: noqa: F401, F811, I001, E402</span>
+<span class="c1"># fmt: off</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>
+
+<span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="c1"># fmt: on</span>
+
+<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,squidpy,matplotlib,numpy
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python implementation: CPython
+Python version       : 3.14.4
+IPython version      : 9.13.0
+
+spatialdata     : 0.7.3
+spatialdata_plot: 0.4.2
+squidpy         : 1.8.3
+matplotlib      : 3.10.9
+numpy           : 2.4.4
+
+Compiler    : Clang 20.1.8 
+OS          : Darwin
+Release     : 25.2.0
+Machine     : arm64
+Processor   : arm
+CPU cores   : 8
+Architecture: 64bit
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="marker_shapes.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Marker shapes for circle elements in spatialdata-plot</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="cropping.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Cropping a plot with <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-channels">1. Inspect the channels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-single-channel-channel">2. A single channel — <code class="docutils literal notranslate"><span class="pre">channel=</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-default-composite">3. The default composite</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#per-channel-contrast-the-fluorescence-essential">4. Per-channel contrast — the fluorescence essential</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recolouring-channels-cmap-vs-palette">5. Recolouring channels — <code class="docutils literal notranslate"><span class="pre">cmap</span></code> vs <code class="docutils literal notranslate"><span class="pre">palette</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fluorescence-luts-per-channel-palette">6. Fluorescence LUTs — per-channel <code class="docutils literal notranslate"><span class="pre">palette</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-desaturated-view-grayscale">7. A desaturated view — <code class="docutils literal notranslate"><span class="pre">grayscale</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labelling-the-composite-channels-as-legend">8. Labelling the composite — <code class="docutils literal notranslate"><span class="pre">channels_as_legend</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By scverse
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, scverse..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
