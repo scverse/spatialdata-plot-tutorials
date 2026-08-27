@@ -83,6 +83,16 @@ composite them with per-channel `palette` LUTs, fix heavy-tailed contrast
 per channel, and label the composite with `channels_as_legend`.
 :::
 
+:::{grid-item-card} Cropping a plot
+:link: /notebooks/tutorials/cropping
+:link-type: doc
+:img-top: /notebooks/_static/img/cropping.png
+
+Zoom into a bounding box with `crop_coord` — every layer windowed at draw
+time, images rasterized for the window only, and how it differs from
+`bounding_box_query`.
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -98,4 +108,5 @@ as_points
 scalebars
 marker_shapes
 multichannel_images
+cropping
 ```
