@@ -54,7 +54,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="_static/documentation_options.js?v=d505e5a5"></script>
+    <script src="_static/documentation_options.js?v=9879977d"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -69,7 +69,7 @@
     <link rel="prev" title="API" href="api.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
+  <meta name="docsearch:version" content="0.1.dev1+g9f19b7d93.d20260827" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -219,13 +219,19 @@
 <li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/multi_panel_color.html">Multi-panel colouring in spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/performance.html">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/as_points.html">Rendering elements as points with <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/scalebars.html">Scalebars in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/marker_shapes.html">Marker shapes for circle elements in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/multichannel_images.html">Multichannel and fluorescence images in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/cropping.html">Cropping a plot with <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/tutorials/styling_shapes_and_labels.html">Styling shapes and labels in spatialdata-plot</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="notebooks/examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/examples/visium_mouse_brain.html">Plotting a Visium dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/examples/interactive_annotate.html">Interactive region annotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/examples/colouring_points.html">Colouring points in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/examples/point_density.html">Point density maps in spatialdata-plot</a></li>
 </ul>
 </details></li>
 </ul>
@@ -1004,7 +1010,7 @@ color mode, with its color key.</p></li>
 <li><p><strong>pad_extent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span> (default: <code class="docutils literal notranslate"><span class="pre">0</span></code>)) – Padding added around the computed spatial extent on all sides. Ignored when <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code> is set.</p></li>
 <li><p><strong>crop_coord</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)) – Restrict the plot to a bounding box <code class="docutils literal notranslate"><span class="pre">(xmin,</span> <span class="pre">xmax,</span> <span class="pre">ymin,</span> <span class="pre">ymax)</span></code> in the rendered coordinate
 system’s units (same order as <code class="xref py py-meth docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.axis()</span></code> and as <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code> in
-<a class="reference external" href="https://scanpy.scverse.org/en/stable/api/generated/scanpy.pl.spatial.html#scanpy.pl.spatial" title="(in Scanpy v1.12.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.pl.spatial()</span></code></a> / <code class="xref py py-func docutils literal notranslate"><span class="pre">squidpy.pl.spatial_scatter()</span></code>). Points and shapes are
+<a class="reference external" href="https://scanpy.scverse.org/en/stable/api/generated/scanpy.pl.spatial.html#scanpy.pl.spatial" title="(in Scanpy v1.12.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.pl.spatial()</span></code></a> / <code class="xref py py-func docutils literal notranslate"><span class="pre">squidpy.pl.spatial_scatter()</span></code>). Points and shapes are
 subsetted before drawing for speed; large images (both the matplotlib and <code class="docutils literal notranslate"><span class="pre">datashader</span></code>
 backends) and labels are rasterized to the window only, so the full array is never
 materialized (fast at Visium HD scale) and the zoom keeps full figure resolution. For points
@@ -1033,8 +1039,11 @@ Only takes effect when <code class="docutils literal notranslate"><span class="p
 e.g. <code class="docutils literal notranslate"><span class="pre">{&quot;location&quot;:</span> <span class="pre">&quot;lower</span> <span class="pre">right&quot;,</span> <span class="pre">&quot;color&quot;:</span> <span class="pre">&quot;white&quot;,</span> <span class="pre">&quot;length_fraction&quot;:</span> <span class="pre">0.25}</span></code>.
 See the matplotlib-scalebar documentation for the full list of options.</p></li>
 <li><p><strong>legend_params</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)) – Bundled legend options; overrides the matching <code class="docutils literal notranslate"><span class="pre">legend_*</span></code> flat kwargs. Accepted keys:
-<code class="docutils literal notranslate"><span class="pre">location</span></code> (or <code class="docutils literal notranslate"><span class="pre">loc</span></code>), <code class="docutils literal notranslate"><span class="pre">fontsize</span></code>, <code class="docutils literal notranslate"><span class="pre">fontweight</span></code>, <code class="docutils literal notranslate"><span class="pre">fontoutline</span></code>,
-<code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code>. Unknown keys raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">location</span></code> (or <code class="docutils literal notranslate"><span class="pre">loc</span></code>), <code class="docutils literal notranslate"><span class="pre">fontsize</span></code>, <code class="docutils literal notranslate"><span class="pre">fontweight</span></code>, <code class="docutils literal notranslate"><span class="pre">fontoutline</span></code>, <code class="docutils literal notranslate"><span class="pre">na_in_legend</span></code>,
+and the categorical-legend styling overrides <code class="docutils literal notranslate"><span class="pre">ncols</span></code> (or <code class="docutils literal notranslate"><span class="pre">ncol</span></code>), <code class="docutils literal notranslate"><span class="pre">markerscale</span></code>,
+<code class="docutils literal notranslate"><span class="pre">frameon</span></code>, <code class="docutils literal notranslate"><span class="pre">framealpha</span></code>, <code class="docutils literal notranslate"><span class="pre">title_fontsize</span></code> and <code class="docutils literal notranslate"><span class="pre">labelcolor</span></code>. Styling overrides default
+to the current auto behaviour (column count picked from the number of entries, no frame).
+Unknown keys raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

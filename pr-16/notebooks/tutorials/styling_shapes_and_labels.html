@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
+    <script src="../../_static/documentation_options.js?v=9879977d"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -68,10 +68,10 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Examples" href="../examples/index.html" />
-    <link rel="prev" title="Scalebars in spatialdata-plot" href="scalebars.html" />
+    <link rel="prev" title="Cropping a plot with crop_coord" href="cropping.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
+  <meta name="docsearch:version" content="0.1.dev1+g9f19b7d93.d20260827" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -221,13 +221,19 @@
 <li class="toctree-l3"><a class="reference internal" href="color_and_palette.html">Colour and palettes in spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="multi_panel_color.html">Multi-panel colouring in spatialdata-plot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="performance.html">Speeding up the rendering of large data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="as_points.html">Rendering elements as points with <code class="docutils literal notranslate"><span class="pre">as_points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="scalebars.html">Scalebars in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marker_shapes.html">Marker shapes for circle elements in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multichannel_images.html">Multichannel and fluorescence images in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cropping.html">Cropping a plot with <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code></a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Styling shapes and labels in spatialdata-plot</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../examples/visium_mouse_brain.html">Plotting a Visium dataset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../examples/interactive_annotate.html">Interactive region annotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/colouring_points.html">Colouring points in spatialdata-plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/point_density.html">Point density maps in spatialdata-plot</a></li>
 </ul>
 </details></li>
 </ul>
@@ -411,12 +417,13 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fill-opacity-fill-alpha">2. Fill opacity — <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outlines-the-outline-toggle">3. Outlines — the <code class="docutils literal notranslate"><span class="pre">outline</span></code> toggle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#styling-the-outline-width-colour-opacity">4. Styling the outline — width, colour, opacity</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hollow-shapes-outline-only">5. Hollow shapes — outline only</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-geometries-scale">6. Resizing geometries — <code class="docutils literal notranslate"><span class="pre">scale</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-use-the-same-vocabulary">7. Labels use the same vocabulary</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translucent-masks-over-an-image-fill-alpha">8. Translucent masks over an image — <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#segmentation-boundaries-outline-and-contour-px">9. Segmentation boundaries — <code class="docutils literal notranslate"><span class="pre">outline</span></code> and <code class="docutils literal notranslate"><span class="pre">contour_px</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-together">10. Putting it together</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-outlines-outer-and-inner">5. Two outlines — outer and inner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hollow-shapes-outline-only">6. Hollow shapes — outline only</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-geometries-scale">7. Resizing geometries — <code class="docutils literal notranslate"><span class="pre">scale</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-use-the-same-vocabulary">8. Labels use the same vocabulary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translucent-masks-over-an-image-fill-alpha">9. Translucent masks over an image — <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#segmentation-boundaries-outline-and-contour-px">10. Segmentation boundaries — <code class="docutils literal notranslate"><span class="pre">outline</span></code> and <code class="docutils literal notranslate"><span class="pre">contour_px</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-together">11. Putting it together</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
@@ -439,6 +446,7 @@ you should be able to:</p>
 <ul class="simple">
 <li><p>Control fill opacity with <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code>.</p></li>
 <li><p>Turn outlines on and style their width, colour, and opacity.</p></li>
+<li><p>Draw a double outline (outer + inner).</p></li>
 <li><p>Draw hollow shapes (outline only) and translucent label masks over an image.</p></li>
 <li><p>Trace segmentation boundaries with <code class="docutils literal notranslate"><span class="pre">outline</span></code> and <code class="docutils literal notranslate"><span class="pre">contour_px</span></code> on labels.</p></li>
 </ul>
@@ -491,7 +499,7 @@ the <code class="docutils literal notranslate"><span class="pre">sdata</span></c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2cefdb4004845550ebe038f02ec8263808d7d2e2cd2418a014b96eb6215e7a8c.png" src="../../_images/2cefdb4004845550ebe038f02ec8263808d7d2e2cd2418a014b96eb6215e7a8c.png" />
+<img alt="../../_images/e8ee3a6fe0f03634100bbd876f8dc6c862cbca03a01bc97162750ca94d7a9f41.png" src="../../_images/e8ee3a6fe0f03634100bbd876f8dc6c862cbca03a01bc97162750ca94d7a9f41.png" />
 </div>
 </div>
 </section>
@@ -506,14 +514,13 @@ shapes overlap or sit on top of an image you still want to see.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a1c7b98851b42285be4f9b40c367cbd0b7965261f8207be077688c2ee1fc0271.png" src="../../_images/a1c7b98851b42285be4f9b40c367cbd0b7965261f8207be077688c2ee1fc0271.png" />
+<img alt="../../_images/45954d984c7fdd0e6cb393501b6b2edf6317b046a841c652eaf4a86e5495eae8.png" src="../../_images/45954d984c7fdd0e6cb393501b6b2edf6317b046a841c652eaf4a86e5495eae8.png" />
 </div>
 </div>
 </section>
 <section id="outlines-the-outline-toggle">
 <h2>3. Outlines — the <code class="docutils literal notranslate"><span class="pre">outline</span></code> toggle<a class="headerlink" href="#outlines-the-outline-toggle" title="Link to this heading">#</a></h2>
-<p>Pass <code class="docutils literal notranslate"><span class="pre">outline=True</span></code> to draw a border around each shape. Outlines are off by default (<code class="docutils literal notranslate"><span class="pre">outline=None</span></code> infers visibility from the <code class="docutils literal notranslate"><span class="pre">outline_*</span></code> settings); turning
-the toggle on gives every shape a crisp edge.</p>
+<p>Pass <code class="docutils literal notranslate"><span class="pre">outline=True</span></code> to draw a border around each shape. Outlines are off by default; turning the toggle on gives every shape a crisp edge. (Leaving <code class="docutils literal notranslate"><span class="pre">outline=None</span></code> — the default — instead infers the border from whether you set any <code class="docutils literal notranslate"><span class="pre">outline_*</span></code> argument.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s1">'blobs_polygons'</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -521,7 +528,7 @@ the toggle on gives every shape a crisp edge.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5582e75775605a5f28bf5c332bb3c2ace8eef4e277047e51d797ab910511f25c.png" src="../../_images/5582e75775605a5f28bf5c332bb3c2ace8eef4e277047e51d797ab910511f25c.png" />
+<img alt="../../_images/8b373a644f15089daebfa44a87f1fa1885272f334e9f5979f13d13773be4eb7e.png" src="../../_images/8b373a644f15089daebfa44a87f1fa1885272f334e9f5979f13d13773be4eb7e.png" />
 </div>
 </div>
 </section>
@@ -541,12 +548,32 @@ the toggle on gives every shape a crisp edge.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9f8609028fd883e47b900701977049990e9a017615d50d505348b84d5b9159d1.png" src="../../_images/9f8609028fd883e47b900701977049990e9a017615d50d505348b84d5b9159d1.png" />
+<img alt="../../_images/208f71ab6caddc3f72a7ee627efc4509d3311dab0f090e553ba896b3cdaa1ef0.png" src="../../_images/208f71ab6caddc3f72a7ee627efc4509d3311dab0f090e553ba896b3cdaa1ef0.png" />
+</div>
+</div>
+</section>
+<section id="two-outlines-outer-and-inner">
+<h2>5. Two outlines — outer and inner<a class="headerlink" href="#two-outlines-outer-and-inner" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">outline_width</span></code>, <code class="docutils literal notranslate"><span class="pre">outline_color</span></code>, and <code class="docutils literal notranslate"><span class="pre">outline_alpha</span></code> each accept a <strong>two-tuple</strong> to draw two concentric borders — an outer band and an inner one — in a single call. Each tuple is <code class="docutils literal notranslate"><span class="pre">(outer,</span> <span class="pre">inner)</span></code>. Useful for a border that reads against both light and dark backgrounds, or simply to make an edge pop. Give any one of them a tuple and the others fall back to per-band defaults (widths <code class="docutils literal notranslate"><span class="pre">1.5</span></code>/<code class="docutils literal notranslate"><span class="pre">0.5</span></code>, colours <code class="docutils literal notranslate"><span class="pre">#000000</span></code>/<code class="docutils literal notranslate"><span class="pre">#ffffff</span></code> for outer/inner).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span>
+    <span class="s1">'blobs_polygons'</span><span class="p">,</span>
+    <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">outline_width</span><span class="o">=</span><span class="p">(</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">),</span>          <span class="c1"># (outer, inner)</span>
+    <span class="n">outline_color</span><span class="o">=</span><span class="p">(</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="s1">'gold'</span><span class="p">),</span>
+    <span class="n">outline_alpha</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/835234fa175179b09a12505c1065688c62b5b25efd2f75ef6e8c46b0bdef25f9.png" src="../../_images/835234fa175179b09a12505c1065688c62b5b25efd2f75ef6e8c46b0bdef25f9.png" />
 </div>
 </div>
 </section>
 <section id="hollow-shapes-outline-only">
-<h2>5. Hollow shapes — outline only<a class="headerlink" href="#hollow-shapes-outline-only" title="Link to this heading">#</a></h2>
+<h2>6. Hollow shapes — outline only<a class="headerlink" href="#hollow-shapes-outline-only" title="Link to this heading">#</a></h2>
 <p>Combine a transparent fill (<code class="docutils literal notranslate"><span class="pre">fill_alpha=0.0</span></code>) with an outline to get outline-only shapes — useful for
 marking regions of interest without hiding what is underneath.</p>
 <div class="cell docutils container">
@@ -562,12 +589,12 @@ marking regions of interest without hiding what is underneath.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ca7af4d165ce0898873ea8449c95f5bdf71abebc11f5598ec80a6c706833ab0a.png" src="../../_images/ca7af4d165ce0898873ea8449c95f5bdf71abebc11f5598ec80a6c706833ab0a.png" />
+<img alt="../../_images/add58e4eb39abcdc7405341ab968f663a1fe1a13bdeb8d66ac6757e93b3c143b.png" src="../../_images/add58e4eb39abcdc7405341ab968f663a1fe1a13bdeb8d66ac6757e93b3c143b.png" />
 </div>
 </div>
 </section>
 <section id="resizing-geometries-scale">
-<h2>6. Resizing geometries — <code class="docutils literal notranslate"><span class="pre">scale</span></code><a class="headerlink" href="#resizing-geometries-scale" title="Link to this heading">#</a></h2>
+<h2>7. Resizing geometries — <code class="docutils literal notranslate"><span class="pre">scale</span></code><a class="headerlink" href="#resizing-geometries-scale" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">scale</span></code> multiplies each shape’s size about its centroid: shrink to separate crowded shapes, or grow to
 emphasise them. Here the polygons are drawn at 60% size with an outline.</p>
 <div class="cell docutils container">
@@ -577,12 +604,12 @@ emphasise them. Here the polygons are drawn at 60% size with an outline.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c9cd7cdb7e70c31d6e0f19a955e9a7b517c06c92938fc5f607ba1f62bcc1174c.png" src="../../_images/c9cd7cdb7e70c31d6e0f19a955e9a7b517c06c92938fc5f607ba1f62bcc1174c.png" />
+<img alt="../../_images/533395b598f7fa73ab024d361f422541826d11f09c0ef0234d348c325cb5f24d.png" src="../../_images/533395b598f7fa73ab024d361f422541826d11f09c0ef0234d348c325cb5f24d.png" />
 </div>
 </div>
 </section>
 <section id="labels-use-the-same-vocabulary">
-<h2>7. Labels use the same vocabulary<a class="headerlink" href="#labels-use-the-same-vocabulary" title="Link to this heading">#</a></h2>
+<h2>8. Labels use the same vocabulary<a class="headerlink" href="#labels-use-the-same-vocabulary" title="Link to this heading">#</a></h2>
 <p>Label (segmentation-mask) rendering shares the fill/outline arguments. By default, masks are drawn
 semi-transparent (<code class="docutils literal notranslate"><span class="pre">fill_alpha=0.4</span></code>), not solid — so anything layered beneath them still shows through.</p>
 <div class="cell docutils container">
@@ -592,12 +619,12 @@ semi-transparent (<code class="docutils literal notranslate"><span class="pre">f
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9bc09723e60ccce9139e2a2507da571a88d39bb4b930d00310c1e5e9f2468c82.png" src="../../_images/9bc09723e60ccce9139e2a2507da571a88d39bb4b930d00310c1e5e9f2468c82.png" />
+<img alt="../../_images/7c9212f537dd42bcd797cbe2df3020246dc29072954798842a44f0462f4b3ea9.png" src="../../_images/7c9212f537dd42bcd797cbe2df3020246dc29072954798842a44f0462f4b3ea9.png" />
 </div>
 </div>
 </section>
 <section id="translucent-masks-over-an-image-fill-alpha">
-<h2>8. Translucent masks over an image — <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code><a class="headerlink" href="#translucent-masks-over-an-image-fill-alpha" title="Link to this heading">#</a></h2>
+<h2>9. Translucent masks over an image — <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code><a class="headerlink" href="#translucent-masks-over-an-image-fill-alpha" title="Link to this heading">#</a></h2>
 <p>Lowering <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code> below its <code class="docutils literal notranslate"><span class="pre">0.4</span></code> default lets more of the underlying image show through — the standard way to overlay a
 segmentation on the raw data. We layer the labels on top of <code class="docutils literal notranslate"><span class="pre">blobs_image</span></code>.</p>
 <div class="cell docutils container">
@@ -610,12 +637,12 @@ segmentation on the raw data. We layer the labels on top of <code class="docutil
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/52bf0ab8bfdc0e9679139e2742dc392c0f3057bf84f0f4b0865b269e8ae28cce.png" src="../../_images/52bf0ab8bfdc0e9679139e2742dc392c0f3057bf84f0f4b0865b269e8ae28cce.png" />
+<img alt="../../_images/1f3b5528774c9b7990b69efbe3efd9d73f9cd00158ad83802faf048c7650da31.png" src="../../_images/1f3b5528774c9b7990b69efbe3efd9d73f9cd00158ad83802faf048c7650da31.png" />
 </div>
 </div>
 </section>
 <section id="segmentation-boundaries-outline-and-contour-px">
-<h2>9. Segmentation boundaries — <code class="docutils literal notranslate"><span class="pre">outline</span></code> and <code class="docutils literal notranslate"><span class="pre">contour_px</span></code><a class="headerlink" href="#segmentation-boundaries-outline-and-contour-px" title="Link to this heading">#</a></h2>
+<h2>10. Segmentation boundaries — <code class="docutils literal notranslate"><span class="pre">outline</span></code> and <code class="docutils literal notranslate"><span class="pre">contour_px</span></code><a class="headerlink" href="#segmentation-boundaries-outline-and-contour-px" title="Link to this heading">#</a></h2>
 <p>For labels, <code class="docutils literal notranslate"><span class="pre">outline=True</span></code> traces each mask’s boundary. <code class="docutils literal notranslate"><span class="pre">contour_px</span></code> sets the boundary thickness in
 pixels, and <code class="docutils literal notranslate"><span class="pre">outline_color</span></code>/<code class="docutils literal notranslate"><span class="pre">outline_alpha</span></code> style it. Set <code class="docutils literal notranslate"><span class="pre">fill_alpha=0.0</span></code> to show the boundaries
 alone.</p>
@@ -635,12 +662,12 @@ alone.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/70f6555e7c5316d2a7a67874df866db23c578ebfb5aea9ce6e337199fb608036.png" src="../../_images/70f6555e7c5316d2a7a67874df866db23c578ebfb5aea9ce6e337199fb608036.png" />
+<img alt="../../_images/cf40dca4510657c8ab6f96df02a5f18fdcae9ebb6ea583f627eb53098ca1a70e.png" src="../../_images/cf40dca4510657c8ab6f96df02a5f18fdcae9ebb6ea583f627eb53098ca1a70e.png" />
 </div>
 </div>
 </section>
 <section id="putting-it-together">
-<h2>10. Putting it together<a class="headerlink" href="#putting-it-together" title="Link to this heading">#</a></h2>
+<h2>11. Putting it together<a class="headerlink" href="#putting-it-together" title="Link to this heading">#</a></h2>
 <p>A translucent fill plus a crisp boundary over the image gives a readable segmentation overlay — the
 combination you will reach for most often.</p>
 <div class="cell docutils container">
@@ -660,7 +687,7 @@ combination you will reach for most often.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/aeda6acc4c51772e2bb4700289dce967390e12251d15baca47d6e7eb56907da4.png" src="../../_images/aeda6acc4c51772e2bb4700289dce967390e12251d15baca47d6e7eb56907da4.png" />
+<img alt="../../_images/581869b1e6091444d395cbb094111def73190254521bc46427cd670ffa652a7e.png" src="../../_images/581869b1e6091444d395cbb094111def73190254521bc46427cd670ffa652a7e.png" />
 </div>
 </div>
 </section>
@@ -670,6 +697,10 @@ combination you will reach for most often.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code> sets fill opacity for both shapes and labels.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">outline=True</span></code> adds a border for shapes and labels; style it with <code class="docutils literal notranslate"><span class="pre">outline_width</span></code>,
 <code class="docutils literal notranslate"><span class="pre">outline_color</span></code>, and <code class="docutils literal notranslate"><span class="pre">outline_alpha</span></code>, and for labels set the boundary thickness with <code class="docutils literal notranslate"><span class="pre">contour_px</span></code>.</p></li>
+<li><p>Pass a two-tuple to <code class="docutils literal notranslate"><span class="pre">outline_width</span></code>/<code class="docutils literal notranslate"><span class="pre">outline_color</span></code>/<code class="docutils literal notranslate"><span class="pre">outline_alpha</span></code> for a double outline
+(outer + inner).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outline_color</span></code> also accepts a column name when the element is annotated by a table, colouring
+each border per shape — see the <em>Colouring</em> tutorial.</p></li>
 <li><p>A transparent fill plus an outline gives hollow shapes or boundary-only segmentation overlays.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code> resizes shape geometries about their centroids.</p></li>
 </ul>
@@ -692,13 +723,13 @@ combination you will reach for most often.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python implementation: CPython
-Python version       : 3.14.6
-IPython version      : 9.14.1
+Python version       : 3.14.4
+IPython version      : 9.13.0
 
 spatialdata     : 0.7.3
-spatialdata_plot: 0.4.1
-matplotlib      : 3.11.0
-numpy           : 2.4.6
+spatialdata_plot: 0.4.2
+matplotlib      : 3.10.9
+numpy           : 2.4.4
 pandas          : 2.3.3
 
 Compiler    : Clang 20.1.8 
@@ -727,12 +758,12 @@ Architecture: 64bit
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="scalebars.html"
+       href="cropping.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Scalebars in spatialdata-plot</p>
+        <p class="prev-next-title">Cropping a plot with <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code></p>
       </div>
     </a>
     <a class="right-next"
@@ -767,12 +798,13 @@ Architecture: 64bit
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fill-opacity-fill-alpha">2. Fill opacity — <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outlines-the-outline-toggle">3. Outlines — the <code class="docutils literal notranslate"><span class="pre">outline</span></code> toggle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#styling-the-outline-width-colour-opacity">4. Styling the outline — width, colour, opacity</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hollow-shapes-outline-only">5. Hollow shapes — outline only</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-geometries-scale">6. Resizing geometries — <code class="docutils literal notranslate"><span class="pre">scale</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-use-the-same-vocabulary">7. Labels use the same vocabulary</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translucent-masks-over-an-image-fill-alpha">8. Translucent masks over an image — <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#segmentation-boundaries-outline-and-contour-px">9. Segmentation boundaries — <code class="docutils literal notranslate"><span class="pre">outline</span></code> and <code class="docutils literal notranslate"><span class="pre">contour_px</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-together">10. Putting it together</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-outlines-outer-and-inner">5. Two outlines — outer and inner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hollow-shapes-outline-only">6. Hollow shapes — outline only</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resizing-geometries-scale">7. Resizing geometries — <code class="docutils literal notranslate"><span class="pre">scale</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#labels-use-the-same-vocabulary">8. Labels use the same vocabulary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translucent-masks-over-an-image-fill-alpha">9. Translucent masks over an image — <code class="docutils literal notranslate"><span class="pre">fill_alpha</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#segmentation-boundaries-outline-and-contour-px">10. Segmentation boundaries — <code class="docutils literal notranslate"><span class="pre">outline</span></code> and <code class="docutils literal notranslate"><span class="pre">contour_px</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-together">11. Putting it together</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-reproducibility">For reproducibility</a></li>
 </ul>
