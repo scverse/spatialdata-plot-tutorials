@@ -434,8 +434,8 @@
 plot to a bounding box <strong>at draw time</strong>: the <code class="docutils literal notranslate"><span class="pre">SpatialData</span></code> object is untouched, only the window is
 rendered — and for images and labels only the window is ever rasterized, so zooming into a
 gigapixel slide costs about as much as plotting a thumbnail.</p>
-<p>This tutorial uses the built-in <code class="docutils literal notranslate"><span class="pre">blobs</span></code> dataset so it runs in seconds. The same calls work on Visium,
-Xenium, MERFISH, or any other <code class="docutils literal notranslate"><span class="pre">SpatialData</span></code> object.</p>
+<p>This tutorial uses the Xenium <code class="docutils literal notranslate"><span class="pre">cells</span></code> dataset from <code class="docutils literal notranslate"><span class="pre">squidpy.datasets</span></code> (a 550 × 450 µm section with a
+four-channel fluorescence image, cell and nucleus segmentations, transcripts and a cell table).</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -443,39 +443,62 @@ Xenium, MERFISH, or any other <code class="docutils literal notranslate"><span c
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rectangle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">squidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sq</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConnectionPatch</span><span class="p">,</span> <span class="n">Rectangle</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span>  <span class="c1"># noqa: F401  # registers the .pl accessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata_plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">PercentileNormalize</span>
 
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
 
-<span class="n">sdata</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">blobs</span><span class="p">()</span>
+<span class="n">sdata</span> <span class="o">=</span> <span class="n">sq</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">cells</span><span class="p">()</span>
 <span class="n">sdata</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object
-├── Images
-│     ├── 'blobs_image': DataArray[cyx] (3, 512, 512)
-│     └── 'blobs_multiscale_image': DataTree[cyx] (3, 512, 512), (3, 256, 256), (3, 128, 128)
-├── Labels
-│     ├── 'blobs_labels': DataArray[yx] (512, 512)
-│     └── 'blobs_multiscale_labels': DataTree[yx] (512, 512), (256, 256), (128, 128)
-├── Points
-│     └── 'blobs_points': DataFrame with shape: (&lt;Delayed&gt;, 4) (2D points)
-├── Shapes
-│     ├── 'blobs_circles': GeoDataFrame shape: (5, 2) (2D shapes)
-│     ├── 'blobs_multipolygons': GeoDataFrame shape: (2, 1) (2D shapes)
-│     └── 'blobs_polygons': GeoDataFrame shape: (5, 1) (2D shapes)
-└── Tables
-      └── 'table': AnnData (26, 3)
-with coordinate systems:
-    ▸ 'global', with elements:
-        blobs_image (Images), blobs_multiscale_image (Images), blobs_labels (Labels), blobs_multiscale_labels (Labels), blobs_points (Points), blobs_circles (Shapes), blobs_multipolygons (Shapes), blobs_polygons (Shapes)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Blue">INFO    </span> Loading existing dataset from data/spatialdata/cells.zarr
 </pre></div>
 </div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SpatialData object, with associated Zarr store: /Users/tim.treis/Documents/GitHub/spatialdata-plot-notebooks/tutorials/data/spatialdata/cells.zarr
+├── Images
+│     ├── 'he_aligned': DataTree[cyx] (3, 430, 540), (3, 215, 270)
+│     ├── 'he_image': DataTree[cyx] (3, 423, 339), (3, 211, 169)
+│     └── 'morphology_focus': DataTree[cyx] (4, 430, 540), (4, 215, 270)
+├── Labels
+│     ├── 'cell_labels': DataTree[yx] (430, 540), (215, 270)
+│     ├── 'nucleus_labels': DataTree[yx] (430, 540), (215, 270)
+│     └── 'tissue_labels': DataTree[yx] (430, 540), (215, 270)
+├── Points
+│     └── 'transcripts': DataFrame with shape: (&lt;Delayed&gt;, 13) (3D points)
+├── Shapes
+│     ├── 'cell_boundaries': GeoDataFrame shape: (94, 1) (2D shapes)
+│     └── 'nucleus_boundaries': GeoDataFrame shape: (94, 2) (2D shapes)
+└── Tables
+      └── 'table': AnnData (94, 5101)
+with coordinate systems:
+    ▸ 'global', with elements:
+        he_aligned (Images), he_image (Images), morphology_focus (Images), cell_labels (Labels), nucleus_labels (Labels), tissue_labels (Labels), transcripts (Points), cell_boundaries (Shapes), nucleus_boundaries (Shapes)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We render the DAPI (nuclei) and membrane channels of <code class="docutils literal notranslate"><span class="pre">morphology_focus</span></code> throughout, so we bundle
+those arguments once. See the <em>Multichannel &amp; fluorescence images</em> tutorial for what they do.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IMG</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">channel</span><span class="o">=</span><span class="p">[</span><span class="s2">"DAPI"</span><span class="p">,</span> <span class="s2">"ATP1A1/CD45/E-Cadherin"</span><span class="p">],</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">"blue"</span><span class="p">,</span> <span class="s2">"red"</span><span class="p">],</span>
+    <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="o">**</span><span class="n">IMG</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"full section"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d820c2dae46fa83932f1348534b91192ad2a734387009f10bc6dd7111803dae4.png" src="../../_images/d820c2dae46fa83932f1348534b91192ad2a734387009f10bc6dd7111803dae4.png" />
 </div>
 </div>
 </section>
@@ -483,23 +506,34 @@ with coordinate systems:
 <h2>1. Zooming in — <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code><a class="headerlink" href="#zooming-in-crop-coord" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">crop_coord</span></code> is a tuple <code class="docutils literal notranslate"><span class="pre">(xmin,</span> <span class="pre">xmax,</span> <span class="pre">ymin,</span> <span class="pre">ymax)</span></code> in the units of the rendered coordinate system —
 the same order as <code class="docutils literal notranslate"><span class="pre">ax.axis(...)</span></code> and as <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code> in <code class="docutils literal notranslate"><span class="pre">scanpy.pl.spatial</span></code> /
-<code class="docutils literal notranslate"><span class="pre">squidpy.pl.spatial_scatter</span></code>. The <code class="docutils literal notranslate"><span class="pre">blobs</span></code> image is 512 × 512 pixels; we zoom into a 250 × 250 window.</p>
+<code class="docutils literal notranslate"><span class="pre">squidpy.pl.spatial_scatter</span></code>. Here the units are microns; we zoom into a 200 × 200 µm window. The
+box and connector lines are plain matplotlib, drawn so you can see where the crop sits.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CROP</span> <span class="o">=</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>  <span class="c1"># xmin, xmax, ymin, ymax</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CROP</span> <span class="o">=</span> <span class="p">(</span><span class="mi">18700</span><span class="p">,</span> <span class="mi">18900</span><span class="p">,</span> <span class="mi">4400</span><span class="p">,</span> <span class="mi">4600</span><span class="p">)</span>  <span class="c1"># xmin, xmax, ymin, ymax in µm</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"full"</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span>
-    <span class="n">Rectangle</span><span class="p">((</span><span class="n">CROP</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">CROP</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">CROP</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">CROP</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">CROP</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">CROP</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"white"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">crop_coord</span><span class="o">=</span><span class="n">CROP</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"crop_coord"</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">mark_crop</span><span class="p">(</span><span class="n">ax_full</span><span class="p">,</span> <span class="n">ax_crop</span><span class="p">,</span> <span class="n">crop</span><span class="p">,</span> <span class="o">**</span><span class="n">style</span><span class="p">):</span>
+    <span class="c1"># draw the crop box on ax_full and connect its right corners to ax_crop</span>
+    <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">crop</span>
+    <span class="n">ax_full</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">),</span> <span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">style</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">frac</span> <span class="ow">in</span> <span class="p">((</span><span class="n">ymin</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">ymax</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>  <span class="c1"># y axis is inverted: ymin is the top edge</span>
+        <span class="n">ax_full</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span>
+            <span class="n">ConnectionPatch</span><span class="p">((</span><span class="n">xmax</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">frac</span><span class="p">),</span> <span class="n">coordsA</span><span class="o">=</span><span class="n">ax_full</span><span class="o">.</span><span class="n">transData</span><span class="p">,</span> <span class="n">coordsB</span><span class="o">=</span><span class="n">ax_crop</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="o">**</span><span class="n">style</span><span class="p">)</span>
+        <span class="p">)</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_full</span><span class="p">,</span> <span class="n">ax_crop</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"width_ratios"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="o">**</span><span class="n">IMG</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax_full</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"full section"</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="o">**</span><span class="n">IMG</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax_crop</span><span class="p">,</span> <span class="n">crop_coord</span><span class="o">=</span><span class="n">CROP</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"crop_coord"</span><span class="p">)</span>
+<span class="n">ax_crop</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">18700</span><span class="p">,</span> <span class="mi">18800</span><span class="p">,</span> <span class="mi">18900</span><span class="p">])</span>
+<span class="n">mark_crop</span><span class="p">(</span><span class="n">ax_full</span><span class="p">,</span> <span class="n">ax_crop</span><span class="p">,</span> <span class="n">CROP</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"white"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"white"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.35</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/95afc1ec38ec95d057a241e081937ea1aeb96fbb435933454a9a1dae8757837f.png" src="../../_images/95afc1ec38ec95d057a241e081937ea1aeb96fbb435933454a9a1dae8757837f.png" />
+<img alt="../../_images/99791ccc0e2c1a92bf83846c93cede627c030dfe359d878a71a5382f1eae42c8.png" src="../../_images/99791ccc0e2c1a92bf83846c93cede627c030dfe359d878a71a5382f1eae42c8.png" />
 </div>
 </div>
 </section>
@@ -510,17 +544,16 @@ shapes are subsetted to the window before drawing; images and labels are rasteri
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
-    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"blobs_labels"</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">outline_alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">"white"</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"blobs_circles"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"orange"</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">"orange"</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"blobs_points"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"genes"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">crop_coord</span><span class="o">=</span><span class="n">CROP</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"all layers, one window"</span><span class="p">)</span>
+    <span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="o">**</span><span class="n">IMG</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"cell_boundaries"</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="s2">"white"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"transcripts"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"yellow"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">crop_coord</span><span class="o">=</span><span class="n">CROP</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"image + cell boundaries + transcripts"</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/868e97a0ac5aec0e4137adadbaefd7c9abc60a9719ec55f6e4f0b9cad0d33fbf.png" src="../../_images/868e97a0ac5aec0e4137adadbaefd7c9abc60a9719ec55f6e4f0b9cad0d33fbf.png" />
+<img alt="../../_images/6fbafbdb81b778a5cd759a2cb27ffeb7cb10c182deb1406a98912f12b55e88d3.png" src="../../_images/6fbafbdb81b778a5cd759a2cb27ffeb7cb10c182deb1406a98912f12b55e88d3.png" />
 </div>
 </div>
 </section>
@@ -528,33 +561,56 @@ shapes are subsetted to the window before drawing; images and labels are rasteri
 <h2>3. Keeping colours comparable<a class="headerlink" href="#keeping-colours-comparable" title="Link to this heading">#</a></h2>
 <p>Cropping changes what the auto-scaled colour ranges see:</p>
 <ul class="simple">
-<li><p><strong>Points and shapes</strong> keep the range of the <em>full</em> element, so a colour in the crop means the same
-thing as in the uncropped plot.</p></li>
+<li><p><strong>Points, shapes and labels</strong> keep the range of the <em>full</em> element, so a colour in the crop means
+the same thing as in the uncropped plot — note the identical colorbars below.</p></li>
 <li><p><strong>Images</strong> are contrast-stretched over the <em>window</em>, because only the window is ever read. A crop
 of a dim region therefore looks brighter than the same region in the full plot.</p></li>
 </ul>
-<p>To pin image contrast to the full-image range, pass explicit limits — a <code class="docutils literal notranslate"><span class="pre">norm</span></code> (or <code class="docutils literal notranslate"><span class="pre">vmin</span></code>/<code class="docutils literal notranslate"><span class="pre">vmax</span></code>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"cell_labels"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"total_counts"</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"full"</span><span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_labels</span><span class="p">(</span><span class="s2">"cell_labels"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"total_counts"</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">crop_coord</span><span class="o">=</span><span class="n">CROP</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"crop"</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/57abb08bc361cee03654899e6267e1ffca1403f16cde2de215953c12159e0b9c.png" src="../../_images/57abb08bc361cee03654899e6267e1ffca1403f16cde2de215953c12159e0b9c.png" />
+</div>
+</div>
+<p>The effect is easiest to see on a dim region: the lobe at the bottom right is roughly half as bright
+as the brightest nuclei, so cropped on its own it gets stretched to full contrast. To pin image
+contrast to the full-image range, pass explicit limits — a <code class="docutils literal notranslate"><span class="pre">norm</span></code> (or <code class="docutils literal notranslate"><span class="pre">vmin</span></code>/<code class="docutils literal notranslate"><span class="pre">vmax</span></code>). Here we take
+the 1st and 99th percentile of the full DAPI channel:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normalize</span>
 
-<span class="n">full</span> <span class="o">=</span> <span class="n">sdata</span><span class="p">[</span><span class="s2">"blobs_image"</span><span class="p">]</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">fixed</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">full</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">full</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+<span class="n">DIM</span> <span class="o">=</span> <span class="p">(</span><span class="mi">18800</span><span class="p">,</span> <span class="mi">18950</span><span class="p">,</span> <span class="mi">4600</span><span class="p">,</span> <span class="mi">4750</span><span class="p">)</span>  <span class="c1"># a dim window at the bottom right</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"full"</span><span class="p">)</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
-    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">crop_coord</span><span class="o">=</span><span class="n">CROP</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"crop (contrast over window)"</span>
+<span class="n">dapi</span> <span class="o">=</span> <span class="n">sdata</span><span class="p">[</span><span class="s2">"morphology_focus"</span><span class="p">][</span><span class="s2">"scale0"</span><span class="p">]</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="s2">"DAPI"</span><span class="p">)</span>
+<span class="n">fixed</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="o">*</span><span class="n">dapi</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">])</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s2">"DAPI"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"full"</span>
 <span class="p">)</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">fixed</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
-    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">crop_coord</span><span class="o">=</span><span class="n">CROP</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"crop (norm from full image)"</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">DIM</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">DIM</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">DIM</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">DIM</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">DIM</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">DIM</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"white"</span><span class="p">))</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s2">"DAPI"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">PercentileNormalize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">))</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">crop_coord</span><span class="o">=</span><span class="n">DIM</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"crop (contrast over window)"</span>
+<span class="p">)</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"morphology_focus"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s2">"DAPI"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"magma"</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">fixed</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">crop_coord</span><span class="o">=</span><span class="n">DIM</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"crop (norm from full image)"</span>
 <span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/44eb761f4483ddea7aface97047066fc3e40b589dddb020c9306953e62a0c419.png" src="../../_images/44eb761f4483ddea7aface97047066fc3e40b589dddb020c9306953e62a0c419.png" />
+<img alt="../../_images/08513644ab80de6ca9dde7fb4b9fa0038c84eb9c5551a21969da063fd16799bb.png" src="../../_images/08513644ab80de6ca9dde7fb4b9fa0038c84eb9c5551a21969da063fd16799bb.png" />
 </div>
 </div>
 </section>
@@ -567,8 +623,8 @@ what you are left with:</p>
 <li><p>use <strong><code class="docutils literal notranslate"><span class="pre">crop_coord</span></code></strong> to <em>look</em> at a region — nothing is copied, and images stay lazy;</p></li>
 <li><p>use <strong><code class="docutils literal notranslate"><span class="pre">bounding_box_query</span></code></strong> when you need the subset as data — to count, analyse, or save it.</p></li>
 </ul>
-<p>Note the axes: the query result spans only the surviving points, while <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code> pins the view to
-the box.</p>
+<p>Note the axes: <code class="docutils literal notranslate"><span class="pre">crop_coord</span></code> pins the view to the box, whereas the query keeps every cell that
+<em>intersects</em> the box in full, so its result spills over the edges.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">bounding_box_query</span><span class="p">(</span>
@@ -578,22 +634,26 @@ the box.</p>
     <span class="n">max_coordinate</span><span class="o">=</span><span class="p">[</span><span class="n">CROP</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">CROP</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span>
     <span class="n">target_coordinate_system</span><span class="o">=</span><span class="s2">"global"</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"points in full object: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s1">'blobs_points'</span><span class="p">])</span><span class="si">}</span><span class="s2">, in the query result: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s1">'blobs_points'</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"cells: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s1">'cell_boundaries'</span><span class="p">])</span><span class="si">}</span><span class="s2"> in the full object, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s1">'cell_boundaries'</span><span class="p">])</span><span class="si">}</span><span class="s2"> in the query result"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"transcripts: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sdata</span><span class="p">[</span><span class="s1">'transcripts'</span><span class="p">])</span><span class="si">}</span><span class="s2"> in the full object, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s1">'transcripts'</span><span class="p">])</span><span class="si">}</span><span class="s2"> in the query result"</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"blobs_points"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"genes"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span>
-    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">crop_coord</span><span class="o">=</span><span class="n">CROP</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"crop_coord on the full object"</span>
-<span class="p">)</span>
-<span class="n">subset</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span><span class="s2">"blobs_points"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"genes"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"bounding_box_query result"</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"cell_boundaries"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"lightgray"</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span>
+    <span class="s2">"transcripts"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"orange"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">crop_coord</span><span class="o">=</span><span class="n">CROP</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"crop_coord on the full object"</span><span class="p">)</span>
+<span class="n">subset</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_shapes</span><span class="p">(</span><span class="s2">"cell_boundaries"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"lightgray"</span><span class="p">,</span> <span class="n">outline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_points</span><span class="p">(</span>
+    <span class="s2">"transcripts"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"orange"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">"bounding_box_query result"</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>points in full object: 200, in the query result: 53
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cells: 94 in the full object, 55 in the query result
+transcripts: 19479 in the full object, 7466 in the query result
 </pre></div>
 </div>
-<img alt="../../_images/518f09149fde2160736ebba6ad30a5862e49b902aef63f945d4fd9e935fc58ea.png" src="../../_images/518f09149fde2160736ebba6ad30a5862e49b902aef63f945d4fd9e935fc58ea.png" />
+<img alt="../../_images/e5316171c48e72b773bce2769f0021871eac9271803d1e1b3bfa22c70a4527c7.png" src="../../_images/e5316171c48e72b773bce2769f0021871eac9271803d1e1b3bfa22c70a4527c7.png" />
 </div>
 </div>
 </section>
@@ -614,7 +674,7 @@ whichever applies) in the same <code class="docutils literal notranslate"><span 
 <span class="o">%</span><span class="k">load_ext</span> watermark
 <span class="c1"># fmt: on</span>
 
-<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,matplotlib,numpy
+<span class="o">%</span><span class="k">watermark</span> -v -m -p spatialdata,spatialdata_plot,squidpy,matplotlib,numpy
 </pre></div>
 </div>
 </div>
@@ -625,6 +685,7 @@ IPython version      : 9.13.0
 
 spatialdata     : 0.7.3
 spatialdata_plot: 0.4.2
+squidpy         : 1.8.3
 matplotlib      : 3.10.9
 numpy           : 2.4.4
 
