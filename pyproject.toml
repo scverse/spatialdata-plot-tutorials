@@ -52,7 +52,7 @@ nbconvert = "*"
 watermark = "*"
 
 [tool.pixi.pypi-dependencies]
-spatialdata-plot = { version = ">=0.4.1", extras = ["interactive"] }
+spatialdata-plot = { version = ">=0.4.2", extras = ["interactive"] }
 squidpy = ">=1.8.2"
 
 [tool.pixi.tasks]
