@@ -64,6 +64,9 @@ jobs:
           else
             nbs=$(find tutorials examples -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" 2>/dev/null || true)
           fi
+          # Notebooks whose datasets are too large for CI (multi-GB downloads):
+          # their committed outputs are trusted and never re-executed here.
+          nbs=$(printf '%s\n' "$nbs" | grep -vxF 'tutorials/as_points.ipynb' || true)
           if [ -z "$nbs" ]; then
             echo "No notebooks to execute."
           else
