@@ -25,6 +25,16 @@ perceptually well-spaced or colourblind-safe palettes with
 `make_palette` and `make_palette_from_data`.
 :::
 
+:::{grid-item-card} Normalization and contrast
+:link: /notebooks/tutorials/normalization_and_contrast
+:link-type: doc
+:img-top: /notebooks/_static/img/normalization_and_contrast.png
+
+How `norm=` maps data to colours: fixed contrast limits, clip vs
+under/over, `LogNorm`/`PowerNorm`/`SymLogNorm`, percentile contrast with
+`PercentileNormalize`, and per-channel norms for images.
+:::
+
 :::{grid-item-card} Multi-panel colouring
 :link: /notebooks/tutorials/multi_panel_color
 :link-type: doc
@@ -112,6 +122,7 @@ shapes, `scale`, and segmentation boundaries via `contour_px`.
 
 getting_started
 color_and_palette
+normalization_and_contrast
 multi_panel_color
 performance
 as_points
