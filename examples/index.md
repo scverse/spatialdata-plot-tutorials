@@ -24,6 +24,26 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 `sdata.pl.annotate(...)` and persist them as a `ShapesModel` element.
 :::
 
+:::{grid-item-card} Colouring points
+:link: /notebooks/examples/colouring_points
+:link-type: doc
+:img-top: /notebooks/_static/img/colouring_points.png
+
+Colour a point element by continuous (`cmap`, `norm`, colorbar) or
+categorical (`palette`, `groups`, `na_color`, legend) columns, and tune
+`size`/`alpha`, on real Xenium transcripts.
+:::
+
+:::{grid-item-card} Point density maps
+:link: /notebooks/examples/point_density
+:link-type: doc
+:img-top: /notebooks/_static/img/point_density.png
+
+Turn tens of millions of Xenium transcripts into a readable density
+heatmap with `render_points(density=True)`, reshape it with `density_how`,
+and draw a separate density per gene.
+:::
+
 ::::
 <!-- gallery-cards-end -->
 
@@ -33,4 +53,6 @@ Draw regions of interest directly on a `spatialdata-plot` canvas with
 
 visium_mouse_brain
 interactive_annotate
+colouring_points
+point_density
 ```
