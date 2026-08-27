@@ -73,6 +73,16 @@ Draw circle elements as circles, hexagons, or squares with `shape=`, and
 render Visium spots as a hex grid with `shape="visium_hex"`.
 :::
 
+:::{grid-item-card} Multichannel & fluorescence images
+:link: /notebooks/tutorials/multichannel_images
+:link-type: doc
+:img-top: /notebooks/_static/img/multichannel_images.png
+
+Render multiplexed and fluorescence images: select channels by name,
+composite them with per-channel `palette` LUTs, fix heavy-tailed contrast
+per channel, and label the composite with `channels_as_legend`.
+:::
+
 :::{grid-item-card} Cropping a plot
 :link: /notebooks/tutorials/cropping
 :link-type: doc
@@ -97,5 +107,6 @@ performance
 as_points
 scalebars
 marker_shapes
+multichannel_images
 cropping
 ```
