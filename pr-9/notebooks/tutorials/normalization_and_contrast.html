@@ -56,7 +56,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
-    <script src="../../_static/documentation_options.js?v=d505e5a5"></script>
+    <script src="../../_static/documentation_options.js?v=9879977d"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="Colour and palettes in spatialdata-plot" href="color_and_palette.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.dev1+g375c17330.d20260819" />
+  <meta name="docsearch:version" content="0.1.dev1+g9f19b7d93.d20260827" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -501,7 +501,7 @@ want their own contrast.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">spatialdata_plot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sdp</span>  <span class="c1"># noqa: F401  (registers the .pl accessor)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogNorm</span><span class="p">,</span> <span class="n">Normalize</span><span class="p">,</span> <span class="n">PowerNorm</span><span class="p">,</span> <span class="n">SymLogNorm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogNorm</span><span class="p">,</span> <span class="n">Normalize</span><span class="p">,</span> <span class="n">PowerNorm</span><span class="p">,</span> <span class="n">SymLogNorm</span><span class="p">,</span> <span class="n">TwoSlopeNorm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">spatialdata_plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">PercentileNormalize</span>
 
 <span class="n">sdata</span> <span class="o">=</span> <span class="n">sd</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">blobs</span><span class="p">()</span>  <span class="c1"># blobs_image has 3 channels: [0, 1, 2]</span>
@@ -545,7 +545,7 @@ RGB image — channel 0 → red, 1 → green, 2 → blue.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9ccb5878e9ce3e4326d983883a56909a258bc2d35cde3e5ae2d9501d79bf4b7d.png" src="../../_images/9ccb5878e9ce3e4326d983883a56909a258bc2d35cde3e5ae2d9501d79bf4b7d.png" />
+<img alt="../../_images/924cbad4e42aecdbf1f2d257c0f3b4247c045e7010ae51e0b198a2686e81d208.png" src="../../_images/924cbad4e42aecdbf1f2d257c0f3b4247c045e7010ae51e0b198a2686e81d208.png" />
 </div>
 </div>
 </section>
@@ -560,7 +560,7 @@ We render one channel with a colorbar so the limits are visible.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/181d1df47d8381642e6bc4f4088f64d1400617fbf18fc9c41a78bf7854b2598e.png" src="../../_images/181d1df47d8381642e6bc4f4088f64d1400617fbf18fc9c41a78bf7854b2598e.png" />
+<img alt="../../_images/c79019ddb0af87833ee0af0ada967c81a2d6bdfeeb2c5abd19d99c8898caf455.png" src="../../_images/c79019ddb0af87833ee0af0ada967c81a2d6bdfeeb2c5abd19d99c8898caf455.png" />
 </div>
 </div>
 </section>
@@ -581,7 +581,7 @@ to make the difference obvious.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7598de712e204e089a73a49a621fae1cfc56e252535473e947d8072784ab0d1d.png" src="../../_images/7598de712e204e089a73a49a621fae1cfc56e252535473e947d8072784ab0d1d.png" />
+<img alt="../../_images/2491ea3d80d06edd6182422be82a9ce230cd03b9b0ca135d0ecb7eee3e5c3b0d.png" src="../../_images/2491ea3d80d06edd6182422be82a9ce230cd03b9b0ca135d0ecb7eee3e5c3b0d.png" />
 </div>
 </div>
 <p>Now <code class="docutils literal notranslate"><span class="pre">clip=True</span></code> — the same out-of-range pixels are clamped to the cmap ends instead:</p>
@@ -592,7 +592,7 @@ to make the difference obvious.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/45f909f12188629e95a9d81a6657efbd2393d180519fb607f9848ce3a60aae44.png" src="../../_images/45f909f12188629e95a9d81a6657efbd2393d180519fb607f9848ce3a60aae44.png" />
+<img alt="../../_images/a3e3a8e6989a75eb1f9fd17f1118659580cc5f34123a9506f718e293f7bbe120.png" src="../../_images/a3e3a8e6989a75eb1f9fd17f1118659580cc5f34123a9506f718e293f7bbe120.png" />
 </div>
 </div>
 </section>
@@ -609,14 +609,13 @@ as below, <code class="docutils literal notranslate"><span class="pre">LogNorm</
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/fba18fbe8d4a052122de006ecb1406bf049189dc9273fe35028a164be231953f.png" src="../../_images/fba18fbe8d4a052122de006ecb1406bf049189dc9273fe35028a164be231953f.png" />
+<img alt="../../_images/67ad1100f42937c9f3fcd2dbd5c8ee7fa4f718c9f78868a0cd9b3b0d652c13ce.png" src="../../_images/67ad1100f42937c9f3fcd2dbd5c8ee7fa4f718c9f78868a0cd9b3b0d652c13ce.png" />
 </div>
 </div>
 </section>
 <section id="other-matplotlib-norms-work-too">
 <h2>5. Other matplotlib norms work too<a class="headerlink" href="#other-matplotlib-norms-work-too" title="Link to this heading">#</a></h2>
-<p>Because the limits come from each norm’s own logic, any <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> subclass plugs in. Two common ones:
-<code class="docutils literal notranslate"><span class="pre">PowerNorm</span></code> (gamma correction) and <code class="docutils literal notranslate"><span class="pre">SymLogNorm</span></code> (log scaling with a linear region around zero).</p>
+<p>Because the limits come from each norm’s own logic, any <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> subclass plugs in. <code class="docutils literal notranslate"><span class="pre">PowerNorm</span></code> applies gamma correction; <code class="docutils literal notranslate"><span class="pre">SymLogNorm</span></code> is log scaling with a linear region around zero; and the <em>diverging</em> <code class="docutils literal notranslate"><span class="pre">TwoSlopeNorm</span></code> maps data on either side of a reference <code class="docutils literal notranslate"><span class="pre">vcenter</span></code> to the two halves of a diverging colormap — ideal for “above vs below” a baseline, with independent slopes above and below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span><span class="s2">"blobs_image"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">PowerNorm</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -624,7 +623,7 @@ as below, <code class="docutils literal notranslate"><span class="pre">LogNorm</
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9e8a91f4f626d794d613bb4a2fb1c375c0e01feeb6b6fb0ab41f8b4cca45246f.png" src="../../_images/9e8a91f4f626d794d613bb4a2fb1c375c0e01feeb6b6fb0ab41f8b4cca45246f.png" />
+<img alt="../../_images/1e8a1bcb0218bfb7984175aad2526ce9653740de102fbf98ef3c1e850861c029.png" src="../../_images/1e8a1bcb0218bfb7984175aad2526ce9653740de102fbf98ef3c1e850861c029.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -634,7 +633,20 @@ as below, <code class="docutils literal notranslate"><span class="pre">LogNorm</
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a11902c3a657d8b0bcbee66b6943d217a1063f8b67d002ab8b38f43117afabd0.png" src="../../_images/a11902c3a657d8b0bcbee66b6943d217a1063f8b67d002ab8b38f43117afabd0.png" />
+<img alt="../../_images/23f1cfdb5b8bc5fe2161f48a769251fea61e3da990d76d4344256edcba017296.png" src="../../_images/23f1cfdb5b8bc5fe2161f48a769251fea61e3da990d76d4344256edcba017296.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sdata</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">render_images</span><span class="p">(</span>
+    <span class="s2">"blobs_image"</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"RdBu_r"</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="n">TwoSlopeNorm</span><span class="p">(</span><span class="n">vcenter</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.8</span><span class="p">),</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d0d3912e9831a9d379e95103dfe67e49f388390dbe59d24b77d77ed9a7a3790b.png" src="../../_images/d0d3912e9831a9d379e95103dfe67e49f388390dbe59d24b77d77ed9a7a3790b.png" />
 </div>
 </div>
 </section>
@@ -647,6 +659,7 @@ from data <strong>percentiles</strong> instead — the same idea as the contrast
 <li><p><code class="docutils literal notranslate"><span class="pre">pmin</span></code>/<code class="docutils literal notranslate"><span class="pre">pmax</span></code> are validated to satisfy <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">pmin</span> <span class="pre">&lt;</span> <span class="pre">pmax</span> <span class="pre">&lt;=</span> <span class="pre">100</span></code>.</p></li>
 <li><p>NaN / inf / masked pixels are excluded from the percentile computation.</p></li>
 <li><p>A single instance is <strong>autoscaled independently per channel</strong>.</p></li>
+<li><p>It also accepts <code class="docutils literal notranslate"><span class="pre">clip</span></code> (forwarded to <code class="docutils literal notranslate"><span class="pre">Normalize</span></code>, §3), and setting <code class="docutils literal notranslate"><span class="pre">vmin</span></code>/<code class="docutils literal notranslate"><span class="pre">vmax</span></code> explicitly <strong>overrides</strong> the corresponding percentile.</p></li>
 </ul>
 <p>Here is the default min/max rendering of one channel:</p>
 <div class="cell docutils container">
@@ -656,7 +669,7 @@ from data <strong>percentiles</strong> instead — the same idea as the contrast
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d83ede2c992eac720d0d93505c07763fc6a9e8ac0f6dfaa130ab1f0187f394c7.png" src="../../_images/d83ede2c992eac720d0d93505c07763fc6a9e8ac0f6dfaa130ab1f0187f394c7.png" />
+<img alt="../../_images/8055391fa865be765114d61578209790da4bb8ce6d1bdff265c15b41a1ff1fc2.png" src="../../_images/8055391fa865be765114d61578209790da4bb8ce6d1bdff265c15b41a1ff1fc2.png" />
 </div>
 </div>
 <p>And the same channel with the top 10% of values clipped, lifting the bulk of the signal:</p>
@@ -667,7 +680,7 @@ from data <strong>percentiles</strong> instead — the same idea as the contrast
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/1fbd88c2dc1cb345901bc3cd1679132e6ea4a74de8dc6fa8f60ba4034679779a.png" src="../../_images/1fbd88c2dc1cb345901bc3cd1679132e6ea4a74de8dc6fa8f60ba4034679779a.png" />
+<img alt="../../_images/36a0c429e9f7d3cc149b6b707e7755b745b96e9267b1aa504104754a22b4ce24.png" src="../../_images/36a0c429e9f7d3cc149b6b707e7755b745b96e9267b1aa504104754a22b4ce24.png" />
 </div>
 </div>
 </section>
@@ -683,7 +696,7 @@ subclasses freely — give each channel exactly the contrast it needs.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/8b66906ca251ca275dab301bc13fd510a63a4837df536289d8ca796ac6285865.png" src="../../_images/8b66906ca251ca275dab301bc13fd510a63a4837df536289d8ca796ac6285865.png" />
+<img alt="../../_images/13786564ab2513bb60c4e3d6e1cf1713e490ad6373dab265fffd6678af563f66.png" src="../../_images/13786564ab2513bb60c4e3d6e1cf1713e490ad6373dab265fffd6678af563f66.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -699,7 +712,7 @@ subclasses freely — give each channel exactly the contrast it needs.</p>
          higher layers will overlay the lower layers. Consider using <span class=" -Color -Color-Green">'palette'</span> instead.
 </pre></div>
 </div>
-<img alt="../../_images/dc49ea366145993b327aad66c8f266356fef307dd632edb5659c216461370508.png" src="../../_images/dc49ea366145993b327aad66c8f266356fef307dd632edb5659c216461370508.png" />
+<img alt="../../_images/d432d9fa745d4b45072a7f2c5dc5a72a85c9fc5c9dd9368404de1e083b9e4adc.png" src="../../_images/d432d9fa745d4b45072a7f2c5dc5a72a85c9fc5c9dd9368404de1e083b9e4adc.png" />
 </div>
 </div>
 </section>
@@ -714,7 +727,7 @@ subclasses freely — give each channel exactly the contrast it needs.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7505e99e7d9e443c7d3a3dc14bddae7dc1c8a73779374d5e1e0a9256da6338ed.png" src="../../_images/7505e99e7d9e443c7d3a3dc14bddae7dc1c8a73779374d5e1e0a9256da6338ed.png" />
+<img alt="../../_images/5b175bd3e60c35f53f0697e0bd50b086f7a55ddf57f190b74aae2399ce37b22b.png" src="../../_images/5b175bd3e60c35f53f0697e0bd50b086f7a55ddf57f190b74aae2399ce37b22b.png" />
 </div>
 </div>
 </section>
@@ -731,7 +744,7 @@ to <code class="docutils literal notranslate"><span class="pre">[0,</span> <span
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/079b7d5069faf34e159de9c6c81a2a0d0f1e4e4dc064c84ada3f46d1770926d0.png" src="../../_images/079b7d5069faf34e159de9c6c81a2a0d0f1e4e4dc064c84ada3f46d1770926d0.png" />
+<img alt="../../_images/57d81f09694e0b2904d82684a0523af81f5d25ebb72b533a1630f97947ca5404.png" src="../../_images/57d81f09694e0b2904d82684a0523af81f5d25ebb72b533a1630f97947ca5404.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -741,7 +754,7 @@ to <code class="docutils literal notranslate"><span class="pre">[0,</span> <span
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e682ac8fbba63e47ebaa76c8b43a9ccda9a92ae8ed34a9e3b057023be2d482c5.png" src="../../_images/e682ac8fbba63e47ebaa76c8b43a9ccda9a92ae8ed34a9e3b057023be2d482c5.png" />
+<img alt="../../_images/7c9527ccb983d8b27e2c67ee35b0bff3b6728a1445982f3ec5cedcee9d9b4f1b.png" src="../../_images/7c9527ccb983d8b27e2c67ee35b0bff3b6728a1445982f3ec5cedcee9d9b4f1b.png" />
 </div>
 </div>
 </section>
@@ -757,7 +770,7 @@ fill colors and the colorbar</strong>, so the bar always matches the pixels — 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9608a9c3c41a1f36506b84a2aedef4c1eace5b3eacadaad69fcf139f965665d7.png" src="../../_images/9608a9c3c41a1f36506b84a2aedef4c1eace5b3eacadaad69fcf139f965665d7.png" />
+<img alt="../../_images/091b1f7084babaefff5b87a911759d4c1dc7afdf70a7a2aaeccd29722c91537c.png" src="../../_images/091b1f7084babaefff5b87a911759d4c1dc7afdf70a7a2aaeccd29722c91537c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -767,7 +780,7 @@ fill colors and the colorbar</strong>, so the bar always matches the pixels — 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9608a9c3c41a1f36506b84a2aedef4c1eace5b3eacadaad69fcf139f965665d7.png" src="../../_images/9608a9c3c41a1f36506b84a2aedef4c1eace5b3eacadaad69fcf139f965665d7.png" />
+<img alt="../../_images/091b1f7084babaefff5b87a911759d4c1dc7afdf70a7a2aaeccd29722c91537c.png" src="../../_images/091b1f7084babaefff5b87a911759d4c1dc7afdf70a7a2aaeccd29722c91537c.png" />
 </div>
 </div>
 <p>Points, colored by a continuous column:</p>
@@ -778,7 +791,7 @@ fill colors and the colorbar</strong>, so the bar always matches the pixels — 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/1f71b5df72b10c2b371aa95c131e0b99e51383fe895abb531fd12c919774ff71.png" src="../../_images/1f71b5df72b10c2b371aa95c131e0b99e51383fe895abb531fd12c919774ff71.png" />
+<img alt="../../_images/875a2f06b105cc131a74d7f6d172097ce47965ce2e1941127700da7fc23e4e8b.png" src="../../_images/875a2f06b105cc131a74d7f6d172097ce47965ce2e1941127700da7fc23e4e8b.png" />
 </div>
 </div>
 <p>Labels, colored by a continuous table column:</p>
@@ -789,7 +802,7 @@ fill colors and the colorbar</strong>, so the bar always matches the pixels — 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a142416eb985b4ffb167ed4bc3955cb0685bd034d72742a4669f7801a4d258c4.png" src="../../_images/a142416eb985b4ffb167ed4bc3955cb0685bd034d72742a4669f7801a4d258c4.png" />
+<img alt="../../_images/cc5464a74f7b8b71c9010f7728c9b7c9d5863a936e3d5ac508501d288b7843a4.png" src="../../_images/cc5464a74f7b8b71c9010f7728c9b7c9d5863a936e3d5ac508501d288b7843a4.png" />
 </div>
 </div>
 </section>
@@ -807,7 +820,7 @@ ignored — the contrast follows the aggregate range instead.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d2aaee9a7173bf8ecd3b0557f7e3be8ca0bbd3bed6fca2af82e205f5c3e4f5fd.png" src="../../_images/d2aaee9a7173bf8ecd3b0557f7e3be8ca0bbd3bed6fca2af82e205f5c3e4f5fd.png" />
+<img alt="../../_images/d4a1b2ed4a26f3cddc31724e437013a1f3a2373720b37eaa1f977f1dfc7488ff.png" src="../../_images/d4a1b2ed4a26f3cddc31724e437013a1f3a2373720b37eaa1f977f1dfc7488ff.png" />
 </div>
 </div>
 </section>
