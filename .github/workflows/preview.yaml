@@ -23,13 +23,13 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Check out notebooks PR (this repo)
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           path: notebooks
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Check out spatialdata-plot main
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           repository: scverse/spatialdata-plot
           path: lib
@@ -62,7 +62,7 @@ jobs:
           commit_message: "Preview for PR #${{ github.event.pull_request.number }}"
 
       - name: Comment preview link on PR
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const pr = context.issue.number;
