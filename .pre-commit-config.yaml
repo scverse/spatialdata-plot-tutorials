@@ -23,7 +23,7 @@ repos:
         exclude: \.ipynb$
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.1
+    rev: v0.17.4
     hooks:
       - id: ruff-check
         args: [--fix]
@@ -34,7 +34,7 @@ repos:
         exclude: \.ipynb$
 
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.9.1
+    rev: 1.10.0
     hooks:
       - id: nbqa-ruff
         args: [--fix]
